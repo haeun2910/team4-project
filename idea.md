@@ -10,10 +10,19 @@
      - 경로 지도 표시 (API 사용).
   
    - **필수 사용자 입력**:
+   
+   a, 회원가입
+   - username, password 제공할때 비활성회사용자(`ROLE_INACTIVE`)가 된다.
+
+   b, 로그인 (일반 로그인, 소셜 로그인)
+   - email, age, phone, address, avata,,, update한 후에 활성화 사용자가(`ROLE_USER`) 되어 서비스를 사용할 수 있다.
+
      - 일정 제목
      - 일정 날짜와 시간
      - 출발지와 도착지 주소
      - 이동 수단 (자가용, 대중교통, 택시)
+
+  - 관리자(`ROLE_ADMIN`)는 서비스와 상관없이 고정된 사용자이다. 다른 회원가입 과정을 통해 만들어진 사용자는 관리자가 될 수 없다.
 
 ### 2. **사용할 API 연구**
    - **네이버 지도 API**: 위치 검색 및 지도 상 경로 표시 기능을 지원.
@@ -31,6 +40,9 @@
      - API 요청/응답: REST API.
    
    - **주요 엔드포인트**:
+     - `/register`: 회원가입
+     - `/login`: 로그인
+     - `/my-page`: 사용자 정보 update
      - `/schedule/create`: 일정 생성 및 저장.
      - `/schedule/calculate`: 최적 경로 및 출발 시간 계산.
      - `/schedule/display-map`: 지도 상에 경로 표시.
