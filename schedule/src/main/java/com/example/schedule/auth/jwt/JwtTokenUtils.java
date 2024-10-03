@@ -1,4 +1,4 @@
-package com.example.schedule.jwt;
+package com.example.schedule.auth.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;

@@ -1,4 +1,4 @@
-package com.example.schedule.jwt;
+package com.example.schedule.auth.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

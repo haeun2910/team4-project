@@ -1,4 +1,4 @@
-package com.example.schedule.jwt.dto;
+package com.example.schedule.auth.jwt.dto;
 
 import lombok.Data;
 
