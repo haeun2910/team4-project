@@ -19,9 +19,16 @@ public class JwtTokenUtils {
     private final Key signingKey;
     private final JwtParser jwtParser;
 
-    public JwtTokenUtils(@Value("{jwt.secret}") String jwtSecret) {
-        this.signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        this.jwtParser = Jwts.parserBuilder().setSigningKey(this.signingKey).build();
+    public JwtTokenUtils(
+            @Value("${jwt.secret}")
+            String jwtSecret
+    ) {
+        this.signingKey
+                = Keys.hmacShaKeyFor(jwtSecret.getBytes());
+        this.jwtParser = Jwts
+                .parserBuilder()
+                .setSigningKey(this.signingKey)
+                .build();
     }
     public String generateToken(UserDetails userDetails) {
         Instant now = Instant.now();

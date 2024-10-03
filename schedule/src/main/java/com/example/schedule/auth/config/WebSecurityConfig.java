@@ -26,8 +26,9 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**")
                             .permitAll();
+
                 })
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -39,8 +40,6 @@ public class WebSecurityConfig {
                         ),
                         AuthorizationFilter.class
                 );
-
-
         return http.build();
     }
 }
