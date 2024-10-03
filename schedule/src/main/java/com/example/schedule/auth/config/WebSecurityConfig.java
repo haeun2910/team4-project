@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin").anonymous();
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
 
                 })
                 .sessionManagement(session -> session
