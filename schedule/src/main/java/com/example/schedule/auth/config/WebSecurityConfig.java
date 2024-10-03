@@ -28,6 +28,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**")
                             .permitAll();
+                    auth.requestMatchers("/users/signup","/users/signin").anonymous();
 
                 })
                 .sessionManagement(session -> session
