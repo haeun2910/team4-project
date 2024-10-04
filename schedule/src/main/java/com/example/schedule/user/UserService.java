@@ -90,4 +90,8 @@ public class UserService implements UserDetailsService {
         userEntity.setProfileImg(requestPath);
         return UserDto.fromEntity(userRepo.save(userEntity));
     }
+    public UserDto getUserInfo(){
+        UserEntity userEntity = authFacade.extractUser();
+        return UserDto.fromEntity(userEntity);
+    }
 }

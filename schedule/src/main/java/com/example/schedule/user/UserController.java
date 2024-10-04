@@ -37,4 +37,9 @@ public class UserController {
     public UserDto profileImg(@RequestParam("file") MultipartFile file) {
         return userService.profileImg(file);
     }
+    @GetMapping("get-user-info")
+    public UserDto getUserInfo(){
+        return userService.getUserInfo();
+    }
+
 }
