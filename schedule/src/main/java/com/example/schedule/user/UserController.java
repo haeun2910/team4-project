@@ -27,10 +27,6 @@ public class UserController {
     public JwtResponseDto signin(@RequestBody JwtRequestDto dto) {
         return userService.signin(dto);
     }
-    @GetMapping("oauth-signin")
-    public Map<String, Object> getOAuthSign(@AuthenticationPrincipal OAuth2User oAuth2User) {
-        return oAuth2User.getAttributes();
 
-    }
 
 }
