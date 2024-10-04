@@ -13,8 +13,10 @@ spring:
 
         registration:
           naver:
-            client-id: u0YS9v6FyHQr9kVrcU8h
-            client-secret: PN6i94vBpO
+#            client-id: u0YS9v6FyHQr9kVrcU8h
+            client-id: uvxeeIjVjXJ0T_7Q8Qr4 #hanh
+#            client-secret: PN6i94vBpO
+            client-secret: Y_Fu5r8Y1m #hanh
             redirect-uri: http://localhost:8080/login/oauth2/code/naver
             authorization-grant-type: authorization_code
             client-authentication-method: client_secret_post

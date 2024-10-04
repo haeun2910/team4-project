@@ -49,7 +49,7 @@ public class UserController {
     public void stoppingReq(@RequestBody UserDto dto) {
         userService.stoppingRequest(dto);
     }
-    @GetMapping("oauth-signin")
+    @PostMapping("oauth-signin")
     public Map<String, Object> getOAuthSign(@AuthenticationPrincipal OAuth2User oAuth2User) {
         return oAuth2User.getAttributes();
 

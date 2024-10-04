@@ -48,11 +48,12 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/test")
+                        .loginPage("/users/signin")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/get-user-info")
+                        .defaultSuccessUrl("/users/get-user-info")
+                        .failureUrl("/users/signin?fail")
                         .permitAll())
 
 
