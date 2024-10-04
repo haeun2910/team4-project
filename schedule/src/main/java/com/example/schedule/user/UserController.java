@@ -30,6 +30,7 @@ public class UserController {
     public JwtResponseDto signin(@RequestBody JwtRequestDto dto) {
         return userService.signin(dto);
     }
+
     @PutMapping("signup-final")
     public UserDto signupFinal(@RequestBody UpdateUserDto dto) {
         return userService.updateUser(dto);
@@ -54,5 +55,6 @@ public class UserController {
         return oAuth2User.getAttributes();
 
     }
+
 
 }
