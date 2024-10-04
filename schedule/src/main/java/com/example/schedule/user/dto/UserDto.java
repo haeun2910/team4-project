@@ -16,7 +16,6 @@ import java.util.List;
 public class UserDto {
     private Long id;
     private String username;
-    private String nickname;
     private String name;
     private Integer age;
     private String email;
@@ -31,7 +30,6 @@ public class UserDto {
         return UserDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
-                .nickname(entity.getNickname())
                 .name(entity.getName())
                 .age(entity.getAge())
                 .email(entity.getEmail())

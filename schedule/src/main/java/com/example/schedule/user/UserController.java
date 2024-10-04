@@ -3,6 +3,7 @@ package com.example.schedule.user;
 import com.example.schedule.auth.jwt.dto.JwtRequestDto;
 import com.example.schedule.auth.jwt.dto.JwtResponseDto;
 import com.example.schedule.user.dto.CreateUserDto;
+import com.example.schedule.user.dto.UpdateUserDto;
 import com.example.schedule.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +24,8 @@ public class UserController {
     public JwtResponseDto signin(@RequestBody JwtRequestDto dto) {
         return userService.signin(dto);
     }
-
+    @PutMapping("signup-final")
+    public UserDto signupFinal(@RequestBody UpdateUserDto dto) {
+        return userService.updateUser(dto);
+    }
 }

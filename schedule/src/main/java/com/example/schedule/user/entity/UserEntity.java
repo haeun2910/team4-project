@@ -19,8 +19,6 @@ public class UserEntity extends BaseEntity {
     @Setter
     private String name;
     @Setter
-    private String nickname;
-    @Setter
     private Integer age;
     @Setter
     @Column(unique = true)

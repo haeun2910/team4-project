@@ -4,6 +4,7 @@ import com.example.schedule.auth.jwt.JwtTokenUtils;
 import com.example.schedule.auth.jwt.dto.JwtRequestDto;
 import com.example.schedule.auth.jwt.dto.JwtResponseDto;
 import com.example.schedule.user.dto.CreateUserDto;
+import com.example.schedule.user.dto.UpdateUserDto;
 import com.example.schedule.user.dto.UserDto;
 import com.example.schedule.user.repo.UserRepo;
 import com.example.schedule.user.entity.ScheduleUserDetails;
@@ -59,5 +60,23 @@ public class UserService implements UserDetailsService {
         JwtResponseDto response = new JwtResponseDto();
         response.setToken(jwt);
         return response;
+    }
+
+    public UserDto updateUser(UpdateUserDto dto) {
+        UserEntity userEntity = authFacade.extractUser();
+        userEntity.setName(dto.getName());
+        userEntity.setAge(dto.getAge());
+        userEntity.setEmail(dto.getEmail());
+        userEntity.setPhone(dto.getPhone());
+        if (
+                userEntity.getName() != null &&
+                        userEntity.getAge() != null &&
+                        userEntity.getEmail() != null &&
+                        userEntity.getPhone() != null &&
+                        userEntity.getRoles().equals("ROLE_INACTIVE")
+        )
+            userEntity.setRoles("ROLE_ACTIVE");
+        return UserDto.fromEntity(userRepo.save(userEntity));
+
     }
 }

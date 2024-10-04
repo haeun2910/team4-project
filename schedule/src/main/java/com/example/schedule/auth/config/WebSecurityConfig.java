@@ -29,6 +29,12 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin").anonymous();
+                    auth.requestMatchers(
+                                    "/users/signup-final",
+                                    "/users/profile",
+                                    "/users/get-user-info"
+                            )
+                            .authenticated();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 
                 })
