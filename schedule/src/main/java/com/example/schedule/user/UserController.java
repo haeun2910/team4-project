@@ -7,7 +7,9 @@ import com.example.schedule.user.dto.UpdateUserDto;
 import com.example.schedule.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RestController
@@ -27,5 +29,12 @@ public class UserController {
     @PutMapping("signup-final")
     public UserDto signupFinal(@RequestBody UpdateUserDto dto) {
         return userService.updateUser(dto);
+    }
+    @PutMapping(
+            value = "profile-img",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
+    public UserDto profileImg(@RequestParam("file") MultipartFile file) {
+        return userService.profileImg(file);
     }
 }

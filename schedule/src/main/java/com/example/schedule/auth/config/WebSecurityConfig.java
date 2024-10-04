@@ -31,7 +31,7 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/users/signup","/users/signin").anonymous();
                     auth.requestMatchers(
                                     "/users/signup-final",
-                                    "/users/profile",
+                                    "/users/profile-img",
                                     "/users/get-user-info"
                             )
                             .authenticated();
