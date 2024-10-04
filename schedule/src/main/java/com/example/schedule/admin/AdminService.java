@@ -17,4 +17,7 @@ public class AdminService {
     public Page<UserDto> readAllUser(Pageable pageable) {
         return userRepo.findAll(pageable).map(UserDto::fromEntity);
     }
+    public Page<UserDto> readStoppingRequests(Pageable pageable) {
+        return userRepo.findStoppingRequest(pageable).map(UserDto::fromEntity);
+    }
 }

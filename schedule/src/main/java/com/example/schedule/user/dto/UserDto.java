@@ -36,6 +36,7 @@ public class UserDto {
                 .email(entity.getEmail())
                 .phone(entity.getPhone())
                 .profileImg(entity.getProfileImg())
+                .stoppingReason(entity.getStoppingReason())
                 .roles(roles)
                 .build();
     }

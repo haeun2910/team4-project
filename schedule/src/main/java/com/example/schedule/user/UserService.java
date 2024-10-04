@@ -94,9 +94,11 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = authFacade.extractUser();
         return UserDto.fromEntity(userEntity);
     }
-    @Transactional
-    public void stoppingRequest(UserDto dto) {
+
+    public void stoppingRequest(UserDto dto){
         UserEntity userEntity = authFacade.extractUser();
+        if (userEntity.getRoles().contains("ROLE_STOPPING"))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         userEntity.setStoppingReason(dto.getStoppingReason());
         userRepo.save(userEntity);
     }

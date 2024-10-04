@@ -42,7 +42,7 @@ public class UserController {
         return userService.getUserInfo();
     }
     @PutMapping("stopping")
-    public void stoppingRequest(@RequestBody UserDto dto) {
+    public void stoppingReq(@RequestBody UserDto dto){
         userService.stoppingRequest(dto);
     }
 
