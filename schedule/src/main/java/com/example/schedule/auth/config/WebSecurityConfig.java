@@ -55,8 +55,6 @@ public class WebSecurityConfig {
 //                        .defaultSuccessUrl("/users/get-user-info")
                         .failureUrl("/users/signin?fail")
                         .permitAll())
-
-
                 .addFilterBefore(
                         new JwtTokenFilter(
                                 jwtTokenUtils,
