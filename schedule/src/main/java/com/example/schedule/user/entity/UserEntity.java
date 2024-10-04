@@ -13,8 +13,10 @@ import lombok.*;
 @Entity
 @Table(name = "user_table")
 public class UserEntity extends BaseEntity {
+    @Setter
     @Column(unique = true)
     private String username;
+    @Setter
     private String password;
     @Setter
     private String name;

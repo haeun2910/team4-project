@@ -17,5 +17,13 @@ public class TestData {
     }
 
     private void testUsers(){
+//        UserEntity admin1 = UserEntity.builder()
+//                .username("admin1")
+//                .password(passwordEncoder.encode("1234"))
+//                .name("admin1")
+//                .age(23)
+//                .roles("ROLE_ADMIN")
+//                .build();
+//        userRepo.save(admin1);
     }
 }

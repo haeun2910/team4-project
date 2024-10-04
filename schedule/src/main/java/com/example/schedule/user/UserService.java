@@ -51,9 +51,9 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
     }
     public JwtResponseDto signin(JwtRequestDto dto) {
+        log.info("here");
         UserEntity userEntity = userRepo.findByUsername(dto.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
-
         if (!passwordEncoder.matches(
                 dto.getPassword(),
                 userEntity.getPassword()))
@@ -103,4 +103,15 @@ public class UserService implements UserDetailsService {
         userRepo.save(userEntity);
     }
 
+    public void makeUser(String username, String password, String passCheck) {
+        if (userExists(username) || !password.equals(passCheck))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        userRepo.save(newUser);
+    }
+    public boolean userExists(String username) {
+        return userRepo.existsByUsername(username);
+    }
 }
