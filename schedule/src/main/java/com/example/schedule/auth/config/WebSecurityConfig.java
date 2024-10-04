@@ -32,7 +32,8 @@ public class WebSecurityConfig {
                     auth.requestMatchers(
                                     "/users/signup-final",
                                     "/users/profile-img",
-                                    "/users/get-user-info"
+                                    "/users/get-user-info",
+                                    "/users/stopping"
                             )
                             .authenticated();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");

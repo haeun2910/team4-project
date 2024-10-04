@@ -21,6 +21,7 @@ public class UserDto {
     private String email;
     private String phone;
     private String profileImg;
+    private String stoppingReason;
     private List<String> roles;
 
     public static UserDto fromEntity(UserEntity entity) {

@@ -94,4 +94,11 @@ public class UserService implements UserDetailsService {
         UserEntity userEntity = authFacade.extractUser();
         return UserDto.fromEntity(userEntity);
     }
+    @Transactional
+    public void stoppingRequest(UserDto dto) {
+        UserEntity userEntity = authFacade.extractUser();
+        userEntity.setStoppingReason(dto.getStoppingReason());
+        userRepo.save(userEntity);
+    }
+
 }
