@@ -46,14 +46,9 @@ public class UserController {
     public UserDto getUserInfo(){
         return userService.getUserInfo();
     }
-    @PutMapping("stopping")
+    @PutMapping("suspend")
     public void stoppingReq(@RequestBody UserDto dto) {
-        userService.stoppingRequest(dto);
-    }
-    @PostMapping("oauth-signin")
-    public Map<String, Object> getOAuthSign(@AuthenticationPrincipal OAuth2User oAuth2User) {
-        return oAuth2User.getAttributes();
-
+        userService.suspendRequest(dto);
     }
 
 

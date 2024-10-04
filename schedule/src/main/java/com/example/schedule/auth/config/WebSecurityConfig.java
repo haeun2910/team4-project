@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
-                                    "/users/stopping"
+                                    "/users/suspend"
                             )
                             .authenticated();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");

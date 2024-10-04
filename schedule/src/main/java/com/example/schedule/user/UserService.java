@@ -95,11 +95,11 @@ public class UserService implements UserDetailsService {
         return UserDto.fromEntity(userEntity);
     }
 
-    public void stoppingRequest(UserDto dto){
+    public void suspendRequest(UserDto dto){
         UserEntity userEntity = authFacade.extractUser();
-        if (userEntity.getRoles().contains("ROLE_STOPPING"))
+        if (userEntity.getRoles().contains("ROLE_SUSPEND"))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        userEntity.setStoppingReason(dto.getStoppingReason());
+        userEntity.setSuspendReason(dto.getSuspendReason());
         userRepo.save(userEntity);
     }
 
