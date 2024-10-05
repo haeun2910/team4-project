@@ -10,12 +10,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class TransportationOption extends BaseEntity {
+public class TransOption extends BaseEntity {
     private double estimatedCost;
     private double travelTime;
     @ManyToOne(fetch = FetchType.LAZY)
     private Route route;
     @Enumerated(EnumType.STRING)
-    private TransportationMode mode;
+    private TransMode mode;
+
+    public enum TransMode {
+        PRIVATE_CAR,
+        BIKE,
+        FOOT,
+        TAXI,
+        BUS,
+        TRAIN
+
+    }
 
 }

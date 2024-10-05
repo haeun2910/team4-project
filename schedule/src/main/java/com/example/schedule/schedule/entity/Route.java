@@ -24,5 +24,5 @@ public class Route extends BaseEntity {
     private double estimatedTime;
     @Builder.Default
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL)
-    private final List<TransportationOption> transportationOptions = new ArrayList<>();
+    private final List<TransOption> transOptions = new ArrayList<>();
 }
