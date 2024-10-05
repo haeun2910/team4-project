@@ -38,7 +38,7 @@ public class WebSecurityConfig {
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
-                                    "/users/stopping"
+                                    "/users/suspend"
                             )
                             .authenticated();
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
@@ -52,11 +52,9 @@ public class WebSecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/users/get-user-info")
+//                        .defaultSuccessUrl("/users/get-user-info")
                         .failureUrl("/users/signin?fail")
                         .permitAll())
-
-
                 .addFilterBefore(
                         new JwtTokenFilter(
                                 jwtTokenUtils,

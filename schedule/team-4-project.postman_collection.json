@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user1\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -66,6 +66,154 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "signup-final",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"chad\",\n    \"age\": 31,\n    \"email\": \"chad@gmail.com\",\n    \"phone\": \"01012144112\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/signup-final",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"signup-final"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile-img",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODAxMzYwMiwiZXhwIjoxNzI4NjE4NDAyfQ.az5NN6Jkn29xsP7dluVGDdXXu3I9j9IVZ3xdA7V38Q_yhTdt99i30yfxT-82Np4P",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/nguyenhanh/Downloads/images.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/profile-img",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"profile-img"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-user-info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/get-user-info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"get-user-info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "suspend request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"suspendReason\": \"출국\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users/suspend",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"suspend"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -80,7 +228,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyNzk1MjI3NywiZXhwIjoxNzI4NTU3MDc3fQ.JPFQNjyxxWYeFgEwEB3PvEeapIWy_tst3RE_f3rTXQUfcSiscaqEvogjujjWkzhA",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODAwOTE5MSwiZXhwIjoxNzI4NjEzOTkxfQ.HSaeXb7rOnPqFi0NZ9DAPz-Gs4TCMlJHXULdY7ErhZpw4p7qziZCz7nnvDi0rnt4",
 									"type": "string"
 								}
 							]
@@ -126,6 +274,36 @@
 							"path": [
 								"users",
 								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get suspend request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODAwOTE5MSwiZXhwIjoxNzI4NjEzOTkxfQ.HSaeXb7rOnPqFi0NZ9DAPz-Gs4TCMlJHXULdY7ErhZpw4p7qziZCz7nnvDi0rnt4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/suspend-request",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"suspend-request"
 							]
 						}
 					},

@@ -20,8 +20,8 @@ public class AdminController {
     public Page<UserDto> readAllUsers(Pageable pageable) {
         return service.readAllUser(pageable);
     }
-    @GetMapping("stopping-request")
+    @GetMapping("suspend-request")
     public Page<UserDto> readAllStoppingRequests(Pageable pageable) {
-        return service.readStoppingRequests(pageable);
+        return service.readSuspendRequests(pageable);
     }
 }

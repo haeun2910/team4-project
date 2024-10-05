@@ -13,6 +13,6 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
     boolean existsByUsername(String username);
     @Query("SELECT s " +
             "FROM UserEntity s " +
-            "WHERE s.stoppingReason IS NOT NULL ")
-    Page<UserEntity> findStoppingRequest(Pageable pageable);
+            "WHERE s.suspendReason IS NOT NULL ")
+    Page<UserEntity> findSuspendRequest(Pageable pageable);
 }

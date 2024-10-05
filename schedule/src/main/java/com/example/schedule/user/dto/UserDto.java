@@ -21,7 +21,7 @@ public class UserDto {
     private String email;
     private String phone;
     private String profileImg;
-    private String stoppingReason;
+    private String suspendReason;
     private List<String> roles;
 
     public static UserDto fromEntity(UserEntity entity) {
@@ -36,7 +36,7 @@ public class UserDto {
                 .email(entity.getEmail())
                 .phone(entity.getPhone())
                 .profileImg(entity.getProfileImg())
-                .stoppingReason(entity.getStoppingReason())
+                .suspendReason(entity.getSuspendReason())
                 .roles(roles)
                 .build();
     }

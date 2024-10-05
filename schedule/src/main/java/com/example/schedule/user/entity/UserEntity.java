@@ -31,7 +31,7 @@ public class UserEntity extends BaseEntity {
     @Setter
     private String profileImg;
     @Setter
-    private String stoppingReason;
+    private String suspendReason;
     @Setter
     @Builder.Default
     private String roles = "ROLE_INACTIVE";
