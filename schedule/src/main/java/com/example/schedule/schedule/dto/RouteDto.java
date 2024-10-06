@@ -1,11 +1,7 @@
 package com.example.schedule.schedule.dto;
 
 import com.example.schedule.schedule.entity.Route;
-import com.example.schedule.schedule.entity.TransportationOption;
 import lombok.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @ToString
@@ -18,6 +14,7 @@ public class RouteDto {
     private String destination;
     private double distance;
     private double estimatedTime;
+
     public RouteDto fromEntity(Route entity) {
         return RouteDto.builder()
                 .id(entity.getId())
@@ -27,5 +24,5 @@ public class RouteDto {
                 .estimatedTime(entity.getEstimatedTime())
                 .build();
     }
-    }
+}
 

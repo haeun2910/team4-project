@@ -1,8 +1,6 @@
 package com.example.schedule.schedule.dto;
 
 import com.example.schedule.schedule.entity.Schedule;
-import com.example.schedule.schedule.entity.TransportationMode;
-import com.example.schedule.user.entity.UserEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;

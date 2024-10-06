@@ -29,7 +29,7 @@ public class Schedule extends BaseEntity {
     @Setter
     private LocalDateTime endTime;
     @Enumerated(EnumType.STRING)
-    private TransportationMode mode;
+    private TransOption.TransMode mode;
     @Setter
     private double estimatedCost;
     @Setter
