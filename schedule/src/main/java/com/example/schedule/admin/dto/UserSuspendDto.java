@@ -10,13 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserSuspendDto {
-    private Long userId;
+    private Long id;
     private String username;
     private String suspendReason;
     private Boolean suspended;
     public static UserSuspendDto fromEntity(UserSuspend entity) {
         return UserSuspendDto.builder()
-                .userId(entity.getId())
+                .id(entity.getId())
                 .username(entity.getTarget().getUsername())
                 .suspendReason(entity.getSuspendReason())
                 .suspended(entity.getSuspended())
