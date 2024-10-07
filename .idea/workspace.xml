@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85a5e07d-23b4-42dd-b8c2-2b4824686627" name="Changes" comment="" />
+
+    <list default="true" id="85a5e07d-23b4-42dd-b8c2-2b4824686627" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -54,9 +57,9 @@
   &quot;keyToString&quot;: {
     &quot;Gradle.schedule [:ScheduleApplication.main()].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;admin-update-dung&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/k tech/live/team4-project&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/k tech/live/ktech-boot-project2&quot;
   }
 }</component>
   <component name="RunManager">
