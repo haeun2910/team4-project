@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODI4MDMyMywiZXhwIjoxNzI4ODg1MTIzfQ.ZVZORSqmLK1a3RhA124Js0fsb_Y1YHoHEdugZ_9CHFiZalw3VdKyz0tS0NZhtX6g",
 									"type": "string"
 								}
 							]
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"chad\",\n    \"age\": 31,\n    \"email\": \"chad@gmail.com\",\n    \"phone\": \"01012144112\"\n}",
+							"raw": "{\n    \"name\": \"brad\",\n    \"age\": 32,\n    \"email\": \"brad@gmail.com\",\n    \"phone\": \"01012154142\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -154,7 +154,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODI3ODYzNCwiZXhwIjoxNzI4ODgzNDM0fQ.IB0CHgzpb4q_JagUXM4KV-p-I2lHr1DeCk0A5_ji7iqLyi4iQc2dSb6qkg-XjlKE",
 									"type": "string"
 								}
 							]
@@ -184,7 +184,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODAzMDI0OSwiZXhwIjoxNzI4NjM1MDQ5fQ.yd1KvNjznpWFBkHNBj9ZlHhyJCTib9HSHM0RZjQke1ipcne7UYUM1pbv1NcOe5Mi",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODI4MDMyMywiZXhwIjoxNzI4ODg1MTIzfQ.ZVZORSqmLK1a3RhA124Js0fsb_Y1YHoHEdugZ_9CHFiZalw3VdKyz0tS0NZhtX6g",
 									"type": "string"
 								}
 							]
@@ -228,7 +228,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODAwOTE5MSwiZXhwIjoxNzI4NjEzOTkxfQ.HSaeXb7rOnPqFi0NZ9DAPz-Gs4TCMlJHXULdY7ErhZpw4p7qziZCz7nnvDi0rnt4",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE3MjgyNzg3MDIsImV4cCI6MTcyODg4MzUwMn0.o4TmFmxtlU1N8269KXuDdJ5F0ewcIm4cx7Rhp5NmvnSa7aqAjsECRv1CnZUb2PHe",
 									"type": "string"
 								}
 							]
@@ -257,7 +257,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"admin1\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -287,7 +287,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODAwOTE5MSwiZXhwIjoxNzI4NjEzOTkxfQ.HSaeXb7rOnPqFi0NZ9DAPz-Gs4TCMlJHXULdY7ErhZpw4p7qziZCz7nnvDi0rnt4",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE3MjgyNzg3MDIsImV4cCI6MTcyODg4MzUwMn0.o4TmFmxtlU1N8269KXuDdJ5F0ewcIm4cx7Rhp5NmvnSa7aqAjsECRv1CnZUb2PHe",
 									"type": "string"
 								}
 							]
@@ -304,6 +304,98 @@
 							"path": [
 								"admin",
 								"suspend-request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "approveSuspend",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE3MjgyNzg3MDIsImV4cCI6MTcyODg4MzUwMn0.o4TmFmxtlU1N8269KXuDdJ5F0ewcIm4cx7Rhp5NmvnSa7aqAjsECRv1CnZUb2PHe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/admin/approveSuspend/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"approveSuspend",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "schedule",
+			"item": [
+				{
+					"name": "directions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODI2MzQxMywiZXhwIjoxNzI4ODY4MjEzfQ.N6fIb_SyMZhfFfrbvPnqSBbPfu7uS2_Dc-CiuIOoSFSL34KZi1bF-fhXSrzXcjOx",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/directions/combined?startLat=37.359708&startLon=127.1058342&goalLat=35.179554&goalLon=129.075647&startStation=Seoul&endStation=Busan\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"directions",
+								"combined"
+							],
+							"query": [
+								{
+									"key": "startLat",
+									"value": "37.359708"
+								},
+								{
+									"key": "startLon",
+									"value": "127.1058342"
+								},
+								{
+									"key": "goalLat",
+									"value": "35.179554"
+								},
+								{
+									"key": "goalLon",
+									"value": "129.075647"
+								},
+								{
+									"key": "startStation",
+									"value": "Seoul"
+								},
+								{
+									"key": "endStation",
+									"value": "Busan\n"
+								}
 							]
 						}
 					},
