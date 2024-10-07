@@ -1,10 +1,7 @@
 package com.example.schedule.user.entity;
 
 import com.example.schedule.entity.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -14,8 +11,9 @@ import lombok.*;
 @AllArgsConstructor
 @Table(name = "role_suspend_req")
 public class UserSuspend extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private UserEntity target;
+    @Setter
     private String suspendReason;
     @Setter
     private Boolean suspended;

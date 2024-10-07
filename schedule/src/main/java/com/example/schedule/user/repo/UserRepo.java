@@ -11,8 +11,8 @@ import java.util.Optional;
 public interface UserRepo extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByUsername(String username);
     boolean existsByUsername(String username);
-    @Query("SELECT s " +
-            "FROM UserEntity s " +
-            "WHERE s.suspendReason IS NOT NULL ")
-    Page<UserEntity> findSuspendRequest(Pageable pageable);
+//    @Query("SELECT s " +
+//            "FROM UserEntity s " +
+//            "WHERE s.suspendReason IS NOT NULL ")
+//    Page<UserEntity> findSuspendRequest(Pageable pageable);
 }

@@ -25,8 +25,8 @@ public class AdminService {
         return userRepo.findAll(pageable).map(UserDto::fromEntity);
     }
 
-    public Page<UserDto> readSuspendRequests(Pageable pageable) {
-        return userRepo.findSuspendRequest(pageable).map(UserDto::fromEntity);
+    public Page<UserSuspendDto> readSuspendRequests(Pageable pageable) {
+        return userSuspendRep.findAll(pageable).map(UserSuspendDto::fromEntity);
     }
 
     @Transactional

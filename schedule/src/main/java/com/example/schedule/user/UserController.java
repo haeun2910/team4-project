@@ -1,5 +1,6 @@
 package com.example.schedule.user;
 
+import com.example.schedule.admin.dto.UserSuspendDto;
 import com.example.schedule.auth.jwt.dto.JwtRequestDto;
 import com.example.schedule.auth.jwt.dto.JwtResponseDto;
 import com.example.schedule.user.dto.CreateUserDto;
@@ -47,7 +48,7 @@ public class UserController {
         return userService.getUserInfo();
     }
     @PutMapping("suspend")
-    public void stoppingReq(@RequestBody UserDto dto) {
+    public void suspendReq(@RequestBody UserSuspendDto dto) {
         userService.suspendRequest(dto);
     }
 

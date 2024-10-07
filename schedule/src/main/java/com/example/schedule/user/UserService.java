@@ -1,15 +1,18 @@
 package com.example.schedule.user;
 
 import com.example.schedule.FileHandlerUtils;
+import com.example.schedule.admin.dto.UserSuspendDto;
 import com.example.schedule.auth.jwt.JwtTokenUtils;
 import com.example.schedule.auth.jwt.dto.JwtRequestDto;
 import com.example.schedule.auth.jwt.dto.JwtResponseDto;
 import com.example.schedule.user.dto.CreateUserDto;
 import com.example.schedule.user.dto.UpdateUserDto;
 import com.example.schedule.user.dto.UserDto;
+import com.example.schedule.user.entity.UserSuspend;
 import com.example.schedule.user.repo.UserRepo;
 import com.example.schedule.user.entity.ScheduleUserDetails;
 import com.example.schedule.user.entity.UserEntity;
+import com.example.schedule.user.repo.UserSuspendRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +34,7 @@ public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenUtils jwtTokenUtils;
     private final FileHandlerUtils fileHandlerUtils;
+    private final UserSuspendRepo userSuspendRepo;
 
     @Transactional
     public UserDto createUser(CreateUserDto dto) {
@@ -95,12 +99,16 @@ public class UserService implements UserDetailsService {
         return UserDto.fromEntity(userEntity);
     }
 
-    public void suspendRequest(UserDto dto){
-        UserEntity userEntity = authFacade.extractUser();
-        if (userEntity.getRoles().contains("ROLE_SUSPEND"))
+    public void suspendRequest(UserSuspendDto dto){
+        UserEntity target = authFacade.extractUser();
+        if (target.getRoles().contains("ROLE_SUSPEND"))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        userEntity.setSuspendReason(dto.getSuspendReason());
-        userRepo.save(userEntity);
+        target.setSuspendReason(dto.getSuspendReason());
+        userSuspendRepo.save(UserSuspend.builder()
+                .target(target)
+                        .suspendReason(target.getSuspendReason())
+                .build()
+        );
     }
 
     public void makeUser(String username, String password, String passCheck) {

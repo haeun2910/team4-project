@@ -1,5 +1,6 @@
 package com.example.schedule;
 
+import com.example.schedule.user.entity.UserEntity;
 import com.example.schedule.user.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

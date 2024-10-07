@@ -21,7 +21,7 @@ public class AdminController {
         return service.readAllUser(pageable);
     }
     @GetMapping("suspend-request")
-    public Page<UserDto> readAllStoppingRequests(Pageable pageable) {
+    public Page<UserSuspendDto> readSuspendRequests(Pageable pageable) {
         return service.readSuspendRequests(pageable);
     }
     @PutMapping("approveSuspend/{id}")
