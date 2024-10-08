@@ -24,27 +24,25 @@ public class ScheduleService {
 
     public ScheduleDto createSchedule(ScheduleDto scheduleDto) {
         UserEntity user = authFacade.extractUser();
-        if (!userRepo.existsById(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        Schedule schedule = Schedule.builder()
+        UserEntity userId = userRepo.findById(user.getId()).orElseThrow();
+        return ScheduleDto.fromEntity(scheduleRepo.save(Schedule.builder()
                 .title(scheduleDto.getTitle())
-                .user(user)
+                        .user(user)
                 .startTime(scheduleDto.getStartTime())
                 .endTime(scheduleDto.getEndTime())
                 .startLocation(scheduleDto.getStartLocation())
                 .destination(scheduleDto.getDestination())
                 .mode(scheduleDto.getTransportationMode())
                 .estimatedCost(scheduleDto.getEstimatedCost())
-                .build();
-        return ScheduleDto.fromEntity(scheduleRepo.save(schedule));
+                        .user(userId)
+                .build()));
 
     }
 
     public ScheduleDto updateSchedule(ScheduleDto schedule) {
+        UserEntity user = authFacade.extractUser();
         Schedule existingSchedule = scheduleRepo.findById(schedule.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        UserEntity user = authFacade.extractUser();
         if (!existingSchedule.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

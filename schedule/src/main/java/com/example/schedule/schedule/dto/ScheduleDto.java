@@ -3,6 +3,7 @@ package com.example.schedule.schedule.dto;
 import com.example.schedule.schedule.entity.Location;
 import com.example.schedule.schedule.entity.Schedule;
 import com.example.schedule.schedule.entity.TransOption;
+import com.example.schedule.user.dto.UserDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ScheduleDto {
     private Long id;
-    private Long userId;
     private String title;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -23,11 +23,13 @@ public class ScheduleDto {
     private TransOption.TransMode transportationMode;
     private double estimatedCost;
     private String notificationMessage;
-
+    private Long userId;
     public static ScheduleDto fromEntity(Schedule entity) {
+        return fromEntity(entity, false);
+    }
+    public static ScheduleDto fromEntity(Schedule entity, boolean 쟈소) {
         return ScheduleDto.builder()
                 .id(entity.getId())
-                .userId(entity.getUser().getId())
                 .title(entity.getTitle())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())
@@ -36,6 +38,10 @@ public class ScheduleDto {
                 .transportationMode(entity.getMode())
                 .estimatedCost(entity.getEstimatedCost())
                 .notificationMessage(entity.getNotificationMessage())
+                .userId(entity.getUser() != null ? entity.getUser().getId() : null)
+                /*.userId(withUser && entity.getUser() != null ? entity.getUser().getId() : null)  // Set userId*/
+            //    .userDto(withUser ? UserDto.fromEntity(entity.getUser()) : null)
+
                 .build();
     }
 }
