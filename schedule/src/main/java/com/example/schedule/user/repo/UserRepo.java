@@ -15,4 +15,5 @@ public interface UserRepo extends JpaRepository<UserEntity, Long> {
 //            "FROM UserEntity s " +
 //            "WHERE s.suspendReason IS NOT NULL ")
 //    Page<UserEntity> findSuspendRequest(Pageable pageable);
+
 }

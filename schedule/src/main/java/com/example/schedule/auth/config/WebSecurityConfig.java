@@ -33,15 +33,16 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate")
                             .permitAll();
-                    auth.requestMatchers("/users/signup","/users/signin").anonymous();
+                    auth.requestMatchers("/users/signup","/users/signin")
+                            .anonymous();
                     auth.requestMatchers(
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
-                                    "/users/suspend"
+                                    "/users/suspend-req",
+                                    "/users/comeback"
                             )
                             .authenticated();
-                    auth.requestMatchers("/users/comeback").hasRole("SUSPEND");
                     auth.requestMatchers("/api/**").hasAnyRole("ADMIN","ACTIVE");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 

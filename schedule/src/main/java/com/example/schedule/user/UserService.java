@@ -115,14 +115,16 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    public void comeback(){
-        UserEntity target = authFacade.extractUser();
-        if (target.getRoles().equals("ROLE_SUSPEND"))
-            target.setRoles("ROLE_ACTIVE");
-        else
+    public UserDto comebackUser(){
+        UserEntity comeback = authFacade.extractUser();
+        log.info("Extracted User: {}", comeback);
+        if (!comeback.getRoles().contains("ROLE_SUSPEND")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        else
+            comeback.setRoles("ROLE_ACTIVE");
+        return UserDto.fromEntity(userRepo.save(comeback));
 
-        userRepo.save(target);
     }
 
 

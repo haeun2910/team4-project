@@ -47,12 +47,12 @@ public class UserController {
     public UserDto getUserInfo(){
         return userService.getUserInfo();
     }
-    @PutMapping("suspend")
+    @PutMapping("suspend-req")
     public void suspendReq(@RequestBody UserSuspendDto dto) {
         userService.suspendRequest(dto);
     }
     @PutMapping("comeback")
-    public void comeback() {
-        userService.comeback();
+    public UserDto comeback() {
+        return userService.comebackUser();
     }
 }
