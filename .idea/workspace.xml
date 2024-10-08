@@ -7,14 +7,8 @@
     <list default="true" id="85a5e07d-23b4-42dd-b8c2-2b4824686627" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/db.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/auth/config/WebSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/auth/config/WebSecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/dto/ScheduleDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/dto/ScheduleDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/entity/Schedule.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/entity/Schedule.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/entity/TransOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/entity/TransOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/user/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/user/dto/UserDto.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,9 +59,9 @@
   "keyToString": {
     "Gradle.schedule [:ScheduleApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging schedule-dung2",
+    "git-widget-placeholder": "schedule-dung2",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/k tech/live/ktech-boot-project2"
+    "last_opened_file_path": "C:/k tech/live/team4-project"
   }
 }]]></component>
   <component name="RunManager">

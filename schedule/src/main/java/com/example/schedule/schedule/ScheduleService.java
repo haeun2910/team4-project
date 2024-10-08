@@ -40,18 +40,17 @@ public class ScheduleService {
                 .user(userId)
                 .build();
 
-        return ScheduleDto.fromEntity(scheduleRepo.save(schedule),true);
+        return ScheduleDto.fromEntity(scheduleRepo.save(schedule), true);
 
 
     }
 
+    @Transactional
     public ScheduleDto updateSchedule(ScheduleDto schedule) {
         UserEntity user = authFacade.extractUser();
-        Schedule existingSchedule = scheduleRepo.findById(schedule.getId())
+        Schedule existingSchedule = scheduleRepo.findByUser(user)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        if (!existingSchedule.getUser().getId().equals(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+
         existingSchedule.setTitle(schedule.getTitle());
         existingSchedule.setStartTime(schedule.getStartTime());
         existingSchedule.setEndTime(schedule.getEndTime());
@@ -59,14 +58,14 @@ public class ScheduleService {
         existingSchedule.setDestination(schedule.getDestination());
         existingSchedule.setMode(schedule.getTransportationMode());
         existingSchedule.setEstimatedCost(schedule.getEstimatedCost());
-        return ScheduleDto.fromEntity(scheduleRepo.save(existingSchedule));
+        return ScheduleDto.fromEntity(scheduleRepo.save(existingSchedule), true);
 
     }
-
+@Transactional
     public void deleteSchedule(Long scheduleId) {
+        UserEntity user = authFacade.extractUser();
         Schedule schedule = scheduleRepo.findById(scheduleId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        UserEntity user = authFacade.extractUser();
         if (!schedule.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

@@ -23,8 +23,8 @@ public class ScheduleController {
     public ScheduleDto update(@RequestBody ScheduleDto schedule, @PathVariable("scheduleId") Long scheduleId) {
         return scheduleService.updateSchedule(schedule);
     }
-    @DeleteMapping("delete")
-    public void delete(@RequestParam Long id) {
-        scheduleService.deleteSchedule(id);
+    @DeleteMapping("delete/{scheduleId}")
+    public void delete(@PathVariable Long scheduleId) {
+        scheduleService.deleteSchedule(scheduleId);
     }
 }
