@@ -41,6 +41,7 @@ public class WebSecurityConfig {
                                     "/users/suspend"
                             )
                             .authenticated();
+                    auth.requestMatchers("/api/**").hasAnyRole("ADMIN","ACTIVE");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 
                 })
