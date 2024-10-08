@@ -23,11 +23,13 @@ public class ScheduleDto {
     private TransOption.TransMode transportationMode;
     private double estimatedCost;
     private String notificationMessage;
-    private Long userId;
+    private UserDto user;
+
     public static ScheduleDto fromEntity(Schedule entity) {
         return fromEntity(entity, false);
     }
-    public static ScheduleDto fromEntity(Schedule entity, boolean 쟈소) {
+
+    public static ScheduleDto fromEntity(Schedule entity, boolean withUser) {
         return ScheduleDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -38,10 +40,7 @@ public class ScheduleDto {
                 .transportationMode(entity.getMode())
                 .estimatedCost(entity.getEstimatedCost())
                 .notificationMessage(entity.getNotificationMessage())
-                .userId(entity.getUser() != null ? entity.getUser().getId() : null)
-                /*.userId(withUser && entity.getUser() != null ? entity.getUser().getId() : null)  // Set userId*/
-            //    .userDto(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-
+                .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
                 .build();
     }
 }

@@ -6,6 +6,7 @@ import com.example.schedule.schedule.repo.ScheduleRepo;
 import com.example.schedule.user.AuthenticationFacade;
 import com.example.schedule.user.entity.UserEntity;
 import com.example.schedule.user.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,20 +23,25 @@ public class ScheduleService {
     private final ScheduleRepo scheduleRepo;
     private final UserRepo userRepo;
 
+    @Transactional
     public ScheduleDto createSchedule(ScheduleDto scheduleDto) {
         UserEntity user = authFacade.extractUser();
-        UserEntity userId = userRepo.findById(user.getId()).orElseThrow();
-        return ScheduleDto.fromEntity(scheduleRepo.save(Schedule.builder()
+        UserEntity userId = userRepo.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        Schedule schedule = Schedule.builder()
                 .title(scheduleDto.getTitle())
-                        .user(user)
                 .startTime(scheduleDto.getStartTime())
                 .endTime(scheduleDto.getEndTime())
                 .startLocation(scheduleDto.getStartLocation())
                 .destination(scheduleDto.getDestination())
                 .mode(scheduleDto.getTransportationMode())
                 .estimatedCost(scheduleDto.getEstimatedCost())
-                        .user(userId)
-                .build()));
+                .user(userId)
+                .build();
+
+        return ScheduleDto.fromEntity(scheduleRepo.save(schedule),true);
+
 
     }
 
@@ -59,7 +65,7 @@ public class ScheduleService {
 
     public void deleteSchedule(Long scheduleId) {
         Schedule schedule = scheduleRepo.findById(scheduleId)
-               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         UserEntity user = authFacade.extractUser();
         if (!schedule.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);

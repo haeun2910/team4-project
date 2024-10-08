@@ -21,7 +21,7 @@ public class TransOption extends BaseEntity {
     public enum TransMode {
         PRIVATE_CAR,
         BIKE,
-        FOOT,
+        WALK,
         TAXI,
         BUS,
         TRAIN

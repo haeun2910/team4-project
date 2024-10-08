@@ -24,10 +24,11 @@ public class UserDto {
     private String suspendReason;
     private List<String> roles;
 
+
+
     public static UserDto fromEntity(UserEntity entity) {
         List<String> roles = Arrays.stream(entity.getRoles().split(","))
                 .toList();
-
         return UserDto.builder()
                 .id(entity.getId())
                 .username(entity.getUsername())
