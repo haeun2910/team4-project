@@ -101,6 +101,10 @@ public class UserService implements UserDetailsService {
 
     public void suspendRequest(UserSuspendDto dto){
         UserEntity target = authFacade.extractUser();
+        boolean alreadyRequested = userSuspendRepo.existsByTarget(target);
+        if (alreadyRequested) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You have already submitted a suspension request.");
+        }
         if (target.getRoles().contains("ROLE_SUSPEND"))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         target.setSuspendReason(dto.getSuspendReason());
@@ -110,6 +114,18 @@ public class UserService implements UserDetailsService {
                 .build()
         );
     }
+
+    public void comeback(){
+        UserEntity target = authFacade.extractUser();
+        if (target.getRoles().equals("ROLE_SUSPEND"))
+            target.setRoles("ROLE_ACTIVE");
+        else
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        userRepo.save(target);
+    }
+
+
 
     public void makeUser(String username, String password, String passCheck) {
         if (userExists(username) || !password.equals(passCheck))

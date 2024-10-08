@@ -51,6 +51,8 @@ public class UserController {
     public void suspendReq(@RequestBody UserSuspendDto dto) {
         userService.suspendRequest(dto);
     }
-
-
+    @PutMapping("comeback")
+    public void comeback() {
+        userService.comeback();
+    }
 }

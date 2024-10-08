@@ -31,7 +31,7 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate", "/oauth-signin")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin").anonymous();
                     auth.requestMatchers(
@@ -41,6 +41,7 @@ public class WebSecurityConfig {
                                     "/users/suspend"
                             )
                             .authenticated();
+                    auth.requestMatchers("/users/comeback").hasRole("SUSPEND");
                     auth.requestMatchers("/api/**").hasAnyRole("ADMIN","ACTIVE");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 

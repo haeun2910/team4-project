@@ -35,7 +35,7 @@ public class AdminService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         suspend.setSuspended(true);
         if (suspend.getSuspendReason() !=null || suspend.getTarget().getRoles().contains("ROLE_ACTIVE")) {
-            suspend.getTarget().setRoles("ROLE_SUSPENDED");
+            suspend.getTarget().setRoles("ROLE_SUSPEND");
         }
         return UserSuspendDto.fromEntity(userSuspendRep.save(suspend));
 
