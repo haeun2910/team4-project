@@ -44,6 +44,10 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // For validation support
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.0' // Add validation API
+	implementation 'org.hibernate.validator:hibernate-validator:7.0.0.Final' // Add Hibernate Validator
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
