@@ -6,6 +6,7 @@ import com.example.schedule.schedule.repo.ScheduleRepo;
 import com.example.schedule.user.AuthenticationFacade;
 import com.example.schedule.user.entity.UserEntity;
 import com.example.schedule.user.repo.UserRepo;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,29 +23,32 @@ public class ScheduleService {
     private final ScheduleRepo scheduleRepo;
     private final UserRepo userRepo;
 
+    @Transactional
     public ScheduleDto createSchedule(ScheduleDto scheduleDto) {
         UserEntity user = authFacade.extractUser();
-        if (!userRepo.existsById(user.getId())) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
+        UserEntity userId = userRepo.findById(user.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         Schedule schedule = Schedule.builder()
                 .title(scheduleDto.getTitle())
-                .user(user)
                 .startTime(scheduleDto.getStartTime())
                 .endTime(scheduleDto.getEndTime())
                 .startLocation(scheduleDto.getStartLocation())
                 .destination(scheduleDto.getDestination())
                 .mode(scheduleDto.getTransportationMode())
                 .estimatedCost(scheduleDto.getEstimatedCost())
+                .user(userId)
                 .build();
-        return ScheduleDto.fromEntity(scheduleRepo.save(schedule));
+
+        return ScheduleDto.fromEntity(scheduleRepo.save(schedule),true);
+
 
     }
 
     public ScheduleDto updateSchedule(ScheduleDto schedule) {
+        UserEntity user = authFacade.extractUser();
         Schedule existingSchedule = scheduleRepo.findById(schedule.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        UserEntity user = authFacade.extractUser();
         if (!existingSchedule.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }

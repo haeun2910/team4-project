@@ -16,10 +16,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name ="schedule_table")
 public class Schedule extends BaseEntity {
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
     @Setter
     private String title;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private UserEntity user;
     @Setter
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Location startLocation;
