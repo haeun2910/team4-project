@@ -32,6 +32,7 @@ public class Schedule extends BaseEntity {
     @Setter
     @Future(message = "End time must be in the future")
     private LocalDateTime endTime;
+    @Setter
     @Enumerated(EnumType.STRING)
     private TransOption.TransMode mode;
     @Setter

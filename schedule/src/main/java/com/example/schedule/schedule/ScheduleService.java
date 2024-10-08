@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +29,7 @@ public class ScheduleService {
         }
         Schedule schedule = Schedule.builder()
                 .title(scheduleDto.getTitle())
+                .user(user)
                 .startTime(scheduleDto.getStartTime())
                 .endTime(scheduleDto.getEndTime())
                 .startLocation(scheduleDto.getStartLocation())
@@ -41,13 +44,28 @@ public class ScheduleService {
     public ScheduleDto updateSchedule(ScheduleDto schedule) {
         Schedule existingSchedule = scheduleRepo.findById(schedule.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        existingSchedule.setTitle(schedule.getTitle())
-                .setStartTime(schedule.getStartTime())
-                .setEndTime(schedule.getEndTime())
-                .setStartLocation(schedule.getStartLocation())
-                .setDestination(schedule.getDestination())
-                .setMode(schedule.getTransportationMode())
-                .setEstimatedCost(schedule.getEstimatedCost());
+        UserEntity user = authFacade.extractUser();
+        if (!existingSchedule.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        existingSchedule.setTitle(schedule.getTitle());
+        existingSchedule.setStartTime(schedule.getStartTime());
+        existingSchedule.setEndTime(schedule.getEndTime());
+        existingSchedule.setStartLocation(schedule.getStartLocation());
+        existingSchedule.setDestination(schedule.getDestination());
+        existingSchedule.setMode(schedule.getTransportationMode());
+        existingSchedule.setEstimatedCost(schedule.getEstimatedCost());
         return ScheduleDto.fromEntity(scheduleRepo.save(existingSchedule));
+
+    }
+
+    public void deleteSchedule(Long scheduleId) {
+        Schedule schedule = scheduleRepo.findById(scheduleId)
+               .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        UserEntity user = authFacade.extractUser();
+        if (!schedule.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        }
+        scheduleRepo.deleteById(scheduleId);
     }
 }

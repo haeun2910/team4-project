@@ -1,7 +1,6 @@
 package com.example.schedule.auth.config;
 
 
-
 import com.example.schedule.auth.jwt.JwtTokenFilter;
 import com.example.schedule.auth.jwt.JwtTokenUtils;
 import com.example.schedule.oauth.OAuth2SuccessHandler;
@@ -31,17 +30,18 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate", "/oauth-signin")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/test/**", "/signin/validate", "/oauth-signin")
                             .permitAll();
-                    auth.requestMatchers("/users/signup","/users/signin").anonymous();
+                    auth.requestMatchers("/users/signup", "/users/signin").anonymous();
                     auth.requestMatchers(
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
-                                    "/users/suspend"
+                                    "/users/suspend",
+                                    "/schedules/**"
                             )
                             .authenticated();
-                    auth.requestMatchers("/api/**").hasAnyRole("ADMIN","ACTIVE");
+                    auth.requestMatchers("/api/**").hasAnyRole("ADMIN", "ACTIVE");
                     auth.requestMatchers("/admin/**").hasRole("ADMIN");
 
                 })
