@@ -14,7 +14,7 @@ public class TransOptDto {
     private double travelTime;
     private Long routeId;
     private TransOption.TransMode mode;
-public static TransOptDto fromEnity(TransOption entity) {
+public static TransOptDto fromEntity(TransOption entity) {
     return TransOptDto.builder()
             .id(entity.getId())
             .estimatedCost(entity.getEstimatedCost())

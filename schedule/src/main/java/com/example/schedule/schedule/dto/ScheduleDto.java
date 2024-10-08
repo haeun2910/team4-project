@@ -1,6 +1,8 @@
 package com.example.schedule.schedule.dto;
 
+import com.example.schedule.schedule.entity.Location;
 import com.example.schedule.schedule.entity.Schedule;
+import com.example.schedule.schedule.entity.TransOption;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +18,9 @@ public class ScheduleDto {
     private String title;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String transportationMode;
+    private Location startLocation;
+    private Location destination;
+    private TransOption.TransMode transportationMode;
     private double estimatedCost;
     private String notificationMessage;
 
@@ -27,7 +31,9 @@ public class ScheduleDto {
                 .title(entity.getTitle())
                 .startTime(entity.getStartTime())
                 .endTime(entity.getEndTime())
-                .transportationMode(entity.getMode().name())
+                .startLocation(entity.getStartLocation())
+                .destination(entity.getDestination())
+                .transportationMode(entity.getMode())
                 .estimatedCost(entity.getEstimatedCost())
                 .notificationMessage(entity.getNotificationMessage())
                 .build();
