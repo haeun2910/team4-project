@@ -5,6 +5,7 @@ import com.example.schedule.admin.dto.UserSuspendDto;
 import com.example.schedule.auth.jwt.JwtTokenUtils;
 import com.example.schedule.auth.jwt.dto.JwtRequestDto;
 import com.example.schedule.auth.jwt.dto.JwtResponseDto;
+import com.example.schedule.schedule.repo.ScheduleRepo;
 import com.example.schedule.user.dto.CreateUserDto;
 import com.example.schedule.user.dto.UpdateUserDto;
 import com.example.schedule.user.dto.UserDto;
@@ -126,8 +127,6 @@ public class UserService implements UserDetailsService {
         return UserDto.fromEntity(userRepo.save(comeback));
 
     }
-
-
 
     public void makeUser(String username, String password, String passCheck) {
         if (userExists(username) || !password.equals(passCheck))

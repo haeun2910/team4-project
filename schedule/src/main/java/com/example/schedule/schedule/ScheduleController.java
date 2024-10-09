@@ -4,6 +4,8 @@ import com.example.schedule.schedule.dto.ScheduleDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -26,5 +28,10 @@ public class ScheduleController {
     @DeleteMapping("delete/{scheduleId}")
     public void delete(@PathVariable Long scheduleId) {
         scheduleService.deleteSchedule(scheduleId);
+    }
+
+    @GetMapping("my-schedules")
+    public Page<ScheduleDto> mySchedules(Pageable pageable) {
+        return scheduleService.mySchedule(pageable);
     }
 }

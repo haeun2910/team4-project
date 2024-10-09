@@ -9,6 +9,10 @@ import com.example.schedule.user.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -61,7 +65,7 @@ public class ScheduleService {
         return ScheduleDto.fromEntity(scheduleRepo.save(existingSchedule), true);
 
     }
-@Transactional
+    @Transactional
     public void deleteSchedule(Long scheduleId) {
         UserEntity user = authFacade.extractUser();
         Schedule schedule = scheduleRepo.findById(scheduleId)
@@ -71,4 +75,16 @@ public class ScheduleService {
         }
         scheduleRepo.deleteById(scheduleId);
     }
+
+    public Page<ScheduleDto> mySchedule(Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Pageable sortedByTime = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by("startTime").ascending()
+        );
+        Page<Schedule> schedule = scheduleRepo.findAllByUser(user, sortedByTime);
+        return schedule.map(ScheduleDto::fromEntity);
+    }
+
 }
