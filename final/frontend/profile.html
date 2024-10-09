@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - MoveSmart</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="profile-container">
+    <h2>Update Profile</h2>
+    <form id="profileForm">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+        <button type="button" class="btn-save-profile" onclick="handleProfileUpdate()">Save Changes</button>
+    </form>
+    <div id="message" style="color: red; margin-top: 15px;"></div>
+</div>
+<script src="profile.js"></script>
+</body>
+</html>

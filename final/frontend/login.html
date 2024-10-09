@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MoveSmart</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .social-logo {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>Login - MoveSmart</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="button" class="btn-login" onclick="handleLogin()">Login</button>
+    </form>
+    <div class="social-login">
+        <p>Or login with:</p>
+        <button class="btn-social" onclick="handleSocialLogin('google')">
+            <img src="images/google-logo.png" alt="Google" class="social-logo"> Google
+        </button>
+        <button class="btn-social" onclick="handleSocialLogin('naver')">
+            <img src="images/naver-logo.png" alt="Naver" class="social-logo"> Naver
+        </button>
+        <button class="btn-social" onclick="handleSocialLogin('facebook')">
+            <img src="images/facebook-logo.png" alt="Facebook" class="social-logo"> Facebook
+        </button>
+    </div>
+    <div class="forgot-password">
+        <a href="#" onclick="showForgotPasswordForm()">Forgot Password?</a>
+        <div id="forgotPasswordForm" style="display: none;">
+            <input type="email" id="forgotPasswordEmail" placeholder="Enter your email" required>
+            <button type="button" onclick="handleForgotPassword()">Submit</button>
+        </div>
+    </div>
+    <div id="message" style="color: red; margin-top: 15px;"></div>
+</div>
+<script src="login.js"></script>
+</body>
+</html>
