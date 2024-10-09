@@ -23,7 +23,7 @@ public class ScheduleDto {
     private TransOption.TransMode transportationMode;
     private double estimatedCost;
     private String notificationMessage;
-//    private boolean done;
+    private boolean completed = false;
     private UserDto user;
 
     public static ScheduleDto fromEntity(Schedule entity) {
@@ -41,6 +41,7 @@ public class ScheduleDto {
                 .transportationMode(entity.getMode())
                 .estimatedCost(entity.getEstimatedCost())
                 .notificationMessage(entity.getNotificationMessage())
+                .completed(entity.isCompleted())
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
                 .build();
     }

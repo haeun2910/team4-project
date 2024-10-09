@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"elisa\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODI4MDMyMywiZXhwIjoxNzI4ODg1MTIzfQ.ZVZORSqmLK1a3RhA124Js0fsb_Y1YHoHEdugZ_9CHFiZalw3VdKyz0tS0NZhtX6g",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
 									"type": "string"
 								}
 							]
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"brad\",\n    \"age\": 32,\n    \"email\": \"brad@gmail.com\",\n    \"phone\": \"01012154142\"\n}",
+							"raw": "{\n    \"name\": \"hien\",\n    \"age\": 27,\n    \"email\": \"hien@gmail.com\",\n    \"phone\": \"01015154143\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -154,7 +154,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODI3ODYzNCwiZXhwIjoxNzI4ODgzNDM0fQ.IB0CHgzpb4q_JagUXM4KV-p-I2lHr1DeCk0A5_ji7iqLyi4iQc2dSb6qkg-XjlKE",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
 									"type": "string"
 								}
 							]
@@ -184,7 +184,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODI4MDMyMywiZXhwIjoxNzI4ODg1MTIzfQ.ZVZORSqmLK1a3RhA124Js0fsb_Y1YHoHEdugZ_9CHFiZalw3VdKyz0tS0NZhtX6g",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
 									"type": "string"
 								}
 							]
@@ -201,7 +201,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/users/suspend",
+							"raw": "http://localhost:8080/users/suspend-req",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -209,7 +209,37 @@
 							"port": "8080",
 							"path": [
 								"users",
-								"suspend"
+								"suspend-req"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comback",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/users/comeback",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"comeback"
 							]
 						}
 					},
@@ -257,7 +287,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"admin1\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -287,7 +317,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE3MjgyNzg3MDIsImV4cCI6MTcyODg4MzUwMn0.o4TmFmxtlU1N8269KXuDdJ5F0ewcIm4cx7Rhp5NmvnSa7aqAjsECRv1CnZUb2PHe",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODM1ODI5OSwiZXhwIjoxNzI4OTYzMDk5fQ.IVrqCawa4NHTtuQQMDGUFvpgKJ2XpSEWQWgQGDf0k4BWPh78Z063BL2wbWgOZRPt",
 									"type": "string"
 								}
 							]
@@ -317,7 +347,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbjEiLCJpYXQiOjE3MjgyNzg3MDIsImV4cCI6MTcyODg4MzUwMn0.o4TmFmxtlU1N8269KXuDdJ5F0ewcIm4cx7Rhp5NmvnSa7aqAjsECRv1CnZUb2PHe",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcyODM1ODI5OSwiZXhwIjoxNzI4OTYzMDk5fQ.IVrqCawa4NHTtuQQMDGUFvpgKJ2XpSEWQWgQGDf0k4BWPh78Z063BL2wbWgOZRPt",
 									"type": "string"
 								}
 							]
@@ -325,7 +355,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/approveSuspend/3",
+							"raw": "http://localhost:8080/admin/approveSuspend/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -334,7 +364,7 @@
 							"path": [
 								"admin",
 								"approveSuspend",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -343,17 +373,127 @@
 			]
 		},
 		{
-			"name": "schedule",
+			"name": "schedules",
 			"item": [
 				{
-					"name": "directions",
+					"name": "create",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODI2MzQxMywiZXhwIjoxNzI4ODY4MjEzfQ.N6fIb_SyMZhfFfrbvPnqSBbPfu7uS2_Dc-CiuIOoSFSL34KZi1bF-fhXSrzXcjOx",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"gội đầu\",\n    \"startTime\": \"2024-10-09T11:18:00\",\n    \"endTime\": \"2024-10-09T11:37:00\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/schedules/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"주방 청소\",\n    \"startTime\": \"2024-10-09T14:00:00\",\n    \"endTime\": \"2024-10-09T14:30:00\",\n    \"estimatedCost\": \"10.3\"\n\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/schedules/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/schedules/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my schedules",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
 									"type": "string"
 								}
 							]
@@ -361,40 +501,158 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/directions/combined?startLat=37.359708&startLon=127.1058342&goalLat=35.179554&goalLon=129.075647&startStation=Seoul&endStation=Busan\n",
+							"raw": "http://localhost:8080/schedules/my-schedules",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"directions",
-								"combined"
+								"schedules",
+								"my-schedules"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "schedule complete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/schedules/complete/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"complete",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/schedules/completed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"completed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/schedules/expired",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"schedules",
+								"expired"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "pub-trans-path",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/pub-trans-path?startX=126.9027279&startY=37.5349277&endX=126.9145430&endY=37.5499421\n",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"pub-trans-path"
 							],
 							"query": [
 								{
-									"key": "startLat",
-									"value": "37.359708"
+									"key": "startX",
+									"value": "126.9027279"
 								},
 								{
-									"key": "startLon",
-									"value": "127.1058342"
+									"key": "startY",
+									"value": "37.5349277"
 								},
 								{
-									"key": "goalLat",
-									"value": "35.179554"
+									"key": "endX",
+									"value": "126.9145430"
 								},
 								{
-									"key": "goalLon",
-									"value": "129.075647"
-								},
-								{
-									"key": "startStation",
-									"value": "Seoul"
-								},
-								{
-									"key": "endStation",
-									"value": "Busan\n"
+									"key": "endY",
+									"value": "37.5499421\n"
 								}
 							]
 						}

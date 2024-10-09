@@ -78,14 +78,44 @@ public class ScheduleService {
 
     public Page<ScheduleDto> mySchedule(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
+        LocalDateTime currentTime = LocalDateTime.now();
         Pageable sortedByEndAndStartTime = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 Sort.by(Sort.Order.asc("endTime"), Sort.Order.asc("startTime"))
         );
 
-        Page<Schedule> schedule = scheduleRepo.findAllByUser(user, sortedByEndAndStartTime);
+        Page<Schedule> schedule = scheduleRepo.findAllByUserAndCompletedFalseAndEndTimeAfter(user, currentTime, sortedByEndAndStartTime);
         return schedule.map(ScheduleDto::fromEntity);
     }
+    public void completeSchedule(Long id) {
+        UserEntity currentUser = authFacade.extractUser();
+        LocalDateTime currentTime = LocalDateTime.now();
 
+        Schedule schedule = scheduleRepo.findById(id)
+                .orElseThrow();
+
+        if (!schedule.getUser().getId().equals(currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to complete this schedule.");
+        }
+        if (schedule.getEndTime().isBefore(currentTime)) {
+            throw new IllegalArgumentException("End time must be in the future to complete the schedule");
+        }
+
+        schedule.setCompleted(true);
+        scheduleRepo.save(schedule);
+    }
+
+    public Page<ScheduleDto> getCompletedSchedules(Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Page<Schedule> schedules = scheduleRepo.findByCompletedTrueAndUserOrderByEndTimeAscStartTimeAsc(user, pageable);
+        return schedules.map(ScheduleDto::fromEntity);
+    }
+
+    public Page<ScheduleDto> getExpiredSchedules(Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        LocalDateTime currentTime = LocalDateTime.now();
+        Page<Schedule> schedules = scheduleRepo.findByCompletedFalseAndEndTimeLessThanAndUserOrderByEndTimeAscStartTimeAsc(currentTime, user, pageable);
+        return schedules.map(ScheduleDto::fromEntity);
+    }
 }

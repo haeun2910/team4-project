@@ -28,7 +28,7 @@ public class Schedule extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Location destination;
     @Setter
-    @FutureOrPresent(message = "Start time must be present or future")
+//    @FutureOrPresent(message = "Start time must be present or future")
     private LocalDateTime startTime;
     @Setter
     @Future(message = "End time must be in the future")
@@ -40,7 +40,8 @@ public class Schedule extends BaseEntity {
     private double estimatedCost;
     @Setter
     private String notificationMessage;
-//    @Setter
-//    private boolean done;
+    @Setter
+    @Column(name = "completed", nullable = false, columnDefinition = "boolean default false")
+    private boolean completed;
 
 }
