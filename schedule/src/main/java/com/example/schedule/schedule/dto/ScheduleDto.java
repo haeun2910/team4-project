@@ -23,6 +23,7 @@ public class ScheduleDto {
     private TransOption.TransMode transportationMode;
     private double estimatedCost;
     private String notificationMessage;
+//    private boolean done;
     private UserDto user;
 
     public static ScheduleDto fromEntity(Schedule entity) {

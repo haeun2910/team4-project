@@ -40,5 +40,7 @@ public class Schedule extends BaseEntity {
     private double estimatedCost;
     @Setter
     private String notificationMessage;
+//    @Setter
+//    private boolean done;
 
 }

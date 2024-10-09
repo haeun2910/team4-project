@@ -78,12 +78,13 @@ public class ScheduleService {
 
     public Page<ScheduleDto> mySchedule(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
-        Pageable sortedByTime = PageRequest.of(
+        Pageable sortedByEndAndStartTime = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
-                Sort.by("startTime").ascending()
+                Sort.by(Sort.Order.asc("endTime"), Sort.Order.asc("startTime"))
         );
-        Page<Schedule> schedule = scheduleRepo.findAllByUser(user, sortedByTime);
+
+        Page<Schedule> schedule = scheduleRepo.findAllByUser(user, sortedByEndAndStartTime);
         return schedule.map(ScheduleDto::fromEntity);
     }
 
