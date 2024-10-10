@@ -1,10 +1,12 @@
-package com.example.schedule.schedule.entity;
+package com.example.schedule.schedule.plan.entity;
+
 
 import com.example.schedule.entity.BaseEntity;
+import com.example.schedule.schedule.route.entity.Location;
+import com.example.schedule.schedule.route.entity.TransOption;
 import com.example.schedule.user.entity.UserEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.FutureOrPresent;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -14,8 +16,8 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name ="schedule_table")
-public class Schedule extends BaseEntity {
+@Table(name ="plan_table")
+public class Plan extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private UserEntity user;

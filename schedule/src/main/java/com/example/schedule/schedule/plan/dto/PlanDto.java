@@ -1,8 +1,8 @@
-package com.example.schedule.schedule.dto;
+package com.example.schedule.schedule.plan.dto;
 
-import com.example.schedule.schedule.entity.Location;
-import com.example.schedule.schedule.entity.Schedule;
-import com.example.schedule.schedule.entity.TransOption;
+import com.example.schedule.schedule.route.entity.Location;
+import com.example.schedule.schedule.plan.entity.Plan;
+import com.example.schedule.schedule.route.entity.TransOption;
 import com.example.schedule.user.dto.UserDto;
 import lombok.*;
 
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ScheduleDto {
+public class PlanDto {
     private Long id;
     private String title;
     private LocalDateTime startTime;
@@ -26,12 +26,12 @@ public class ScheduleDto {
     private boolean completed = false;
     private UserDto user;
 
-    public static ScheduleDto fromEntity(Schedule entity) {
+    public static PlanDto fromEntity(Plan entity) {
         return fromEntity(entity, false);
     }
 
-    public static ScheduleDto fromEntity(Schedule entity, boolean withUser) {
-        return ScheduleDto.builder()
+    public static PlanDto fromEntity(Plan entity, boolean withUser) {
+        return PlanDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .startTime(entity.getStartTime())

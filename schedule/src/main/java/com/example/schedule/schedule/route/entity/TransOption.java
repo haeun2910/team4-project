@@ -1,4 +1,4 @@
-package com.example.schedule.schedule.entity;
+package com.example.schedule.schedule.route.entity;
 
 import com.example.schedule.entity.BaseEntity;
 import jakarta.persistence.*;

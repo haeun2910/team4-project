@@ -1,6 +1,6 @@
-package com.example.schedule.schedule.dto;
+package com.example.schedule.schedule.route.dto;
 
-import com.example.schedule.schedule.entity.Location;
+import com.example.schedule.schedule.route.entity.Location;
 import lombok.*;
 
 @Getter

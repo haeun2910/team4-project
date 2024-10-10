@@ -1,6 +1,6 @@
-package com.example.schedule.schedule.repo;
+package com.example.schedule.schedule.route.repo;
 
-import com.example.schedule.schedule.entity.Route;
+import com.example.schedule.schedule.route.entity.Route;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

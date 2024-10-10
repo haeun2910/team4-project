@@ -1,7 +1,7 @@
 package com.example.schedule.user.entity;
 
 import com.example.schedule.entity.BaseEntity;
-import com.example.schedule.schedule.entity.Schedule;
+import com.example.schedule.schedule.plan.entity.Plan;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -41,6 +41,6 @@ public class UserEntity extends BaseEntity {
     @Builder.Default
     private String roles = "ROLE_INACTIVE";
     @OneToMany(mappedBy = "user")
-    private final List<Schedule> schedules = new ArrayList<>();
+    private final List<Plan> plans = new ArrayList<>();
 
 }

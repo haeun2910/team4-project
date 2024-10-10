@@ -1,6 +1,6 @@
-package com.example.schedule.schedule.dto;
+package com.example.schedule.schedule.route.dto;
 
-import com.example.schedule.schedule.entity.TransOption;
+import com.example.schedule.schedule.route.entity.TransOption;
 import lombok.*;
 
 @Getter
