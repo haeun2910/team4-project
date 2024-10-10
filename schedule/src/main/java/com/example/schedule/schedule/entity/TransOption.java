@@ -12,7 +12,6 @@ import lombok.*;
 @Entity
 public class TransOption extends BaseEntity {
     private double estimatedCost;
-    private double travelTime;
     @ManyToOne(fetch = FetchType.LAZY)
     private Route route;
     @Enumerated(EnumType.STRING)
