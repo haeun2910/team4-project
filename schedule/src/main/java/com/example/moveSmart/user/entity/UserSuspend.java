@@ -4,6 +4,8 @@ import com.example.moveSmart.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Builder
 @Entity
@@ -17,5 +19,7 @@ public class UserSuspend extends BaseEntity {
     private String suspendReason;
     @Setter
     private Boolean suspended;
+    @Setter
+    private LocalDateTime suspendStartDate;
 
 }

@@ -43,7 +43,6 @@ public class WebSecurityConfig {
                                     "/users/get-user-info",
                                     "/users/suspend-req",
                                     "/users/comeback"
-
                             )
                             .authenticated();
                     auth.requestMatchers("/api/**","/plans/**","tasks/**").hasAnyRole("ADMIN", "ACTIVE");

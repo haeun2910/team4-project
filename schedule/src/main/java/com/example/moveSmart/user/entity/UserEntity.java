@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class UserEntity extends BaseEntity {
     private String profileImg;
     @Setter
     private String suspendReason;
+    @Setter
+    private LocalDateTime suspendStartDate;
     @Setter
     @Builder.Default
     private String roles = "ROLE_INACTIVE";

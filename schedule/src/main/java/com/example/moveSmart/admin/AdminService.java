@@ -2,6 +2,7 @@ package com.example.moveSmart.admin;
 
 import com.example.moveSmart.admin.dto.UserSuspendDto;
 import com.example.moveSmart.user.dto.UserDto;
+import com.example.moveSmart.user.entity.UserEntity;
 import com.example.moveSmart.user.entity.UserSuspend;
 import com.example.moveSmart.user.repo.UserRepo;
 import com.example.moveSmart.user.repo.UserSuspendRepo;
@@ -13,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -32,15 +35,22 @@ public class AdminService {
     @Transactional
     public UserSuspendDto approveSuspend(Long id) {
         UserSuspend suspend = userSuspendRep.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Suspension request not found."));
+
+        // Mark the suspension as approved
         suspend.setSuspended(true);
-        if (suspend.getSuspendReason() !=null || suspend.getTarget().getRoles().contains("ROLE_ACTIVE")) {
-            suspend.getTarget().setRoles("ROLE_SUSPEND");
+
+        // Update the user's roles if the suspension reason is valid
+        UserEntity targetUser = suspend.getTarget();
+        if (suspend.getSuspendReason() != null && targetUser.getRoles().contains("ROLE_ACTIVE")) {
+            targetUser.setRoles("ROLE_SUSPEND");
+            targetUser.setSuspendStartDate(LocalDateTime.now()); // Optionally reset start date on approval
         }
-        return UserSuspendDto.fromEntity(userSuspendRep.save(suspend));
 
+        // Save the updated UserSuspend and UserEntity
+        userSuspendRep.save(suspend);
+        userRepo.save(targetUser); // Ensure the UserEntity is also updated
+
+        return UserSuspendDto.fromEntity(suspend);
     }
-
-
-
 }

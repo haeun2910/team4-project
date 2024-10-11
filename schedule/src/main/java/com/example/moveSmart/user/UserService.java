@@ -25,6 +25,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -108,9 +110,11 @@ public class UserService implements UserDetailsService {
         if (target.getRoles().contains("ROLE_SUSPEND"))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         target.setSuspendReason(dto.getSuspendReason());
+        target.setSuspendStartDate(LocalDateTime.now());
         userSuspendRepo.save(UserSuspend.builder()
                 .target(target)
                         .suspendReason(target.getSuspendReason())
+                        .suspendStartDate(target.getSuspendStartDate())
                 .build()
         );
     }
@@ -121,8 +125,14 @@ public class UserService implements UserDetailsService {
         if (!comeback.getRoles().contains("ROLE_SUSPEND")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
-        else
+        else {
             comeback.setRoles("ROLE_ACTIVE");
+
+        }
+        UserSuspend userSuspend = userSuspendRepo.findByTarget(comeback)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Suspension record not found."));
+        userSuspend.setSuspended(false);
+        userSuspendRepo.save(userSuspend);
         return UserDto.fromEntity(userRepo.save(comeback));
 
     }
