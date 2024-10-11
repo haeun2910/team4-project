@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -184,7 +184,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODYwNzU1NiwiZXhwIjoxNzI5MjEyMzU2fQ.Rp1UQZ_Pr6t00fYZEIipVxADy7IcjIRLhNP6sbQkhLN2hTgTqocUhN8XmSVO95BA",
 									"type": "string"
 								}
 							]
@@ -223,7 +223,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODYwNzU1NiwiZXhwIjoxNzI5MjEyMzU2fQ.Rp1UQZ_Pr6t00fYZEIipVxADy7IcjIRLhNP6sbQkhLN2hTgTqocUhN8XmSVO95BA",
 									"type": "string"
 								}
 							]
@@ -355,7 +355,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/approveSuspend/1",
+							"raw": "http://localhost:8080/admin/approveSuspend/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -364,7 +364,7 @@
 							"path": [
 								"admin",
 								"approveSuspend",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -373,7 +373,7 @@
 			]
 		},
 		{
-			"name": "schedules",
+			"name": "plans",
 			"item": [
 				{
 					"name": "create",
@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"gội đầu\",\n    \"startTime\": \"2024-10-09T11:18:00\",\n    \"endTime\": \"2024-10-09T11:37:00\"\n    \n}",
+							"raw": "{\n    \"title\": \"làm lại thẻ ngân hàng\",\n    \"startTime\": \"2024-10-11T10:00:00\",\n    \"endTime\": \"2024-10-11T11:00:00\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -400,15 +400,54 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/schedules/create",
+							"raw": "http://localhost:8080/plans/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-plan-task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"planId\": 1,\n    \"title\": \"mang chung minh thu\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/plans/create-plan-task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"create-plan-task"
 							]
 						}
 					},
@@ -439,14 +478,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/schedules/update/1",
+							"raw": "http://localhost:8080/plans/update/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"update",
 								"1"
 							]
@@ -470,14 +509,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/delete/1",
+							"raw": "http://localhost:8080/plans/delete/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"delete",
 								"1"
 							]
@@ -486,7 +525,7 @@
 					"response": []
 				},
 				{
-					"name": "my schedules",
+					"name": "my plans",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -501,22 +540,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/my-schedules",
+							"raw": "http://localhost:8080/plans/my-plans",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
-								"my-schedules"
+								"plans",
+								"my-plans"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "schedule complete",
+					"name": "plan complete",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -531,16 +570,16 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/complete/7",
+							"raw": "http://localhost:8080/plans/complete/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"complete",
-								"7"
+								"1"
 							]
 						}
 					},
@@ -562,14 +601,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/completed",
+							"raw": "http://localhost:8080/plans/completed",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"completed"
 							]
 						}
@@ -577,7 +616,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "plan expired",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -592,14 +631,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/expired",
+							"raw": "http://localhost:8080/plans/expired",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"plans",
 								"expired"
 							]
 						}
@@ -654,6 +693,182 @@
 									"key": "endY",
 									"value": "37.5499421\n"
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tasks",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"청소하기\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasks/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"청소하기\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasks/update/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"update",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasks/delete/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"delete",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my tasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasks/my-tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"my-tasks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasks/complete/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"complete",
+								"3"
 							]
 						}
 					},
