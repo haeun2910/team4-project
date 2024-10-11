@@ -66,16 +66,24 @@ public class PlanService {
                 .user(user)
                 .plan(plan)
                 .build();
+        plan.getTasks().add(task);
+        taskRepo.save(task);
          return PlanTaskDto.fromPlanTaskEntity(taskRepo.save(task), true);
 
     }
 
     @Transactional
-    public PlanDto updatePlan(PlanDto plan) {
+    public PlanDto updatePlan(PlanDto plan, Long planId) {
         UserEntity user = authFacade.extractUser();
-        Plan existingPlan = planRepo.findByUser(user)
+        Plan existingPlan = planRepo.findById(planId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        // Check if the current user owns the plan
+        if (!existingPlan.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this plan.");
+        }
+
+        // Update plan details
         existingPlan.setTitle(plan.getTitle());
         existingPlan.setStartTime(plan.getStartTime());
         existingPlan.setEndTime(plan.getEndTime());
@@ -124,7 +132,11 @@ public class PlanService {
         }
 
         plan.setCompleted(true);
+        for (Task task : plan.getTasks()) {
+            task.setCompleted(true);
+        }
         planRepo.save(plan);
+
     }
 
     public Page<PlanDto> getCompletedPlans(Pageable pageable) {

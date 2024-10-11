@@ -33,7 +33,8 @@ public class PlanController {
 
     @PutMapping("update/{planId}")
     public PlanDto update(@RequestBody PlanDto plan, @PathVariable("planId") Long planId) {
-        return planService.updatePlan(plan);
+
+        return planService.updatePlan(plan, planId);
     }
     @DeleteMapping("delete/{planId}")
     public void delete(@PathVariable Long planId) {

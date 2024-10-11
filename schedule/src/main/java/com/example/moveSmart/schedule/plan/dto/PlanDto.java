@@ -28,7 +28,7 @@ public class PlanDto {
     private String notificationMessage;
     private boolean completed = false;
     private UserDto user;
-    private List<TaskDto> tasks;
+    private List<PlanTaskDto> tasks;
 
 
     public static PlanDto fromEntity(Plan entity) {
@@ -36,6 +36,11 @@ public class PlanDto {
     }
 
     public static PlanDto fromEntity(Plan entity, boolean withUser) {
+        List<PlanTaskDto> taskDtos = (entity.getTasks() != null) ?
+                entity.getTasks().stream()
+                        .map(task -> PlanTaskDto.fromPlanTaskEntity(task, withUser))
+                        .collect(Collectors.toList())
+                : List.of();
         return PlanDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -48,7 +53,7 @@ public class PlanDto {
                 .notificationMessage(entity.getNotificationMessage())
                 .completed(entity.isCompleted())
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-//                .tasks(withTasks ? entity.getTasks().stream().map(TaskDto::fromEntity).collect(Collectors.toList()) : null)
+                .tasks(taskDtos)
                 .build();
     }
 }

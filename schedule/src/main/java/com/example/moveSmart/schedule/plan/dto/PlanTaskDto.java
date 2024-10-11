@@ -23,11 +23,11 @@ public class PlanTaskDto {
     public static PlanTaskDto fromPlanTaskEntity(Task entity, boolean withUser) {
         return PlanTaskDto.builder()
                 .id(entity.getId())
-                .planId(entity.getPlan().getId())
+                .planId(entity.getPlan() != null ? entity.getPlan().getId() : null)
                 .title(entity.getTitle())
                 .completed(entity.isCompleted())
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-                .plan(PlanDto.fromEntity(entity.getPlan()))
+//                .plan(entity.getPlan() != null ? PlanDto.fromEntity(entity.getPlan()) : null)
                 .build();
     }
 }
