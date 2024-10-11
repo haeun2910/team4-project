@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>네이버 검색</title>
+    <style>
+        #map { width: 100%; height: 400px; }
+        #modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0, 0, 0, 0.4); padding-top: 60px; }
+        .modal-content { background-color: #fefefe; margin: 5% auto; padding: 20px; border: 1px solid #888; width: 80%; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; }
+        .close:hover, .close:focus { color: black; cursor: pointer; }
+        #markerInfo, #clickedMarkerInfo { margin-top: 20px; padding: 10px; background-color: #f2f2f2; border: 1px solid #ccc; border-radius: 5px; }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script defer src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=33d41e2e8e4bc7f0b2634654a69d4b2f"></script>
+
+</head>
+<body>
+<h1>네이버 검색</h1>
+<input type="text" id="searchInput" placeholder="검색어를 입력하세요">
+<button onclick="search()">검색</button>
+<div id="searchResults"></div>
+<div id="map"></div>
+
+<div id="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p id="modalContent">마커 정보</p>
+    </div>
+</div>
+
+<div id="clickedMarkerInfo"></div>
+
+<script>
+    function search() {
+        const query = document.getElementById('searchInput').value;
+        $.ajax({
+            url: '/api/server/naver/' + encodeURIComponent(query),
+            method: 'GET',
+            success: function (data) {
+                displaySearchResults(data);
+                displayMarkers(data);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function displaySearchResults(response) {
+        const restaurants = response.items || [];
+        const searchResultsElement = document.getElementById('searchResults');
+        searchResultsElement.innerHTML = '';
+
+        if (restaurants.length === 0) {
+            searchResultsElement.innerHTML = 'No results found.';
+            return;
+        }
+
+        restaurants.forEach(function(restaurant) {
+            const listItem = document.createElement('div');
+            listItem.innerHTML = `<strong>${restaurant.title.replace(/<[^>]+>/g, '')}</strong><br>${restaurant.address}`;
+            searchResultsElement.appendChild(listItem);
+        });
+    }
+
+    function displayMarkers(response) {
+        const restaurants = response.items || [];
+        if (restaurants.length === 0) {
+            console.error('No restaurants found');
+            return;
+        }
+
+        const firstRestaurant = restaurants[0];
+        const centerLatLng = firstRestaurant.latitude && firstRestaurant.longitude
+            ? new kakao.maps.LatLng(firstRestaurant.latitude, firstRestaurant.longitude)
+            : new kakao.maps.LatLng(37.5665, 126.9780); // Default location
+
+        const map = new kakao.maps.Map(document.getElementById('map'), {
+            center: centerLatLng,
+            level: 3
+        });
+
+        restaurants.forEach(function(restaurant) {
+            if (restaurant.latitude && restaurant.longitude) {
+                const marker = new kakao.maps.Marker({
+                    map: map,
+                    position: new kakao.maps.LatLng(restaurant.latitude, restaurant.longitude),
+                    title: restaurant.title.replace(/<[^>]+>/g, ''),
+                    image: new kakao.maps.MarkerImage("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png", new kakao.maps.Size(24, 35))
+                });
+
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    modal.style.display = "block";
+                    document.getElementById('modalContent').innerHTML = this.getTitle();
+                    document.getElementById('clickedMarkerInfo').innerHTML = this.getTitle();
+                });
+            } else {
+                console.warn('Missing coordinates for restaurant:', restaurant.title);
+            }
+        });
+    };
+</script>
+</body>
+</html>

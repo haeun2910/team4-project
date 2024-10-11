@@ -16,7 +16,7 @@ public class TestController {
     }
     @GetMapping
     public String test2() {
-        return "naver-map";
+        return "user/api/search";
     }
 
 

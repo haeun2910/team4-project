@@ -42,3 +42,6 @@ spring:
 
 jwt:
   secret: iAxixh53UL,u]Znp!=]>k#7z#T~x!ne%w2#p2qk+4yHne71-gLhP*q%Fm
+naver:
+  client-id: g24wojyn1l
+  secret: roKieXIZhqb8BA4sIasGgBscLRC4L9Q7h09q3wQQ
