@@ -1,9 +1,7 @@
-package org.imgoing.api.domain.entity;
+package com.example.moveSmart.route;
 
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.imgoing.api.dto.route.OdsayRouteSearchResponse;
-import org.imgoing.api.dto.route.RouteSearchRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,16 +11,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Slf4j
-@NoArgsConstructor
 @Component
+@RequiredArgsConstructor
 public class RouteSearcher {
-    private static final RestTemplate routeSearchClient = new RestTemplate();
+    private final RestTemplate routeSearchClient;
     private static final String url = "https://api.odsay.com/v1/api/searchPubTransPathT";
 
-    @Value("${keys.odsayApiKey}")
+    @Value("${odsay.key}")
     private String apiKey;
 
-    private OdsayRouteSearchResponse searchAllRoutes(RouteSearchRequest requestDto) {
+    public OdsayRouteSearchResponse searchAllRoutes(RouteSearchRequest requestDto) {
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("apiKey", apiKey)
                 .queryParam("SX", requestDto.getStartLng())

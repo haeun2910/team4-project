@@ -1,8 +1,11 @@
 package com.example.moveSmart;
 
+import com.example.moveSmart.user.entity.UserEntity;
 import com.example.moveSmart.user.repo.UserRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class TestData {
