@@ -2,12 +2,8 @@ package com.example.moveSmart.schedule.plan.entity;
 
 
 import com.example.moveSmart.entity.BaseEntity;
-import com.example.moveSmart.schedule.route.entity.Location;
-import com.example.moveSmart.schedule.route.entity.TransOption;
-import com.example.moveSmart.schedule.task.entity.Task;
 import com.example.moveSmart.user.entity.UserEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -26,29 +22,55 @@ public class Plan extends BaseEntity {
     private UserEntity user;
     @Setter
     private String title;
+//    @Setter
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Location startLocation;
+//    @Setter
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private Location destination;
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Location startLocation;
+//    @Column(nullable = false)
+    private String departureName;
     @Setter
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Location destination;
+//    @Column(nullable = false)
+    private Double departureLat;
     @Setter
+//    @Column(nullable = false)
+    private Double departureLng;
+    @Setter
+//    @Column(nullable = false)
+    private String arrivalName;
+    @Setter
+//    @Column(nullable = false)
+    private Double arrivalLat;
+    @Setter
+//    @Column(nullable = false)
+    private Double arrivalLng;
+    @Setter
+//    @Column(nullable = false)
+    private LocalDateTime arrivalAt;
+
+//    @Setter
 //    @FutureOrPresent(message = "Start time must be present or future")
-    private LocalDateTime startTime;
+//    private LocalDateTime startTime;
+//    @Setter
+//    @Future(message = "End time must be in the future")
+//    private LocalDateTime endTime;
+//    @Setter
+//    @Enumerated(EnumType.STRING)
+//    private TransOption.TransMode mode;
+//    @Setter
+//    private double estimatedCost;
     @Setter
-    @Future(message = "End time must be in the future")
-    private LocalDateTime endTime;
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private TransOption.TransMode mode;
-    @Setter
-    private double estimatedCost;
-    @Setter
+//    @Column
     private String notificationMessage;
+    @Setter
+//    @Column
+    private LocalDateTime actualArrivalAt;
     @Setter
     @Column(name = "completed", nullable = false, columnDefinition = "boolean default false")
     private boolean completed;
     @OneToMany(mappedBy = "plan")
-    private final List<Task> tasks = new ArrayList<>();
+    private final List<PlanTask> planTasks = new ArrayList<>();
 
 }

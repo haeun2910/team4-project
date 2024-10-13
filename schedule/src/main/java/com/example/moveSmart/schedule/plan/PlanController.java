@@ -1,13 +1,23 @@
 package com.example.moveSmart.schedule.plan;
 
+import com.example.moveSmart.route.RemainingTimeInfoVo;
+import com.example.moveSmart.route.RemainingTimeResponse;
+import com.example.moveSmart.route.RouteSearchRequest;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
+import com.example.moveSmart.schedule.plan.entity.Plan;
+import com.example.moveSmart.user.AuthenticationFacade;
+import com.example.moveSmart.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -15,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PlanController {
     private final PlanService planService;
+    private final AuthenticationFacade authFacade;
 
     @PostMapping("create")
     public PlanDto create(@RequestBody PlanDto plan) {
@@ -51,15 +62,24 @@ public class PlanController {
         return ResponseEntity.ok("plan marked as completed");
     }
 
-    @GetMapping("/completed")
-    public ResponseEntity<Page<PlanDto>> getCompletedplans(Pageable pageable) {
-        Page<PlanDto> completedplans = planService.getCompletedPlans(pageable);
-        return ResponseEntity.ok(completedplans);
-    }
+//    @GetMapping("/completed")
+//    public ResponseEntity<Page<PlanDto>> getCompletedplans(Pageable pageable) {
+//        Page<PlanDto> completedplans = planService.getCompletedPlans(pageable);
+//        return ResponseEntity.ok(completedplans);
+//    }
+//
+//    @GetMapping("/expired")
+//    public ResponseEntity<Page<PlanDto>> getExpiredplans(Pageable pageable) {
+//        Page<PlanDto> expiredplans = planService.getExpiredPlans(pageable);
+//        return ResponseEntity.ok(expiredplans);
+//    }
 
-    @GetMapping("/expired")
-    public ResponseEntity<Page<PlanDto>> getExpiredplans(Pageable pageable) {
-        Page<PlanDto> expiredplans = planService.getExpiredPlans(pageable);
-        return ResponseEntity.ok(expiredplans);
+
+
+    @GetMapping("/time-remaining")
+    public ResponseEntity<RemainingTimeResponse> getTimeRemaining() {
+        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan();
+        RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
+        return ResponseEntity.ok(response);
     }
 }

@@ -13,7 +13,9 @@ import lombok.*;
 @AllArgsConstructor
 public class TaskDto {
     private Long id;
+    private Long planId;
     private String title;
+    private Integer time;
     private boolean completed = false;
     private UserDto user;
 
@@ -25,8 +27,9 @@ public class TaskDto {
                 .id(entity.getId())
                 .title(entity.getTitle())
                 .completed(entity.isCompleted())
+                .time(entity.getTime())
+                .planId(entity.getPlan() != null ? entity.getPlan().getId() : null)
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-
                 .build();
     }
 }

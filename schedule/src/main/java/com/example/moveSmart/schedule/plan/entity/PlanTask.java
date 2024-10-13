@@ -1,31 +1,39 @@
-package com.example.moveSmart.schedule.task.entity;
+package com.example.moveSmart.schedule.plan.entity;
 
 import com.example.moveSmart.entity.BaseEntity;
-import com.example.moveSmart.schedule.plan.entity.Plan;
+import com.example.moveSmart.schedule.task.entity.Task;
 import com.example.moveSmart.user.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
-@Entity
+
 @Getter
+@Setter
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name ="task_table")
-public class Task extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+@Table(name = "plantask_tb")
+public class PlanTask extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id")
     private Plan plan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_id")
+    private Task task;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
-    @Setter
-    private String title;
-    @Setter
-    private Integer time;
-    @Setter
+
     @Column(name = "completed", nullable = false, columnDefinition = "boolean default false")
     private boolean completed;
+
 }

@@ -45,3 +45,11 @@ jwt:
 naver:
   client-id: g24wojyn1l
   secret: roKieXIZhqb8BA4sIasGgBscLRC4L9Q7h09q3wQQ
+odsay:
+  uri: https://api.odsay.com/v1/api/searchPubTransPathT
+  key: VyjPkBhOaGJPOxjlcqVe9jUmvlfR5zvMh3IwZBMoi8w
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always

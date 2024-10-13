@@ -1,10 +1,8 @@
 package com.example.moveSmart.schedule.plan.dto;
 
-import com.example.moveSmart.schedule.route.entity.Location;
 import com.example.moveSmart.schedule.plan.entity.Plan;
-import com.example.moveSmart.schedule.route.entity.TransOption;
-import com.example.moveSmart.schedule.task.dto.TaskDto;
 import com.example.moveSmart.user.dto.UserDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -19,16 +17,24 @@ import java.util.stream.Collectors;
 public class PlanDto {
     private Long id;
     private String title;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private Location startLocation;
-    private Location destination;
-    private TransOption.TransMode transportationMode;
-    private double estimatedCost;
+//    private LocalDateTime startTime;
+//    private LocalDateTime endTime;
+//    private Location startLocation;
+//    private Location destination;
+//    private TransOption.TransMode transportationMode;
+//    private double estimatedCost;
+    private String departureName;
+    private Double departureLat;
+    private Double departureLng;
+    private String arrivalName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime arrivalAt;
+    private Double arrivalLat;
+    private Double arrivalLng;
     private String notificationMessage;
     private boolean completed = false;
     private UserDto user;
-    private List<PlanTaskDto> tasks;
+    private List<PlanTaskDto> planTasks;
 
 
     public static PlanDto fromEntity(Plan entity) {
@@ -36,24 +42,31 @@ public class PlanDto {
     }
 
     public static PlanDto fromEntity(Plan entity, boolean withUser) {
-        List<PlanTaskDto> taskDtos = (entity.getTasks() != null) ?
-                entity.getTasks().stream()
-                        .map(task -> PlanTaskDto.fromPlanTaskEntity(task, withUser))
+        List<PlanTaskDto> taskDtos = (entity.getPlanTasks() != null) ?
+                entity.getPlanTasks().stream()
+                        .map(planTask -> PlanTaskDto.fromPlanTaskEntity(planTask, withUser)) // pass PlanTask object directly
                         .collect(Collectors.toList())
                 : List.of();
         return PlanDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
-                .startTime(entity.getStartTime())
-                .endTime(entity.getEndTime())
-                .startLocation(entity.getStartLocation())
-                .destination(entity.getDestination())
-                .transportationMode(entity.getMode())
-                .estimatedCost(entity.getEstimatedCost())
+//                .startTime(entity.getStartTime())
+//                .endTime(entity.getEndTime())
+//                .startLocation(entity.getStartLocation())
+//                .destination(entity.getDestination())
+//                .transportationMode(entity.getMode())
+//                .estimatedCost(entity.getEstimatedCost())
+                .departureName(entity.getDepartureName())
+                .departureLat(entity.getDepartureLat())
+                .departureLng(entity.getDepartureLng())
+                .arrivalName(entity.getArrivalName())
+                .arrivalAt(entity.getArrivalAt())
+                .arrivalLat(entity.getArrivalLat())
+                .arrivalLng(entity.getArrivalLng())
                 .notificationMessage(entity.getNotificationMessage())
                 .completed(entity.isCompleted())
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-                .tasks(taskDtos)
+                .planTasks(taskDtos)
                 .build();
     }
 }

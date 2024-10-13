@@ -1,0 +1,2 @@
+package com.example.moveSmart.route.odsay;public class PassStopList {
+}
