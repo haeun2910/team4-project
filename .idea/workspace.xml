@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="85a5e07d-23b4-42dd-b8c2-2b4824686627" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/schedule/src/main/java/com/example/schedule/schedule/ScheduleService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,14 +54,17 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.ScheduleApplication.executor": "Run",
+    "Application.com.example.moveSmart.ScheduleApplication.executor": "Run",
+    "Gradle.Build schedule.executor": "Run",
     "Gradle.schedule [:ScheduleApplication.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "schedule-dung2",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/k tech/live/team4-project"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.com.example.moveSmart.ScheduleApplication">
     <configuration name="ScheduleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.schedule.ScheduleApplication" />
       <module name="schedule.main" />
@@ -78,8 +78,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="com.example.moveSmart.ScheduleApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.moveSmart.ScheduleApplication" />
+      <module name="schedule.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.moveSmart.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.com.example.moveSmart.ScheduleApplication" />
         <item itemvalue="Application.ScheduleApplication" />
       </list>
     </recent_temporary>
@@ -105,5 +119,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/schedule/src/main/java/com/example/moveSmart/auth/jwt/JwtTokenFilter.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
