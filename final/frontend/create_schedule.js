@@ -3,14 +3,16 @@ async function handleCreateSchedule() {
     const date = document.getElementById("date").value;
     const time = document.getElementById("time").value;
     const location = document.getElementById("location").value;
+    const createScheduleUrl = "http://localhost:8080/schedules/create";
 
     const token = localStorage.getItem("token");
     if (!token) {
+        alert("You need to login to create a schedule.");
         window.location.href = "login.html";
         return;
     }
 
-    const createScheduleUrl = "http://localhost:8080/schedule/create";
+
 
     try {
         const response = await fetch(createScheduleUrl, {
@@ -27,9 +29,11 @@ async function handleCreateSchedule() {
             window.location.href = "schedule.html";
         } else {
             const errorData = await response.json();
+            console.error('Error:', errorData);
             document.getElementById("message").innerText = errorData.message || "Failed to create schedule!";
         }
     } catch (error) {
+        console.error('Fetch Error:', error);
         document.getElementById("message").innerText = "An error occurred while creating schedule!";
     }
 }

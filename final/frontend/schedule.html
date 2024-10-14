@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,9 +10,108 @@
 <div class="schedule-container">
     <h2>Your Schedules</h2>
     <button onclick="createNewSchedule()">Create New Schedule</button>
+
     <div id="scheduleList"></div>
+
+    <div class="action-buttons">
+        <button onclick="getPublicTransportInfo(37.5665, 126.9780, 35.1796, 129.0756)">
+            View Public Transport Info
+        </button>
+        <button onclick="displayRouteOnMap(37.5665, 126.9780, 35.1796, 129.0756)">
+            View Driving Route
+        </button>
+    </div>
+
+    <div id="map" style="width:100%; height:400px; margin-top:20px;"></div>
 </div>
+
 <script src="schedule.js"></script>
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+<script src="js/map_integration.js"></script>
+<script src="js/public_transport.js"></script>
+<script src="js/directions.js"></script>
+
+<script>
+    async function loadSchedules() {
+        const scheduleList = document.getElementById('scheduleList');
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+            alert("You need to login to view schedules.");
+            window.location.href = "login.html";
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:8080/schedules', {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+            console.log('Response Status:', response.status);
+            if (!response.ok) {
+                throw new Error('Failed to fetch schedules');
+            }
+
+            const schedules = await response.json();
+            console.log('Schedules Data:', schedules);
+
+            schedules.forEach(schedule => {
+                let scheduleItem = document.createElement('div');
+                scheduleItem.className = 'schedule-item';
+                scheduleItem.innerHTML = `
+                    <h3>${schedule.title}</h3>
+                    <p>Date: ${schedule.date}</p>
+                    <p>Start: ${schedule.start} - End: ${schedule.end}</p>
+                    <button onclick="displayRouteOnMap(${schedule.startLat}, ${schedule.startLng}, ${schedule.endLat}, ${schedule.endLng})">
+                        View Route
+                    </button>
+                `;
+                scheduleList.appendChild(scheduleItem);
+            });
+        } catch (error) {
+            console.error('Error loading schedules:', error);
+            scheduleList.innerHTML = '<p>Unable to load schedules. Please try again later.</p>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadSchedules);
+
+    function createNewSchedule() {
+        window.location.href = "create-schedule.html";
+    }
+
+    async function displayRouteOnMap(startLat, startLng, endLat, endLng) {
+        const mapOptions = {
+            center: new naver.maps.LatLng(startLat, startLng),
+            zoom: 10
+        };
+        const map = new naver.maps.Map('map', mapOptions);
+
+        try {
+            const routeData = await getDrivingRoute(startLat, startLng, endLat, endLng);
+            console.log('Route Data:', routeData);
+
+            if (routeData && routeData.route) {
+                const path = routeData.route.traoptimal[0].path.map(coord => {
+                    return new naver.maps.LatLng(coord[1], coord[0]);
+                });
+
+                const polyline = new naver.maps.Polyline({
+                    map: map,
+                    path: path,
+                    strokeColor: '#5347AA',
+                    strokeWeight: 4
+                });
+            } else {
+                alert('No route found for the given locations.');
+            }
+        } catch (error) {
+            console.error('Error displaying route:', error);
+            alert('Unable to display route. Please try again later.');
+        }
+    }
+</script>
 </body>
 </html>
-
