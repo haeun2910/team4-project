@@ -29,6 +29,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -194,7 +195,7 @@ public class PlanService {
     @Transactional
     public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan() {
         UserEntity currentUser = authFacade.extractUser();
-
+        log.info("Current User: {}", currentUser);
         LocalDateTime now = LocalDateTime.now();
         Plan recentPlan = planRepo.findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc(currentUser, now)
                 .orElseThrow();
@@ -207,7 +208,7 @@ public class PlanService {
         );
         int routeAverageMins = (int) Math.ceil(routeSearcher.calcRouteAverageTime(requestDto));
         int preparationMins = recentPlan.getPlanTasks().stream()
-                .mapToInt(pt -> pt.getTask().getTime())
+                .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0))
                 .sum();
         LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
         LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes(routeAverageMins + preparationMins);

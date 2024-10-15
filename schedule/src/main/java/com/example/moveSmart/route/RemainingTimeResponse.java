@@ -21,9 +21,12 @@ public class RemainingTimeResponse {
     }
 
     public RemainingTimeResponse(RemainingTimeInfoVo remainingTimeInfoVo) {
+        if (remainingTimeInfoVo == null || remainingTimeInfoVo.getRemainingTime() == null) {
+            throw new IllegalArgumentException("RemainingTimeInfoVo or its RemainingTime cannot be null");
+        }
         Duration remainingTime = remainingTimeInfoVo.getRemainingTime();
-        long hours = remainingTime.toDaysPart() * 24 + remainingTime.toHoursPart();
-        int minutes = remainingTime.toMinutesPart();
+        long hours = Math.max(0, remainingTime.toDaysPart() * 24 + remainingTime.toHoursPart());
+        int minutes = Math.max(0, remainingTime.toMinutesPart());
         this.remainingTime = new RemainingTime(hours, minutes);
         this.routeAverageTimeAsMins = remainingTimeInfoVo.getRouteAverageTimeAsMins();
         this.totalReadyTimeAsMins = remainingTimeInfoVo.getTotalReadyTimeAsMins();
