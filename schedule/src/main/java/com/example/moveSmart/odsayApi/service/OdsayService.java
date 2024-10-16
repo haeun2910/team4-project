@@ -1,6 +1,7 @@
 package com.example.moveSmart.odsayApi.service;
 
-import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.config.Client;
+import com.example.moveSmart.odsayApi.entity.PlaceSearchResponse;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class OdsayService {
     private final AuthenticationFacade authFacade;
-    private final OdsayClient odsayClient;
+    private final Client client;
     private final PlanRepo planRepo;
 
     public Map<String, List<OdsayRouteSearchResponse.Result.Path>> findRoutesForPlan(Long planId) {
@@ -47,7 +48,7 @@ public class OdsayService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found"));
 
         // Sử dụng OdsayClient để tìm kiếm tuyến đường dựa trên tọa độ của kế hoạch
-        OdsayRouteSearchResponse response = odsayClient.searchRoute(plan);
+        OdsayRouteSearchResponse response = client.searchRoute(plan);
         log.info("Response from ODSAY API: {}", response);
         log.info("Searching for paths with traffic type: {}", trafficType);
         // Kiểm tra nếu response hợp lệ

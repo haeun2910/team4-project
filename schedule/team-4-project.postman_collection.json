@@ -735,6 +735,141 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "/route/{planId}/transportation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "SX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "SY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/route/6/transportation?type=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"route",
+								"6",
+								"transportation"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search-location?address=정ㄷ",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search-location"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "정ㄷ"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search location Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search-location?address=정자동",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search-location"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "정자동"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -907,6 +1042,51 @@
 								"tasks",
 								"complete",
 								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ncloud",
+			"item": [
+				{
+					"name": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=남가좌동 5-138",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-ncp-apigw-api-key-id",
+								"value": "g24wojyn1l",
+								"type": "text"
+							},
+							{
+								"key": "x-ncp-apigw-api-key",
+								"value": "tmkN8TuZ7Wnc6hbFHjIs0ElQat39LqSNIvkUsG5l",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=%EB%82%A8%EA%B0%80%EC%A2%8C%EB%8F%99%205-138",
+							"protocol": "https",
+							"host": [
+								"naveropenapi",
+								"apigw",
+								"ntruss",
+								"com"
+							],
+							"path": [
+								"map-geocode",
+								"v2",
+								"geocode"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "%EB%82%A8%EA%B0%80%EC%A2%8C%EB%8F%99%205-138"
+								}
 							]
 						}
 					},

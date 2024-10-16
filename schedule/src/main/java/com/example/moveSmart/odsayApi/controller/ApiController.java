@@ -1,6 +1,7 @@
 package com.example.moveSmart.odsayApi.controller;
 
-import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.config.Client;
+import com.example.moveSmart.odsayApi.entity.PlaceSearchResponse;
 import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
 import com.example.moveSmart.odsayApi.service.OdsayService;
 import com.example.moveSmart.schedule.plan.PlanService;
@@ -9,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("api")
 public class ApiController {
-    private final OdsayClient odsayClient;
+    private final Client client;
     private final PlanService planService;
     private final OdsayService odsayService;
 
@@ -34,5 +34,11 @@ public class ApiController {
             @RequestParam("type") int trafficType) { // Use an integer to represent the traffic type
         List<OdsayRouteSearchResponse.Result.Path> filteredPaths = odsayService.findRouteForPlan(planId, trafficType);
         return ResponseEntity.ok(filteredPaths);
+    }
+    @GetMapping("/search-location")
+    public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) {
+        System.out.println("Received address: " + address);
+        PlaceSearchResponse response = client.searchAddress(address);
+        return ResponseEntity.ok(response);
     }
 }

@@ -14,7 +14,7 @@ public class TestController {
     public String test() {
         return "test";
     }
-    @GetMapping
+    @GetMapping("search")
     public String test2() {
         return "user/api/search";
     }

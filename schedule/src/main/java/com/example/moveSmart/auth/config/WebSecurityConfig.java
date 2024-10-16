@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate","/search")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin")
                             .anonymous();

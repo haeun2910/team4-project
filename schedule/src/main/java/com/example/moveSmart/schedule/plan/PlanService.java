@@ -1,6 +1,6 @@
 package com.example.moveSmart.schedule.plan;
 
-import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.config.Client;
 import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
 import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
 import com.example.moveSmart.odsayApi.config.RouteSearcher;
@@ -38,7 +38,7 @@ public class PlanService {
     private final TaskRepo taskRepo;
     private final PlanTaskRepo planTaskRepo;
     private final RouteSearcher routeSearcher;
-    private final OdsayClient odsayClient;
+    private final Client client;
 
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {

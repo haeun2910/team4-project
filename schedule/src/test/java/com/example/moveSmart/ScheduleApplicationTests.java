@@ -1,5 +1,5 @@
 package com.example.moveSmart;
-import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.config.Client;
 import com.example.moveSmart.odsayApi.config.RouteSearcher;
 import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
 import com.example.moveSmart.odsayApi.entity.RemainingTimeResponse;
@@ -25,7 +25,7 @@ class ScheduleApplicationTests {
 	@InjectMocks
 	private RouteSearcher routeSearcher;
 	@InjectMocks
-	private OdsayClient odsayClient;
+	private Client client;
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);

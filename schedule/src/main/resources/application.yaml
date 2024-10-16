@@ -44,10 +44,12 @@ jwt:
   secret: iAxixh53UL,u]Znp!=]>k#7z#T~x!ne%w2#p2qk+4yHne71-gLhP*q%Fm
 naver:
   client-id: g24wojyn1l
-  secret: roKieXIZhqb8BA4sIasGgBscLRC4L9Q7h09q3wQQ
+  secret: tmkN8TuZ7Wnc6hbFHjIs0ElQat39LqSNIvkUsG5l
 odsay:
   uri: https://api.odsay.com/v1/api/searchPubTransPathT
   key: VyjPkBhOaGJPOxjlcqVe9jUmvlfR5zvMh3IwZBMoi8w
+kakao:
+  key: 07ae5df5475e2ef16337e8bd18f58792
 server:
   error:
     include-message: always
