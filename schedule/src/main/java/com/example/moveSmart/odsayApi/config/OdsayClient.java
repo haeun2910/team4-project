@@ -1,5 +1,6 @@
 package com.example.moveSmart.odsayApi.config;
 
+import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class OdsayClient {
     private String key;
     @Value(("${odsay.uri}"))
     private String routeSearchUri;
-public String searchRoute(Plan plan) {
+public OdsayRouteSearchResponse searchRoute(Plan plan) {
     // Build the URI using the coordinates from the Plan object
     URI uri = UriComponentsBuilder.fromUriString(routeSearchUri)
             .queryParam("SX", plan.getDepartureLng())  // SX: Departure Longitude
@@ -34,7 +35,7 @@ public String searchRoute(Plan plan) {
 
     // HttpEntity for request
     var httpEntity = new HttpEntity<>(new HttpHeaders());
-    var responseType = new ParameterizedTypeReference<String>() {};
+    var responseType = new ParameterizedTypeReference<OdsayRouteSearchResponse>() {};
 
     // Send the request to ODsay API
     var responseEntity = new RestTemplate().exchange(

@@ -2,6 +2,7 @@ package com.example.moveSmart.schedule.plan;
 
 import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
 import com.example.moveSmart.odsayApi.entity.RemainingTimeResponse;
+import com.example.moveSmart.odsayApi.service.OdsayService;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class PlanController {
     private final PlanService planService;
     private final AuthenticationFacade authFacade;
+    private final OdsayService odsayService;
 
     @PostMapping("create")
     public PlanDto create(@RequestBody PlanDto plan) {

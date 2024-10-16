@@ -222,16 +222,16 @@ public class PlanService {
 
 
 
-    public String findRouteForPlan(Long planId) {
-        // Extract the currently authenticated user
-        UserEntity user = authFacade.extractUser();
-
-        // Fetch the Plan by ID, and ensure it belongs to the current user
-        Plan plan = planRepo.findByIdAndUser(planId, user)
-                .orElseThrow();
-
-        // Use OdsayClient to search for the route based on the Plan's coordinates
-        return odsayClient.searchRoute(plan);
-    }
+//    public String findRouteForPlan(Long planId) {
+//        // Extract the currently authenticated user
+//        UserEntity user = authFacade.extractUser();
+//
+//        // Fetch the Plan by ID, and ensure it belongs to the current user
+//        Plan plan = planRepo.findByIdAndUser(planId, user)
+//                .orElseThrow();
+//
+//        // Use OdsayClient to search for the route based on the Plan's coordinates
+//        return odsayClient.searchRoute(plan);
+//    }
 
 }

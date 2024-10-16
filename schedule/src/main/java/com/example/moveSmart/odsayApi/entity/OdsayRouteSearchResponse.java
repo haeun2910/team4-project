@@ -38,11 +38,11 @@ public class OdsayRouteSearchResponse {
             @AllArgsConstructor
             @Getter
             public static class Info {
-                private double trafficDistance;
-                private int totalWalk;
-                private int totalTime;
-                private int payment;
-                private int busTransitCount;
+                private double trafficDistance;// Khoảng cách giao thông
+                private int totalWalk; // Tổng thời gian đi bộ
+                private int totalTime; // Tổng thời gian di chuyển
+                private int payment; // Chi phí
+                private int busTransitCount; // Số lần chuyển xe buýt
                 private int subwayTransitCount;
                 private int taxiTime;
                 private double taxiDistance;
