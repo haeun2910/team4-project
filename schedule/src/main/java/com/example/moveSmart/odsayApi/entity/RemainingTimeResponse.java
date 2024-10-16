@@ -1,4 +1,4 @@
-package com.example.moveSmart.route;
+package com.example.moveSmart.odsayApi.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ public class RemainingTimeResponse {
     private final RemainingTime remainingTime;
     private final int routeAverageTimeAsMins;
     private final int totalReadyTimeAsMins;
-    private final LocalDateTime recentPlanArrivalAt;
+    private final LocalDateTime recentPlanArrivalAt; // thời gian đến dự kiến
 
     @RequiredArgsConstructor
     @Getter

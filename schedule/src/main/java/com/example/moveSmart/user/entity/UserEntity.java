@@ -3,10 +3,7 @@ package com.example.moveSmart.user.entity;
 import com.example.moveSmart.entity.BaseEntity;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.task.entity.Task;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -44,9 +41,9 @@ public class UserEntity extends BaseEntity {
     @Setter
     @Builder.Default
     private String roles = "ROLE_INACTIVE";
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private final List<Plan> plans = new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private final List<Task> tasks = new ArrayList<>();
 
 }

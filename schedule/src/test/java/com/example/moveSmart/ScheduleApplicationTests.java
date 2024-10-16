@@ -1,5 +1,9 @@
 package com.example.moveSmart;
-import com.example.moveSmart.route.*;
+import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.config.RouteSearcher;
+import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
+import com.example.moveSmart.odsayApi.entity.RemainingTimeResponse;
+import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -21,6 +24,8 @@ class ScheduleApplicationTests {
 	private RestTemplate routeSearchClient;
 	@InjectMocks
 	private RouteSearcher routeSearcher;
+	@InjectMocks
+	private OdsayClient odsayClient;
 	@BeforeEach
 	void setUp() {
 		MockitoAnnotations.openMocks(this);

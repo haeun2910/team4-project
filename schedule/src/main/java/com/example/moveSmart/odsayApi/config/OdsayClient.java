@@ -1,4 +1,4 @@
-package com.example.moveSmart.api.config;
+package com.example.moveSmart.odsayApi.config;
 
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import lombok.extern.slf4j.Slf4j;
@@ -43,4 +43,5 @@ public String searchRoute(Plan plan) {
 
     return responseEntity.getBody();
 }
+
 }

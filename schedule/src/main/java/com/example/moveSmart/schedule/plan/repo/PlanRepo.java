@@ -11,9 +11,9 @@ import java.util.Optional;
 
 public interface PlanRepo extends JpaRepository<Plan, Long> {
     Page<Plan> findByUser(UserEntity user, Pageable pageable);
-//    Page<Plan> findAllByUserAndCompletedFalseAndEndTimeAfter(UserEntity user, LocalDateTime currentTime, Pageable pageable);
-//    Page<Plan> findByCompletedTrueAndUserOrderByEndTimeAscStartTimeAsc(UserEntity user, Pageable pageable);
-//    Page<Plan> findByCompletedFalseAndEndTimeLessThanAndUserOrderByEndTimeAscStartTimeAsc(LocalDateTime currentTime, UserEntity user, Pageable pageable);
+
+    Page<Plan> findByUserAndCompletedTrue(UserEntity user, Pageable pageable);
+    Page<Plan> findByUserAndCompletedFalse(UserEntity user, Pageable pageable);
     Optional<Plan> findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc (UserEntity user, LocalDateTime now);
     Optional<Plan> findByIdAndUser(Long planId, UserEntity user);
 

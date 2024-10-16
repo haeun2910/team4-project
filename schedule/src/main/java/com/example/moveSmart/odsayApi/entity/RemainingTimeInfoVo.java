@@ -1,4 +1,4 @@
-package com.example.moveSmart.route;
+package com.example.moveSmart.odsayApi.entity;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

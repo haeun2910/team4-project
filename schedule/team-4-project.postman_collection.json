@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"elisa\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user3\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
 									"type": "string"
 								}
 							]
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hien\",\n    \"age\": 27,\n    \"email\": \"hien@gmail.com\",\n    \"phone\": \"01015154143\"\n}",
+							"raw": "{\n    \"name\": \"hanh\",\n    \"age\": 24,\n    \"email\": \"hahaha@gmail.com\",\n    \"phone\": \"01015754143\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +114,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODAxMzYwMiwiZXhwIjoxNzI4NjE4NDAyfQ.az5NN6Jkn29xsP7dluVGDdXXu3I9j9IVZ3xdA7V38Q_yhTdt99i30yfxT-82Np4P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODYxMjU3NywiZXhwIjoxNzI5MjE3Mzc3fQ.rdK3nEOeGsnTlOBjknRZdBakNjqUtdh2nn_xmW5pXjo6haMMP-VnnNxjjXcssVGX",
 									"type": "string"
 								}
 							]
@@ -383,7 +383,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
 									"type": "string"
 								}
 							]
@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"làm lại thẻ ngân hàng\",\n    \"startTime\": \"2024-10-11T10:00:00\",\n    \"endTime\": \"2024-10-11T11:00:00\"\n    \n}",
+							"raw": "{\n    \"title\": \"My Trip to Gyeongbokgung Palace\",\n    \"departureName\": \"My Apartment\",\n    \"departureLat\": 37.5665, \n    \"departureLng\": 126.978,   \n    \"arrivalName\": \"Gyeongbokgung Palace\",\n    \"arrivalAt\": \"2024-10-17 14:00:00\",\n    \"arrivalLat\": 37.5796,      \n    \"arrivalLng\": 126.9769,    \n    \"notificationMessage\": \"Prepare your camera for photos!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,7 +422,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -431,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"planId\": 1,\n    \"title\": \"mang chung minh thu\"\n}",
+							"raw": "{\n    \"planId\": 7,\n    \"title\": \"mang ho chieu\",\n    \"time\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -461,7 +461,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
 									"type": "string"
 								}
 							]
@@ -470,7 +470,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"주방 청소\",\n    \"startTime\": \"2024-10-09T14:00:00\",\n    \"endTime\": \"2024-10-09T14:30:00\",\n    \"estimatedCost\": \"10.3\"\n\n    \n}",
+							"raw": "{\n    \"title\": \"My Trip to Gyeongbokgung Palace\",\n    \"departureName\": \"My home\",\n    \"departureLat\": 37.5665, \n    \"departureLng\": 126.978,   \n    \"arrivalName\": \"Gyeongbokgung Palace\",\n    \"arrivalAt\": \"2024-10-17 12:00:00\",\n    \"arrivalLat\": 37.5796,      \n    \"arrivalLng\": 126.9769,    \n    \"notificationMessage\": \"bring money\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -478,7 +478,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/plans/update/1",
+							"raw": "http://localhost:8080/plans/update/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -487,7 +487,7 @@
 							"path": [
 								"plans",
 								"update",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -501,7 +501,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -509,7 +509,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/plans/delete/1",
+							"raw": "http://localhost:8080/plans/delete/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -518,7 +518,7 @@
 							"path": [
 								"plans",
 								"delete",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -532,7 +532,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -562,7 +562,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -570,7 +570,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/plans/complete/1",
+							"raw": "http://localhost:8080/plans/complete/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -579,7 +579,7 @@
 							"path": [
 								"plans",
 								"complete",
-								"1"
+								"5"
 							]
 						}
 					},
@@ -593,7 +593,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -616,14 +616,14 @@
 					"response": []
 				},
 				{
-					"name": "plan expired",
+					"name": "incomplete",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
 									"type": "string"
 								}
 							]
@@ -631,7 +631,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/plans/expired",
+							"raw": "http://localhost:8080/plans/incomplete",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -639,7 +639,7 @@
 							"port": "8080",
 							"path": [
 								"plans",
-								"expired"
+								"incomplete"
 							]
 						}
 					},
@@ -651,14 +651,14 @@
 			"name": "api",
 			"item": [
 				{
-					"name": "pub-trans-path",
+					"name": "remaining-time",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
 									"type": "string"
 								}
 							]
@@ -666,7 +666,62 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/pub-trans-path?startX=126.9027279&startY=37.5349277&endX=126.9145430&endY=37.5499421\n",
+							"raw": "http://localhost:8080/plans/time-remaining",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"time-remaining"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "route",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "SX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "SY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/route/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -674,25 +729,8 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"pub-trans-path"
-							],
-							"query": [
-								{
-									"key": "startX",
-									"value": "126.9027279"
-								},
-								{
-									"key": "startY",
-									"value": "37.5349277"
-								},
-								{
-									"key": "endX",
-									"value": "126.9145430"
-								},
-								{
-									"key": "endY",
-									"value": "37.5499421\n"
-								}
+								"route",
+								"6"
 							]
 						}
 					},

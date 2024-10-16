@@ -1,16 +1,15 @@
 package com.example.moveSmart.schedule.plan;
 
-import com.example.moveSmart.api.config.OdsayClient;
-import com.example.moveSmart.route.RemainingTimeInfoVo;
-import com.example.moveSmart.route.RouteSearchRequest;
-import com.example.moveSmart.route.RouteSearcher;
+import com.example.moveSmart.odsayApi.config.OdsayClient;
+import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
+import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
+import com.example.moveSmart.odsayApi.config.RouteSearcher;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.entity.PlanTask;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.schedule.plan.repo.PlanTaskRepo;
-import com.example.moveSmart.schedule.task.dto.TaskDto;
 import com.example.moveSmart.schedule.task.entity.Task;
 import com.example.moveSmart.schedule.task.repo.TaskRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -20,9 +19,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -51,12 +48,6 @@ public class PlanService {
 
         Plan plan = Plan.builder()
                 .title(planDto.getTitle())
-//                .startTime(planDto.getStartTime())
-//                .endTime(planDto.getEndTime())
-//                .startLocation(planDto.getStartLocation())
-//                .destination(planDto.getDestination())
-//                .mode(planDto.getTransportationMode())
-//                .estimatedCost(planDto.getEstimatedCost())
                 .departureName(planDto.getDepartureName())
                 .departureLat(planDto.getDepartureLat())
                 .departureLng(planDto.getDepartureLng())
@@ -119,15 +110,7 @@ public class PlanService {
         if (!existingPlan.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this plan.");
         }
-
-        // Update plan details
         existingPlan.setTitle(plan.getTitle());
-//        existingPlan.setStartTime(plan.getStartTime());
-//        existingPlan.setEndTime(plan.getEndTime());
-//        existingPlan.setStartLocation(plan.getStartLocation());
-//        existingPlan.setDestination(plan.getDestination());
-//        existingPlan.setMode(plan.getTransportationMode());
-//        existingPlan.setEstimatedCost(plan.getEstimatedCost());
         existingPlan.setDepartureName(plan.getDepartureName());
         existingPlan.setDepartureLat(plan.getDepartureLat());
         existingPlan.setDepartureLng(plan.getDepartureLng());
@@ -167,10 +150,6 @@ public class PlanService {
         if (!plan.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to complete this plan.");
         }
-//        if (plan.getEndTime().isBefore(currentTime)) {
-//            throw new IllegalArgumentException("End time must be in the future to complete the plan");
-//        }
-
         plan.setCompleted(true);
         for (PlanTask task : plan.getPlanTasks()) {
             task.setCompleted(true);
@@ -179,42 +158,64 @@ public class PlanService {
 
     }
 
-//    public Page<PlanDto> getCompletedPlans(Pageable pageable) {
-//        UserEntity user = authFacade.extractUser();
-//        Page<Plan> plans = planRepo.findByCompletedTrueAndUserOrderByEndTimeAscStartTimeAsc(user, pageable);
-//        return plans.map(PlanDto::fromEntity);
-//    }
-//
-//    public Page<PlanDto> getExpiredPlans(Pageable pageable) {
-//        UserEntity user = authFacade.extractUser();
-//        LocalDateTime currentTime = LocalDateTime.now();
-//        Page<Plan> plans = planRepo.findByCompletedFalseAndEndTimeLessThanAndUserOrderByEndTimeAscStartTimeAsc(currentTime, user, pageable);
-//        return plans.map(PlanDto::fromEntity);
-//    }
+    public Page<PlanDto> getCompletedPlans(Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Page<Plan> plans = planRepo.findByUserAndCompletedTrue(user, pageable);
+        return plans.map(PlanDto::fromEntity);
+    }
+
+    public Page<PlanDto> getIncompletePlans(Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Page<Plan> plans = planRepo.findByUserAndCompletedFalse(user,pageable);
+        return plans.map(PlanDto::fromEntity);
+    }
 
     @Transactional
     public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan() {
+        // Lấy người dùng hiện tại từ authFacade
         UserEntity currentUser = authFacade.extractUser();
         log.info("Current User: {}", currentUser);
+
+        // Lấy thời gian hiện tại
         LocalDateTime now = LocalDateTime.now();
+
+        // Tìm kế hoạch gần nhất của người dùng, kế hoạch phải có thời gian đến lớn hơn thời gian hiện tại
         Plan recentPlan = planRepo.findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc(currentUser, now)
                 .orElseThrow();
-        RouteSearchRequest requestDto = new RouteSearchRequest(
-                recentPlan.getDepartureLng(),
-                recentPlan.getDepartureLat(),
-                recentPlan.getArrivalLng(),
-                recentPlan.getArrivalLat(),
-                0
-        );
+
+        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch gần nhất
+        RouteSearchRequest requestDto = RouteSearchRequest.builder()
+                .startLng(recentPlan.getDepartureLng())
+                .startLat(recentPlan.getDepartureLat())
+                .endLng(recentPlan.getArrivalLng())
+                .endLat(recentPlan.getArrivalLat())
+                .sortCriterion(0) // 0 là giá trị mặc định của tiêu chí sắp xếp
+                .build();
+
+        // Tính toán thời gian trung bình của các tuyến đường
         int routeAverageMins = (int) Math.ceil(routeSearcher.calcRouteAverageTime(requestDto));
-        int preparationMins = recentPlan.getPlanTasks().stream()
-                .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0))
-                .sum();
+
+        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ liên quan tới kế hoạch
+        int preparationMins = Optional.ofNullable(recentPlan.getPlanTasks())
+                .map(tasks -> tasks.stream()
+                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Thời gian của mỗi nhiệm vụ
+                        .sum())
+                .orElse(0); // Trả về 0 nếu danh sách nhiệm vụ rỗng hoặc null
+
+        // Tính toán thời gian chuẩn bị
         LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
         LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes(routeAverageMins + preparationMins);
+
+        // Tính toán thời gian còn lại cho đến khi người dùng cần bắt đầu chuẩn bị
         Duration remainingTime = Duration.between(now, preparationStartAt);
+        if (remainingTime.isNegative()) {
+            remainingTime = Duration.ZERO; // Nếu thời gian còn lại là số âm, đặt thành 0
+        }
+
+        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại
         return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt);
     }
+
 
     public String findRouteForPlan(Long planId) {
         // Extract the currently authenticated user

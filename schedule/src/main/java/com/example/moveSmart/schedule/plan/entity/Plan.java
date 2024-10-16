@@ -17,17 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name ="plan_table")
 public class Plan extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
     @Setter
     private String title;
-//    @Setter
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Location startLocation;
-//    @Setter
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Location destination;
     @Setter
 //    @Column(nullable = false)
     private String departureName;
@@ -49,18 +43,6 @@ public class Plan extends BaseEntity {
     @Setter
 //    @Column(nullable = false)
     private LocalDateTime arrivalAt;
-
-//    @Setter
-//    @FutureOrPresent(message = "Start time must be present or future")
-//    private LocalDateTime startTime;
-//    @Setter
-//    @Future(message = "End time must be in the future")
-//    private LocalDateTime endTime;
-//    @Setter
-//    @Enumerated(EnumType.STRING)
-//    private TransOption.TransMode mode;
-//    @Setter
-//    private double estimatedCost;
     @Setter
 //    @Column
     private String notificationMessage;
