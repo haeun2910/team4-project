@@ -13,4 +13,5 @@ public class RemainingTimeInfoVo {
     private final int routeAverageTimeAsMins;
     private final int totalReadyTimeAsMins;
     private final LocalDateTime recentPlanArrivalAt;
+    private final LocalDateTime recommendedDepartureTime;
 }

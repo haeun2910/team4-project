@@ -212,9 +212,14 @@ public class PlanService {
             remainingTime = Duration.ZERO; // Nếu thời gian còn lại là số âm, đặt thành 0
         }
 
-        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại
-        return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt);
+        // Định nghĩa thời gian đệm (trong phút)
+        int bufferTimeMins = 15; // Thay đổi giá trị này theo nhu cầu
+        LocalDateTime recommendedDepartureTime = preparationStartAt.minusMinutes(bufferTimeMins);
+
+        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và thời gian khuyến nghị
+        return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
+
 
 
     public String findRouteForPlan(Long planId) {

@@ -12,6 +12,7 @@ public class RemainingTimeResponse {
     private final int routeAverageTimeAsMins;
     private final int totalReadyTimeAsMins;
     private final LocalDateTime recentPlanArrivalAt; // thời gian đến dự kiến
+    private final LocalDateTime recommendedDepartureTime; // nên xuất phát trước mấy giờ
 
     @RequiredArgsConstructor
     @Getter
@@ -31,5 +32,6 @@ public class RemainingTimeResponse {
         this.routeAverageTimeAsMins = remainingTimeInfoVo.getRouteAverageTimeAsMins();
         this.totalReadyTimeAsMins = remainingTimeInfoVo.getTotalReadyTimeAsMins();
         this.recentPlanArrivalAt = remainingTimeInfoVo.getRecentPlanArrivalAt();
+        this.recommendedDepartureTime = remainingTimeInfoVo.getRecommendedDepartureTime();
     }
 }
