@@ -1,9 +1,9 @@
-package com.example.moveSmart.odsayApi.controller;
+package com.example.moveSmart.api.controller;
 
-import com.example.moveSmart.odsayApi.config.Client;
-import com.example.moveSmart.odsayApi.entity.PlaceSearchResponse;
-import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
-import com.example.moveSmart.odsayApi.service.OdsayService;
+import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.service.OdsayService;
 import com.example.moveSmart.schedule.plan.PlanService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,8 +37,9 @@ public class ApiController {
     }
     @GetMapping("/search-location")
     public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) {
-        System.out.println("Received address: " + address);
+        log.info("Received address: {}", address);
         PlaceSearchResponse response = client.searchAddress(address);
         return ResponseEntity.ok(response);
     }
+
 }

@@ -1,7 +1,6 @@
-package com.example.moveSmart.odsayApi.service;
+package com.example.moveSmart.api.service;
 
-import com.example.moveSmart.odsayApi.config.Client;
-import com.example.moveSmart.odsayApi.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.config.Client;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -9,7 +8,7 @@ import com.example.moveSmart.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

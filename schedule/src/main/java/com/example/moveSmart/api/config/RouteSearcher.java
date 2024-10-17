@@ -1,7 +1,7 @@
-package com.example.moveSmart.odsayApi.config;
+package com.example.moveSmart.api.config;
 
-import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
-import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
+import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.RouteSearchRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

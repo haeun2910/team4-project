@@ -1,9 +1,9 @@
 package com.example.moveSmart;
-import com.example.moveSmart.odsayApi.config.Client;
-import com.example.moveSmart.odsayApi.config.RouteSearcher;
-import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.odsayApi.entity.RemainingTimeResponse;
-import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
+import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.config.RouteSearcher;
+import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.RemainingTimeResponse;
+import com.example.moveSmart.api.entity.RouteSearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

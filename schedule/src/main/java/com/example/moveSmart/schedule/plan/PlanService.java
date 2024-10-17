@@ -1,9 +1,9 @@
 package com.example.moveSmart.schedule.plan;
 
-import com.example.moveSmart.odsayApi.config.Client;
-import com.example.moveSmart.odsayApi.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.odsayApi.entity.RouteSearchRequest;
-import com.example.moveSmart.odsayApi.config.RouteSearcher;
+import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.RouteSearchRequest;
+import com.example.moveSmart.api.config.RouteSearcher;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
 import com.example.moveSmart.schedule.plan.entity.Plan;

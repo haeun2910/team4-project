@@ -1,7 +1,7 @@
-package com.example.moveSmart.odsayApi.config;
+package com.example.moveSmart.api.config;
 
-import com.example.moveSmart.odsayApi.entity.PlaceSearchResponse;
-import com.example.moveSmart.odsayApi.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -68,28 +69,32 @@ public class Client {
                 .toUriString();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("x-ncp-apigw-api-key-id", clientId); // Use API key ID for Naver
+        headers.set("x-ncp-apigw-api-key-id", clientId);
         headers.set("x-ncp-apigw-api-key", clientSecret);
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));// Use API key for Naver
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, entity, JsonNode.class);
+        try {
+            ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, entity, JsonNode.class);
+            JsonNode items = response.getBody() != null ? response.getBody().path("addresses") : null;
 
-        List<PlaceSearchResponse.Place> places = new ArrayList<>();
-        JsonNode items = response.getBody().path("addresses"); // Adjust based on the actual structure of the response
-
-        // Check if addresses is an array
-        if (items.isArray() && !items.isEmpty()) {
-            for (JsonNode item : items) {
-                String name = item.path("roadAddress").asText(); // Adjust according to actual response
-                double latitude = item.path("y").asDouble();
-                double longitude = item.path("x").asDouble();
-                places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
+            List<PlaceSearchResponse.Place> places = new ArrayList<>();
+            if (items != null && items.isArray() && !items.isEmpty()) {
+                for (JsonNode item : items) {
+                    String name = item.path("roadAddress").asText();
+                    double latitude = item.path("y").asDouble();
+                    double longitude = item.path("x").asDouble();
+                    places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
+                }
+            } else {
+                log.error("No addresses found for query: {}", query);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No addresses found");
             }
-        } else {
-            System.out.println("No addresses found.");
-        }
 
-        return new PlaceSearchResponse(places);
+            return new PlaceSearchResponse(places);
+        } catch (Exception e) {
+            log.error("Error occurred while searching for address: {}", e.getMessage(), e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while searching for the address");
+        }
     }
 }
