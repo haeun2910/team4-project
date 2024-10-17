@@ -5,6 +5,7 @@ import com.example.moveSmart.api.entity.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
 import com.example.moveSmart.api.service.OdsayService;
 import com.example.moveSmart.schedule.plan.PlanService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class ApiController {
         return ResponseEntity.ok(filteredPaths);
     }
     @GetMapping("/search-location")
-    public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) {
+    public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) throws JsonProcessingException {
         log.info("Received address: {}", address);
         PlaceSearchResponse response = client.searchAddress(address);
         return ResponseEntity.ok(response);

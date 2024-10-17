@@ -2,15 +2,16 @@ package com.example.moveSmart.api.config;
 
 import com.example.moveSmart.api.entity.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.GeoAddress;
+import com.example.moveSmart.api.entity.GeoNcpResponse;
+import com.example.moveSmart.api.repo.NcpMapApiService;
 import com.example.moveSmart.schedule.plan.entity.Plan;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Component
@@ -27,6 +29,9 @@ public class Client {
     private String key;
     @Value(("${odsay.uri}"))
     private String routeSearchUri;
+
+    private final NcpMapApiService apiService;
+
 
     @Value("${naver.client-id}")
     private String clientId;
@@ -64,37 +69,25 @@ public class Client {
     }
 
     public PlaceSearchResponse searchAddress(String query) {
-        String url = UriComponentsBuilder.fromHttpUrl("https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode")
-                .queryParam("query", query)
-                .toUriString();
+        GeoNcpResponse response = apiService.geocode(Map.of("query", query));
+        log.info(response.toString());
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("x-ncp-apigw-api-key-id", clientId);
-        headers.set("x-ncp-apigw-api-key", clientSecret);
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        List<PlaceSearchResponse.Place> places = new ArrayList<>();
+        // Validate the response
+        if (response != null && response.getAddresses() != null && !response.getAddresses().isEmpty()) {
+            for (GeoAddress address : response.getAddresses()) {
+                String name = address.getRoadAddress(); // Get the road address
+                double latitude = Double.parseDouble(address.getY()); // Get latitude (ensure it's parsed as a double)
+                double longitude = Double.parseDouble(address.getX()); // Get longitude (ensure it's parsed as a double)
 
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        try {
-            ResponseEntity<JsonNode> response = restTemplate.exchange(url, HttpMethod.GET, entity, JsonNode.class);
-            JsonNode items = response.getBody() != null ? response.getBody().path("addresses") : null;
-
-            List<PlaceSearchResponse.Place> places = new ArrayList<>();
-            if (items != null && items.isArray() && !items.isEmpty()) {
-                for (JsonNode item : items) {
-                    String name = item.path("roadAddress").asText();
-                    double latitude = item.path("y").asDouble();
-                    double longitude = item.path("x").asDouble();
-                    places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
-                }
-            } else {
-                log.error("No addresses found for query: {}", query);
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No addresses found");
+                // Create a new Place object and add it to the list
+                places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
             }
-
-            return new PlaceSearchResponse(places);
-        } catch (Exception e) {
-            log.error("Error occurred while searching for address: {}", e.getMessage(), e);
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "An error occurred while searching for the address");
+        } else {
+            log.warn("No addresses found for query: {}", query);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No addresses found");
         }
+
+        return new PlaceSearchResponse(places);
     }
 }
