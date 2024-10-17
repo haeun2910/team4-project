@@ -1,6 +1,7 @@
 package com.example.moveSmart.schedule.plan.dto;
 
 import com.example.moveSmart.schedule.plan.entity.Plan;
+import com.example.moveSmart.schedule.plan.entity.PlanTask;
 import com.example.moveSmart.user.dto.UserDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -17,12 +18,6 @@ import java.util.stream.Collectors;
 public class PlanDto {
     private Long id;
     private String title;
-//    private LocalDateTime startTime;
-//    private LocalDateTime endTime;
-//    private Location startLocation;
-//    private Location destination;
-//    private TransOption.TransMode transportationMode;
-//    private double estimatedCost;
     private String departureName;
     private Double departureLat;
     private Double departureLng;
@@ -42,11 +37,6 @@ public class PlanDto {
     }
 
     public static PlanDto fromEntity(Plan entity, boolean withUser) {
-        List<PlanTaskDto> taskDtos = (entity.getPlanTasks() != null) ?
-                entity.getPlanTasks().stream()
-                        .map(planTask -> PlanTaskDto.fromPlanTaskEntity(planTask, withUser)) // pass PlanTask object directly
-                        .collect(Collectors.toList())
-                : List.of();
         return PlanDto.builder()
                 .id(entity.getId())
                 .title(entity.getTitle())
@@ -60,7 +50,14 @@ public class PlanDto {
                 .notificationMessage(entity.getNotificationMessage())
                 .completed(entity.isCompleted())
                 .user(withUser ? UserDto.fromEntity(entity.getUser()) : null)
-                .planTasks(taskDtos)
+                .planTasks(convertToPlanTaskDtos(entity.getPlanTasks(), withUser))
                 .build();
+    }
+
+    private static List<PlanTaskDto> convertToPlanTaskDtos(List<PlanTask> planTasks, boolean withUser) {
+        return planTasks == null ? List.of() :
+                planTasks.stream()
+                        .map(task -> PlanTaskDto.fromPlanTaskEntity(task, withUser))
+                        .collect(Collectors.toList());
     }
 }

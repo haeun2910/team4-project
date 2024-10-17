@@ -29,6 +29,7 @@ public class ApiController {
         Map<String, List<OdsayRouteSearchResponse.Result.Path>> routes = odsayService.findRoutesForPlan(planId);
         return ResponseEntity.ok(routes);
     }
+
     @GetMapping("/route/{planId}/transportation")
     public ResponseEntity<List<OdsayRouteSearchResponse.Result.Path>> getRoutesByTransportationType(
             @PathVariable Long planId,
@@ -36,6 +37,7 @@ public class ApiController {
         List<OdsayRouteSearchResponse.Result.Path> filteredPaths = odsayService.findRouteForPlan(planId, trafficType);
         return ResponseEntity.ok(filteredPaths);
     }
+
     @GetMapping("/search-location")
     public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) throws JsonProcessingException {
         log.info("Received address: {}", address);

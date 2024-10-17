@@ -1,6 +1,7 @@
 package com.example.moveSmart.schedule.plan;
 
 import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
 import com.example.moveSmart.api.entity.RouteSearchRequest;
 import com.example.moveSmart.api.config.RouteSearcher;
@@ -46,21 +47,32 @@ public class PlanService {
         UserEntity userId = userRepo.findById(user.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        // Get latitude and longitude for departure and arrival addresses
+        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
+        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+
+        // Assuming the first result is the most relevant
+        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
+        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
+        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
+        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
+
         Plan plan = Plan.builder()
                 .title(planDto.getTitle())
                 .departureName(planDto.getDepartureName())
-                .departureLat(planDto.getDepartureLat())
-                .departureLng(planDto.getDepartureLng())
+                .departureLat(departureLat) // set fetched latitude
+                .departureLng(departureLng) // set fetched longitude
                 .arrivalName(planDto.getArrivalName())
                 .arrivalAt(planDto.getArrivalAt())
-                .arrivalLat(planDto.getArrivalLat())
-                .arrivalLng(planDto.getArrivalLng())
+                .arrivalLat(arrivalLat) // set fetched latitude
+                .arrivalLng(arrivalLng) // set fetched longitude
                 .notificationMessage(planDto.getNotificationMessage())
                 .user(userId)
                 .build();
 
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
+
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user
         Long planId = planTaskDto.getPlanId();
@@ -101,7 +113,7 @@ public class PlanService {
 
 
     @Transactional
-    public PlanDto updatePlan(PlanDto plan, Long planId) {
+    public PlanDto updatePlan(PlanDto planDto, Long planId) {
         UserEntity user = authFacade.extractUser();
         Plan existingPlan = planRepo.findById(planId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -110,19 +122,31 @@ public class PlanService {
         if (!existingPlan.getUser().getId().equals(user.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this plan.");
         }
-        existingPlan.setTitle(plan.getTitle());
-        existingPlan.setDepartureName(plan.getDepartureName());
-        existingPlan.setDepartureLat(plan.getDepartureLat());
-        existingPlan.setDepartureLng(plan.getDepartureLng());
-        existingPlan.setArrivalName(plan.getArrivalName());
-        existingPlan.setArrivalLat(plan.getArrivalLat());
-        existingPlan.setArrivalLng(plan.getArrivalLng());
-        existingPlan.setNotificationMessage(plan.getNotificationMessage());
 
+        // Fetch the latitude and longitude for departure and arrival addresses
+        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
+        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
 
+        // Assuming the first result is the most relevant
+        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
+        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
+        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
+        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
+
+        // Update existing plan details
+        existingPlan.setTitle(planDto.getTitle());
+        existingPlan.setDepartureName(planDto.getDepartureName());
+        existingPlan.setDepartureLat(departureLat); // Update with fetched latitude
+        existingPlan.setDepartureLng(departureLng); // Update with fetched longitude
+        existingPlan.setArrivalName(planDto.getArrivalName());
+        existingPlan.setArrivalLat(arrivalLat); // Update with fetched latitude
+        existingPlan.setArrivalLng(arrivalLng); // Update with fetched longitude
+        existingPlan.setNotificationMessage(planDto.getNotificationMessage());
+
+        // Save the updated plan and return the DTO
         return PlanDto.fromEntity(planRepo.save(existingPlan), true);
-
     }
+
     @Transactional
     public void deletePlan(Long planId) {
         UserEntity user = authFacade.extractUser();
