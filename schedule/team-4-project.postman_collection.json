@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"My Trip to Gyeongbokgung Palace\",\n    \"departureName\": \"My Apartment\",\n    \"departureLat\": 37.5665, \n    \"departureLng\": 126.978,   \n    \"arrivalName\": \"Gyeongbokgung Palace\",\n    \"arrivalAt\": \"2024-10-17 14:00:00\",\n    \"arrivalLat\": 37.5796,      \n    \"arrivalLng\": 126.9769,    \n    \"notificationMessage\": \"Prepare your camera for photos!\"\n}",
+							"raw": "{\n    \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-138\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 14:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -470,7 +470,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"My Trip to Gyeongbokgung Palace\",\n    \"departureName\": \"My home\",\n    \"departureLat\": 37.5665, \n    \"departureLng\": 126.978,   \n    \"arrivalName\": \"Gyeongbokgung Palace\",\n    \"arrivalAt\": \"2024-10-17 12:00:00\",\n    \"arrivalLat\": 37.5796,      \n    \"arrivalLng\": 126.9769,    \n    \"notificationMessage\": \"bring money\"\n}",
+							"raw": "{\n     \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-142\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 09:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -478,7 +478,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/plans/update/6",
+							"raw": "http://localhost:8080/plans/update/9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -487,7 +487,7 @@
 							"path": [
 								"plans",
 								"update",
-								"6"
+								"9"
 							]
 						}
 					},
@@ -777,7 +777,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/route/6/transportation?type=3",
+							"raw": "http://localhost:8080/api/route/6/transportation?type=0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -792,7 +792,7 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "3"
+									"value": "0"
 								}
 							]
 						}
@@ -815,7 +815,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search-location?address=정ㄷ",
+							"raw": "http://localhost:8080/api/search-location?address=남가좌동 5-138",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -828,7 +828,7 @@
 							"query": [
 								{
 									"key": "address",
-									"value": "정ㄷ"
+									"value": "남가좌동 5-138"
 								}
 							]
 						}
@@ -851,7 +851,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search-location?address=정자동",
+							"raw": "http://localhost:8080/api/search-location?address=서교동",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -864,7 +864,7 @@
 							"query": [
 								{
 									"key": "address",
-									"value": "정자동"
+									"value": "서교동"
 								}
 							]
 						}
@@ -1069,7 +1069,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=%EB%82%A8%EA%B0%80%EC%A2%8C%EB%8F%99%205-138",
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=명지대학교",
 							"protocol": "https",
 							"host": [
 								"naveropenapi",
@@ -1085,7 +1085,7 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "%EB%82%A8%EA%B0%80%EC%A2%8C%EB%8F%99%205-138"
+									"value": "명지대학교"
 								}
 							]
 						}
