@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"elisa\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"user2\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
 									"type": "string"
 								}
 							]
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hien\",\n    \"age\": 27,\n    \"email\": \"hien@gmail.com\",\n    \"phone\": \"01015154143\"\n}",
+							"raw": "{\n    \"name\": \"hanh\",\n    \"age\": 24,\n    \"email\": \"hahaha@gmail.com\",\n    \"phone\": \"01015754143\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -114,7 +114,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODAxMzYwMiwiZXhwIjoxNzI4NjE4NDAyfQ.az5NN6Jkn29xsP7dluVGDdXXu3I9j9IVZ3xdA7V38Q_yhTdt99i30yfxT-82Np4P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODYxMjU3NywiZXhwIjoxNzI5MjE3Mzc3fQ.rdK3nEOeGsnTlOBjknRZdBakNjqUtdh2nn_xmW5pXjo6haMMP-VnnNxjjXcssVGX",
 									"type": "string"
 								}
 							]
@@ -184,7 +184,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODYwNzU1NiwiZXhwIjoxNzI5MjEyMzU2fQ.Rp1UQZ_Pr6t00fYZEIipVxADy7IcjIRLhNP6sbQkhLN2hTgTqocUhN8XmSVO95BA",
 									"type": "string"
 								}
 							]
@@ -223,7 +223,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODM2MzExMSwiZXhwIjoxNzI4OTY3OTExfQ.94U4Vm4yRCkHtOactj352jer-fpeRnC83hvvTcI_8Gh6dXNSqPYCoUXCB2q7fy6P",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMyIsImlhdCI6MTcyODYwNzU1NiwiZXhwIjoxNzI5MjEyMzU2fQ.Rp1UQZ_Pr6t00fYZEIipVxADy7IcjIRLhNP6sbQkhLN2hTgTqocUhN8XmSVO95BA",
 									"type": "string"
 								}
 							]
@@ -355,7 +355,7 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/admin/approveSuspend/1",
+							"raw": "http://localhost:8080/admin/approveSuspend/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -364,7 +364,7 @@
 							"path": [
 								"admin",
 								"approveSuspend",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -373,7 +373,508 @@
 			]
 		},
 		{
-			"name": "schedules",
+			"name": "plans",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-138\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 14:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/plans/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-plan-task",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"planId\": 7,\n    \"title\": \"mang ho chieu\",\n    \"time\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/plans/create-plan-task",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"create-plan-task"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n     \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-142\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 09:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/plans/update/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"update",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/delete/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "my plans",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/my-plans",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"my-plans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "plan complete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/complete/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"complete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completed",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/completed",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"completed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "incomplete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/incomplete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"incomplete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "remaining-time",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/plans/time-remaining",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"plans",
+								"time-remaining"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "route",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "SX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "SY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/route/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"route",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/route/{planId}/transportation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "SX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "SY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/route/6/transportation?type=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"route",
+								"6",
+								"transportation"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search location",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search-location?address=남가좌동 5-138",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search-location"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "남가좌동 5-138"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search location Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search-location?address=서교동",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search-location"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "서교동"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "tasks",
 			"item": [
 				{
 					"name": "create",
@@ -392,7 +893,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"gội đầu\",\n    \"startTime\": \"2024-10-09T11:18:00\",\n    \"endTime\": \"2024-10-09T11:37:00\"\n    \n}",
+							"raw": "{\n    \"title\": \"청소하기\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -400,14 +901,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/schedules/create",
+							"raw": "http://localhost:8080/tasks/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"tasks",
 								"create"
 							]
 						}
@@ -422,7 +923,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
 									"type": "string"
 								}
 							]
@@ -431,7 +932,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"주방 청소\",\n    \"startTime\": \"2024-10-09T14:00:00\",\n    \"endTime\": \"2024-10-09T14:30:00\",\n    \"estimatedCost\": \"10.3\"\n\n    \n}",
+							"raw": "{\n    \"title\": \"청소하기\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -439,14 +940,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/schedules/update/1",
+							"raw": "http://localhost:8080/tasks/update/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"tasks",
 								"update",
 								"1"
 							]
@@ -462,7 +963,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcyODM5NzA5NiwiZXhwIjoxNzI5MDAxODk2fQ.Fuu-TeY4kCA7Uxp7YqftNEirQ5hxZ8aIx3qBBGReWC6My-jmKB25tkgH1INBtzwE",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
 									"type": "string"
 								}
 							]
@@ -470,14 +971,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/delete/1",
+							"raw": "http://localhost:8080/tasks/delete/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"tasks",
 								"delete",
 								"1"
 							]
@@ -486,7 +987,7 @@
 					"response": []
 				},
 				{
-					"name": "my schedules",
+					"name": "my tasks",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -501,22 +1002,22 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/my-schedules",
+							"raw": "http://localhost:8080/tasks/my-tasks",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
-								"my-schedules"
+								"tasks",
+								"my-tasks"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "schedule complete",
+					"name": "complete task",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -531,76 +1032,16 @@
 						"method": "PUT",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/schedules/complete/7",
+							"raw": "http://localhost:8080/tasks/complete/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"schedules",
+								"tasks",
 								"complete",
-								"7"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "completed",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/schedules/completed",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"schedules",
-								"completed"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyMiIsImlhdCI6MTcyODQzNTM2MCwiZXhwIjoxNzI5MDQwMTYwfQ.u2mmdHxAN92GgTa3IA4hINXQo9YmZY_jzgDxIHkQahw9zObqkML2KXy79O2D4zIt",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/schedules/expired",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"schedules",
-								"expired"
+								"3"
 							]
 						}
 					},
@@ -609,50 +1050,42 @@
 			]
 		},
 		{
-			"name": "api",
+			"name": "ncloud",
 			"item": [
 				{
-					"name": "pub-trans-path",
+					"name": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=남가좌동 5-138",
 					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-ncp-apigw-api-key-id",
+								"value": "g24wojyn1l",
+								"type": "text"
+							},
+							{
+								"key": "x-ncp-apigw-api-key",
+								"value": "tmkN8TuZ7Wnc6hbFHjIs0ElQat39LqSNIvkUsG5l",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "http://localhost:8080/api/pub-trans-path?startX=126.9027279&startY=37.5349277&endX=126.9145430&endY=37.5499421\n",
-							"protocol": "http",
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=명지대학교",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"naveropenapi",
+								"apigw",
+								"ntruss",
+								"com"
 							],
-							"port": "8080",
 							"path": [
-								"api",
-								"pub-trans-path"
+								"map-geocode",
+								"v2",
+								"geocode"
 							],
 							"query": [
 								{
-									"key": "startX",
-									"value": "126.9027279"
-								},
-								{
-									"key": "startY",
-									"value": "37.5349277"
-								},
-								{
-									"key": "endX",
-									"value": "126.9145430"
-								},
-								{
-									"key": "endY",
-									"value": "37.5499421\n"
+									"key": "query",
+									"value": "명지대학교"
 								}
 							]
 						}
