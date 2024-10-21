@@ -1,6 +1,8 @@
 package com.example.moveSmart.api.service;
 
 import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.config.RouteSearcher;
+import com.example.moveSmart.api.entity.RouteSearchResult;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -12,6 +14,7 @@ import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,54 +27,36 @@ public class OdsayService {
     private final AuthenticationFacade authFacade;
     private final Client client;
     private final PlanRepo planRepo;
+    private final RouteSearcher routeSearcher;
 
-    public Map<String, List<OdsayRouteSearchResponse.Result.Path>> findRoutesForPlan(Long planId) {
-        Map<String, List<OdsayRouteSearchResponse.Result.Path>> routes = new HashMap<>();
 
-        // Tìm các loại đường
-        for (int trafficType = 0; trafficType <= 4; trafficType++) {
-            String routeType = getRouteType(trafficType);
-            List<OdsayRouteSearchResponse.Result.Path> pathList = findRouteForPlan(planId, trafficType);
-            routes.put(routeType, pathList);
-        }
+    public RouteSearchResult findRouteForPlan(Long planId, int searchPathType) {
+        // Extract the current user from the authentication facade
+        UserEntity currentUser = authFacade.extractUser();
 
-        return routes;
-    }
+        // Retrieve the plan by ID, ensuring it belongs to the current user
+        Plan plan = planRepo.findByIdAndUser(planId, currentUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found for the current user"));
 
-    public List<OdsayRouteSearchResponse.Result.Path> findRouteForPlan(Long planId, int trafficType) {
-        // Lấy người dùng hiện tại từ authFacade
-        UserEntity user = authFacade.extractUser();
+        // Use the OdsayClient to search for routes based on the plan's coordinates and the searchPathType
+        OdsayRouteSearchResponse response = client.searchRoute(plan, searchPathType);
+        log.info("ODSay API Response: {}", response);
 
-        // Fetch the Plan by ID and ensure it belongs to the current user
-        Plan plan = planRepo.findByIdAndUser(planId, user)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found"));
-
-        // Sử dụng OdsayClient để tìm kiếm tuyến đường dựa trên tọa độ của kế hoạch
-        OdsayRouteSearchResponse response = client.searchRoute(plan);
-        log.info("Response from ODSAY API: {}", response);
-        log.info("Searching for paths with traffic type: {}", trafficType);
-        // Kiểm tra nếu response hợp lệ
+        // Validate the response
         if (response == null || response.getResult() == null || response.getResult().getPath() == null) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found for the given plan");
         }
 
-        // Lọc và lấy các quãng đường dựa trên trafficType
-        List<OdsayRouteSearchResponse.Result.Path> filteredPaths = response.getResult().getPath().stream()
-                .filter(path -> path.getPathType() == trafficType)
-                .collect(Collectors.toList());
-        log.info("Filtered Paths for traffic type {}: {}", trafficType, filteredPaths.size());
-
-        return filteredPaths;
+        // Return a RouteSearchResult object containing the search type and the list of routes
+        int resultSearchType = response.getResult().getSearchType();
+        List<OdsayRouteSearchResponse.Result.Path> paths = response.getResult().getPath();
+        return new RouteSearchResult(resultSearchType, paths);
     }
 
-    private String getRouteType(int trafficType) {
-        return switch (trafficType) {
-            case 0 -> "walkingRoutes";
-            case 1 -> "busRoutes";
-            case 2 -> "subwayRoutes";
-            case 3 -> "taxiRoutes";
-            case 4 -> "carRoutes";
-            default -> "unknownRoutes";
-        };
-    }
+
+
+
+
+
+
 }

@@ -69,11 +69,9 @@ public class PlanController {
         return ResponseEntity.ok(expiredplans);
     }
 
-
-
-    @GetMapping("/time-remaining")
-    public ResponseEntity<RemainingTimeResponse> getTimeRemaining() {
-        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan();
+    @GetMapping("/time-remaining/{planId}")
+    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
+        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
         RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
         return ResponseEntity.ok(response);
     }

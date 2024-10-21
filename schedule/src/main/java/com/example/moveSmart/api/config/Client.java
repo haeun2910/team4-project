@@ -39,12 +39,9 @@ public class Client {
     @Value("${naver.secret}")
     private String clientSecret;
 
-    @Value("${kakao.key}")
-    private String kakaoApiKey;
-
     private final RestTemplate restTemplate;
 
-    public OdsayRouteSearchResponse searchRoute(Plan plan) {
+    public OdsayRouteSearchResponse searchRoute(Plan plan, int searchPathType) {
         // Build the URI using the coordinates from the Plan object
         URI uri = UriComponentsBuilder.fromUriString(routeSearchUri)
                 .queryParam("SX", plan.getDepartureLng())  // SX: Departure Longitude
@@ -52,6 +49,7 @@ public class Client {
                 .queryParam("EX", plan.getArrivalLng())    // EX: Arrival Longitude
                 .queryParam("EY", plan.getArrivalLat())    // EY: Arrival Latitude
                 .queryParam("apiKey", key)
+                .queryParam("searchType", searchPathType) // Add searchType to the query parameters
                 .build().encode().toUri();
 
         log.info("[request api] uri = {}", uri);
@@ -90,4 +88,6 @@ public class Client {
 
         return new PlaceSearchResponse(places);
     }
+
+
 }

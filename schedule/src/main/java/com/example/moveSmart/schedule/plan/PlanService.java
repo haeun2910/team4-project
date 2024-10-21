@@ -27,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -195,7 +196,7 @@ public class PlanService {
     }
 
     @Transactional
-    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan() {
+    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan(Long planId) {
         // Lấy người dùng hiện tại từ authFacade
         UserEntity currentUser = authFacade.extractUser();
         log.info("Current User: {}", currentUser);
@@ -203,11 +204,11 @@ public class PlanService {
         // Lấy thời gian hiện tại
         LocalDateTime now = LocalDateTime.now();
 
-        // Tìm kế hoạch gần nhất của người dùng, kế hoạch phải có thời gian đến lớn hơn thời gian hiện tại
-        Plan recentPlan = planRepo.findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc(currentUser, now)
-                .orElseThrow();
+        // Tìm kế hoạch theo id và thời gian đến phải lớn hơn thời gian hiện tại
+        Plan recentPlan = planRepo.findByIdAndArrivalAtGreaterThan(planId, now)
+                .orElseThrow(() -> new NoSuchElementException("No plan found with id " + planId + " and valid arrival time."));
 
-        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch gần nhất
+        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch
         RouteSearchRequest requestDto = RouteSearchRequest.builder()
                 .startLng(recentPlan.getDepartureLng())
                 .startLat(recentPlan.getDepartureLat())
@@ -244,18 +245,5 @@ public class PlanService {
         return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
 
-
-
-//    public String findRouteForPlan(Long planId) {
-//        // Extract the currently authenticated user
-//        UserEntity user = authFacade.extractUser();
-//
-//        // Fetch the Plan by ID, and ensure it belongs to the current user
-//        Plan plan = planRepo.findByIdAndUser(planId, user)
-//                .orElseThrow();
-//
-//        // Use OdsayClient to search for the route based on the Plan's coordinates
-//        return odsayClient.searchRoute(plan);
-//    }
 
 }
