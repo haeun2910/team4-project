@@ -1,7 +1,7 @@
 package com.example.moveSmart.schedule.plan;
 
 import com.example.moveSmart.api.config.Client;
-import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.geo.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
 import com.example.moveSmart.api.entity.RouteSearchRequest;
 import com.example.moveSmart.api.config.RouteSearcher;
@@ -195,8 +195,58 @@ public class PlanService {
         return plans.map(PlanDto::fromEntity);
     }
 
+//    @Transactional
+//    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan(Long planId) {
+//        // Lấy người dùng hiện tại từ authFacade
+//        UserEntity currentUser = authFacade.extractUser();
+//        log.info("Current User: {}", currentUser);
+//
+//        // Lấy thời gian hiện tại
+//        LocalDateTime now = LocalDateTime.now();
+//
+//        // Tìm kế hoạch theo id và thời gian đến phải lớn hơn thời gian hiện tại
+//        Plan recentPlan = planRepo.findByIdAndArrivalAtGreaterThan(planId, now)
+//                .orElseThrow(() -> new NoSuchElementException("No plan found with id " + planId + " and valid arrival time."));
+//
+//        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch
+//        RouteSearchRequest requestDto = RouteSearchRequest.builder()
+//                .startLng(recentPlan.getDepartureLng())
+//                .startLat(recentPlan.getDepartureLat())
+//                .endLng(recentPlan.getArrivalLng())
+//                .endLat(recentPlan.getArrivalLat())
+//                .sortCriterion(0) // 0 là giá trị mặc định của tiêu chí sắp xếp
+//                .build();
+//
+//        // Tính toán thời gian trung bình của các tuyến đường
+//        int routeAverageMins = (int) Math.ceil(routeSearcher.calcRouteAverageTime(requestDto));
+//
+//        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ liên quan tới kế hoạch
+//        int preparationMins = Optional.ofNullable(recentPlan.getPlanTasks())
+//                .map(tasks -> tasks.stream()
+//                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Thời gian của mỗi nhiệm vụ
+//                        .sum())
+//                .orElse(0); // Trả về 0 nếu danh sách nhiệm vụ rỗng hoặc null
+//
+//        // Tính toán thời gian chuẩn bị
+//        LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
+//        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes(routeAverageMins + preparationMins);
+//
+//        // Tính toán thời gian còn lại cho đến khi người dùng cần bắt đầu chuẩn bị
+//        Duration remainingTime = Duration.between(now, preparationStartAt);
+//        if (remainingTime.isNegative()) {
+//            remainingTime = Duration.ZERO; // Nếu thời gian còn lại là số âm, đặt thành 0
+//        }
+//
+//        // Định nghĩa thời gian đệm (trong phút)
+//        int bufferTimeMins = 15; // Thay đổi giá trị này theo nhu cầu
+//        LocalDateTime recommendedDepartureTime = preparationStartAt.minusMinutes(bufferTimeMins);
+//
+//        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và thời gian khuyến nghị
+//        return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
+//    }
+
     @Transactional
-    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan(Long planId) {
+    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan(Long planId, String transportType) {
         // Lấy người dùng hiện tại từ authFacade
         UserEntity currentUser = authFacade.extractUser();
         log.info("Current User: {}", currentUser);
@@ -217,8 +267,15 @@ public class PlanService {
                 .sortCriterion(0) // 0 là giá trị mặc định của tiêu chí sắp xếp
                 .build();
 
-        // Tính toán thời gian trung bình của các tuyến đường
-        int routeAverageMins = (int) Math.ceil(routeSearcher.calcRouteAverageTime(requestDto));
+        // Tính toán thời gian trung bình của các tuyến đường dựa trên loại phương tiện
+        double routeAverageMins;
+        if ("publicTransport".equalsIgnoreCase(transportType)) {
+            routeAverageMins = Math.ceil(routeSearcher.calcRouteAverageTime(requestDto)); // Tính toán thời gian từ Odsay
+        } else if ("CarOrTaxi".equalsIgnoreCase(transportType)) {
+            routeAverageMins = Math.ceil(routeSearcher.calcNCloudRouteAverageTime(requestDto)); // Tính toán thời gian từ NCloud
+        } else {
+            throw new IllegalArgumentException("Invalid transport type: " + transportType);
+        }
 
         // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ liên quan tới kế hoạch
         int preparationMins = Optional.ofNullable(recentPlan.getPlanTasks())
@@ -229,7 +286,7 @@ public class PlanService {
 
         // Tính toán thời gian chuẩn bị
         LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
-        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes(routeAverageMins + preparationMins);
+        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes((int) routeAverageMins + preparationMins);
 
         // Tính toán thời gian còn lại cho đến khi người dùng cần bắt đầu chuẩn bị
         Duration remainingTime = Duration.between(now, preparationStartAt);
@@ -242,7 +299,7 @@ public class PlanService {
         LocalDateTime recommendedDepartureTime = preparationStartAt.minusMinutes(bufferTimeMins);
 
         // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và thời gian khuyến nghị
-        return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
+        return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
 
 

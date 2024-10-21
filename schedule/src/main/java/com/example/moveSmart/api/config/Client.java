@@ -1,9 +1,10 @@
 package com.example.moveSmart.api.config;
 
-import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.geo.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
-import com.example.moveSmart.api.entity.GeoAddress;
-import com.example.moveSmart.api.entity.GeoNcpResponse;
+import com.example.moveSmart.api.entity.geo.GeoAddress;
+import com.example.moveSmart.api.entity.geo.GeoNcpResponse;
 import com.example.moveSmart.api.repo.NcpMapApiService;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -41,7 +44,7 @@ public class Client {
 
     private final RestTemplate restTemplate;
 
-    public OdsayRouteSearchResponse searchRoute(Plan plan, int searchPathType) {
+    public OdsayRouteSearchResponse searchRouteWithPubTran(Plan plan) {
         // Build the URI using the coordinates from the Plan object
         URI uri = UriComponentsBuilder.fromUriString(routeSearchUri)
                 .queryParam("SX", plan.getDepartureLng())  // SX: Departure Longitude
@@ -49,7 +52,7 @@ public class Client {
                 .queryParam("EX", plan.getArrivalLng())    // EX: Arrival Longitude
                 .queryParam("EY", plan.getArrivalLat())    // EY: Arrival Latitude
                 .queryParam("apiKey", key)
-                .queryParam("searchType", searchPathType) // Add searchType to the query parameters
+                // Removed the searchType query parameter to search for all modes
                 .build().encode().toUri();
 
         log.info("[request api] uri = {}", uri);
@@ -58,13 +61,26 @@ public class Client {
         var httpEntity = new HttpEntity<>(new HttpHeaders());
         var responseType = new ParameterizedTypeReference<OdsayRouteSearchResponse>() {};
 
-        // Send the request to ODsay API
-        var responseEntity = new RestTemplate().exchange(
-                uri, HttpMethod.GET, httpEntity, responseType
-        );
+        try {
+            // Send the request to ODsay API
+            ResponseEntity<OdsayRouteSearchResponse> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, httpEntity, responseType
+            );
 
-        return responseEntity.getBody();
+            // Log the response
+            log.info("[response api] status = {}, body = {}", responseEntity.getStatusCode(), responseEntity.getBody());
+
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.error("Error during API request: {}", e.getMessage());
+            throw new ResponseStatusException(e.getStatusCode(), "Error while calling ODSAY API", e);
+        } catch (Exception e) {
+            log.error("Unexpected error: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred", e);
+        }
     }
+
+
 
     public PlaceSearchResponse searchAddress(String query) {
         GeoNcpResponse response = apiService.geocode(Map.of("query", query));
@@ -88,6 +104,43 @@ public class Client {
 
         return new PlaceSearchResponse(places);
     }
+
+    public NCloudRouteSearchResponse searchRouteWithPrivateCar(Plan plan) {
+        // Build the URI using the coordinates from the Plan object
+        URI uri = UriComponentsBuilder.fromUriString("https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving")
+                .queryParam("start", plan.getDepartureLng() + "," + plan.getDepartureLat())  // Start location (Longitude, Latitude)
+                .queryParam("goal", plan.getArrivalLng() + "," + plan.getArrivalLat())        // End location (Longitude, Latitude)
+                .build().encode().toUri();
+
+        log.info("[request api] uri = {}", uri);
+
+        // HttpEntity for request with headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-NCP-APIGW-API-KEY-ID", clientId); // Set the client ID
+        headers.set("X-NCP-APIGW-API-KEY", clientSecret); // Set the client secret
+
+        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
+        var responseType = new ParameterizedTypeReference<NCloudRouteSearchResponse>() {};
+
+        try {
+            // Send the request to NCloud API
+            ResponseEntity<NCloudRouteSearchResponse> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, httpEntity, responseType
+            );
+
+            // Log the response
+            log.info("[response api] status = {}, body = {}", responseEntity.getStatusCode(), responseEntity.getBody());
+
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.error("Error during API request: {}", e.getMessage());
+            throw new ResponseStatusException(e.getStatusCode(), "Error while calling NCloud API", e);
+        } catch (Exception e) {
+            log.error("Unexpected error: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred", e);
+        }
+    }
+
 
 
 }

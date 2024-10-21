@@ -69,10 +69,19 @@ public class PlanController {
         return ResponseEntity.ok(expiredplans);
     }
 
+//    @GetMapping("/time-remaining/{planId}")
+//    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
+//        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
+//        RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
+//        return ResponseEntity.ok(response);
+//    }
+
     @GetMapping("/time-remaining/{planId}")
-    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
-        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
+    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId,
+                                                                  @RequestParam String transportType) {
+        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId, transportType);
         RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
         return ResponseEntity.ok(response);
     }
+
 }
