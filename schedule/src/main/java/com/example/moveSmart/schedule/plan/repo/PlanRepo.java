@@ -14,12 +14,6 @@ public interface PlanRepo extends JpaRepository<Plan, Long> {
 
     Page<Plan> findByUserAndCompletedTrue(UserEntity user, Pageable pageable);
     Page<Plan> findByUserAndCompletedFalse(UserEntity user, Pageable pageable);
-    Optional<Plan> findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc (UserEntity user, LocalDateTime now);
     Optional<Plan> findByIdAndUser(Long planId, UserEntity user);
     Optional<Plan> findByIdAndArrivalAtGreaterThan(Long id, LocalDateTime now);
-
-
-
-
-
 }

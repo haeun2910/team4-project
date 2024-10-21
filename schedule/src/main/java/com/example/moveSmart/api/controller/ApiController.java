@@ -19,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api")
 public class ApiController {
     private final Client client;
-    private final PlanService planService;
     private final OdsayService odsayService;
-    private final RouteSearcher routeSearcher;
-
 
     @GetMapping("/route/{planId}")
     public ResponseEntity<RouteSearchResult> getRoutesForPlan(@PathVariable Long planId) {
@@ -34,8 +31,6 @@ public class ApiController {
         NCloudRouteSearchResponse response = odsayService.searchRouteByPlanIdWithPrivateCar(planId);
         return ResponseEntity.ok(response);
     }
-
-
     @GetMapping("/search-location")
     public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) throws JsonProcessingException {
         log.info("Received address: {}", address);
