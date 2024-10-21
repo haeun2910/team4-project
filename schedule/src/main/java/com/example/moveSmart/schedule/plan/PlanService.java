@@ -27,8 +27,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -277,30 +277,39 @@ public class PlanService {
             throw new IllegalArgumentException("Invalid transport type: " + transportType);
         }
 
-        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ liên quan tới kế hoạch
-        int preparationMins = Optional.ofNullable(recentPlan.getPlanTasks())
+        // Kiểm tra danh sách các nhiệm vụ
+        Optional.ofNullable(recentPlan.getPlanTasks())
+                .ifPresent(tasks -> tasks.forEach(task -> log.info("Task: {}, Time: {}", task.getTask().getTitle(), task.getTask().getTime())));
+
+        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ (Task) liên quan tới kế hoạch
+        int totalReadyTimeAsMins = Optional.ofNullable(recentPlan.getPlanTasks())
                 .map(tasks -> tasks.stream()
-                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Thời gian của mỗi nhiệm vụ
+                        .filter(Objects::nonNull)
+                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Lấy thời gian của mỗi nhiệm vụ (nếu null trả về 0)
                         .sum())
                 .orElse(0); // Trả về 0 nếu danh sách nhiệm vụ rỗng hoặc null
 
+        log.info("Total Ready Time (in minutes): {}", totalReadyTimeAsMins);
+
         // Tính toán thời gian chuẩn bị
         LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
-        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes((int) routeAverageMins + preparationMins);
+        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes((int) routeAverageMins + totalReadyTimeAsMins);
 
-        // Tính toán thời gian còn lại cho đến khi người dùng cần bắt đầu chuẩn bị
-        Duration remainingTime = Duration.between(now, preparationStartAt);
+        // Tính toán thời gian còn lại cho đến khi người dùng cần đến (ArrivalAt)
+        Duration remainingTime = Duration.between(now, recentPlanArrivalAt);
         if (remainingTime.isNegative()) {
             remainingTime = Duration.ZERO; // Nếu thời gian còn lại là số âm, đặt thành 0
         }
+
 
         // Định nghĩa thời gian đệm (trong phút)
         int bufferTimeMins = 15; // Thay đổi giá trị này theo nhu cầu
         LocalDateTime recommendedDepartureTime = preparationStartAt.minusMinutes(bufferTimeMins);
 
-        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và thời gian khuyến nghị
-        return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
+        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và tổng thời gian chuẩn bị
+        return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, totalReadyTimeAsMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
+
 
 
 }

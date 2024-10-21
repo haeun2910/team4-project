@@ -422,7 +422,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -431,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"planId\": 12,\n    \"title\": \"trang diem\",\n    \"time\": 15\n}",
+							"raw": "{\n    \"planId\": 14,\n    \"title\": \"rut tien\",\n    \"time\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -681,6 +681,11 @@
 								{
 									"key": "transportType",
 									"value": "CarOrTaxi"
+								},
+								{
+									"key": "transportType",
+									"value": "publicTransport",
+									"disabled": true
 								}
 							]
 						}

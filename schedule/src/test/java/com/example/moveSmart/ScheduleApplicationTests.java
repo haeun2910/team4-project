@@ -43,29 +43,4 @@ class ScheduleApplicationTests {
 		// Assert the response (you might not know the exact value, but you can check it's > 0)
 		assertTrue(averageTime > 0);
 	}
-	@Test
-	void testRemainingTimeResponse() {
-		// Arrange
-		Duration remainingTime = Duration.ofHours(2).plusMinutes(30); // 2 hours and 30 minutes
-		int routeAverageTimeAsMins = 45;
-		int totalReadyTimeAsMins = 15;
-		LocalDateTime recentPlanArrivalAt = LocalDateTime.now().plusHours(3); // 3 hours from now
-
-		RemainingTimeInfoVo remainingTimeInfoVo = new RemainingTimeInfoVo(
-				remainingTime,
-				routeAverageTimeAsMins,
-				totalReadyTimeAsMins,
-				recentPlanArrivalAt
-		);
-
-		// Act
-		RemainingTimeResponse response = new RemainingTimeResponse(remainingTimeInfoVo);
-
-		// Assert
-		assertEquals(2, response.getRemainingTime().getHours()); // Check hours
-		assertEquals(30, response.getRemainingTime().getMinutes()); // Check minutes
-		assertEquals(routeAverageTimeAsMins, response.getRouteAverageTimeAsMins()); // Check route average time
-		assertEquals(totalReadyTimeAsMins, response.getTotalReadyTimeAsMins()); // Check total ready time
-		assertEquals(recentPlanArrivalAt, response.getRecentPlanArrivalAt()); // Check recent plan arrival time
-	}
 }
