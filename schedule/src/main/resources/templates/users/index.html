@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<main class="p-3">
+    <h1>My Page</h1>
+    <div id="anonymous" class="d-none">
+        <h2>Please Sign In</h2>
+        <a href="/users/signin">Sign In</a>
+        <a href="/users/signup">Sign Up</a>
+    </div>
+    <div id="authenticated" class="d-none">
+        <div id="img-container" class="w-25 my-3"></div>
+        <h2 id="greeting"></h2>
+        <p id="summary"></p>
+        <a href="/views/user/update">Update</a>
+        <button id="logout-button" class="btn btn-primary">Logout</button>
+<!--        <div id="user-menu" class="d-none">-->
+<!--            <a href="/views/shops">Go Shopping</a>-->
+<!--            <a href="/views/orders">View my Orders</a>-->
+<!--            <a href="/views/user/upgrade">Make a shop</a>-->
+<!--        </div>-->
+<!--        <div id="owner-menu" class="d-none">-->
+<!--            <a href="/views/shops">Go Shopping</a>-->
+<!--            <a href="/views/orders">View my Orders</a>-->
+<!--            <a href="/views/shops/my-shop">Manage my Shop</a>-->
+<!--        </div>-->
+<!--        <div id="admin-menu" class="d-none">-->
+<!--            <a href="/views/shops">Go Shopping</a>-->
+<!--            <a href="/views/orders">View my Orders</a>-->
+<!--            <a href="/views/admin/upgrade-requests">Check User Requests</a>-->
+<!--            <a href="/views/admin/shop-open-requests">Check Shop Open Requests</a>-->
+<!--            <a href="/views/admin/shop-close-requests">Check Shop Close Requests</a>-->
+<!--        </div>-->
+    </div>
+</main>
+<script src="/static/js/user/index.js"></script>
+</body>
+</html>

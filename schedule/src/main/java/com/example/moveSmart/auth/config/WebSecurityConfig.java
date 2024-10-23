@@ -29,12 +29,12 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate","/search")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/signin/validate","/search")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin")
                             .anonymous();
 
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/test/**", "/signin/validate", "/oauth-signin")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/signin/validate", "/oauth-signin")
                             .permitAll();
                     auth.requestMatchers("/users/signup", "/users/signin").anonymous();
                     auth.requestMatchers(
@@ -53,11 +53,11 @@ public class WebSecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/test")
+                        .loginPage("/users/signin")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-//                        .defaultSuccessUrl("/users/get-user-info")
+                        .defaultSuccessUrl("/users/get-user-info")
                         .failureUrl("/users/signin?fail")
                         .permitAll())
                 .addFilterBefore(

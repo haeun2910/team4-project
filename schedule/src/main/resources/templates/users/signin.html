@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <title>Sign In</title>
+</head>
+
+<body>
+<main class="p-3">
+    <div class="mx-auto w-50">
+        <h1>Signin</h1>
+        <a href="/users">Back</a>
+        <form id="signin-form">
+            <div class="mb-3">
+                <label for="username-input" class="form-label">ID</label>
+                <input type="text" id="username-input" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="password-input" class="form-label">Password</label>
+                <input type="password" id="password-input" class="form-control">
+            </div>
+            <button id="login-button" type="submit" class="btn btn-primary">Sign In</button>
+            <br>
+            Login with <a href="/oauth2/authorization/naver">네이버</a>
+
+        </form>
+    </div>
+</main>
+<script src="/static/js/user/signin.js"></script>
+
+</body>
+
+</html>
