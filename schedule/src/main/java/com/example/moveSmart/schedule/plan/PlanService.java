@@ -42,6 +42,38 @@ public class PlanService {
     private final RouteSearcher routeSearcher;
     private final Client client;
 
+//    @Transactional
+//    public PlanDto createPlan(PlanDto planDto) {
+//        UserEntity user = authFacade.extractUser();
+//        UserEntity userId = userRepo.findById(user.getId())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        // Get latitude and longitude for departure and arrival addresses
+//        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
+//        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+//
+//        // Assuming the first result is the most relevant
+//        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
+//        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
+//        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
+//        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
+//
+//        Plan plan = Plan.builder()
+//                .title(planDto.getTitle())
+//                .departureName(planDto.getDepartureName())
+//                .departureLat(departureLat) // set fetched latitude
+//                .departureLng(departureLng) // set fetched longitude
+//                .arrivalName(planDto.getArrivalName())
+//                .arrivalAt(planDto.getArrivalAt())
+//                .arrivalLat(arrivalLat) // set fetched latitude
+//                .arrivalLng(arrivalLng) // set fetched longitude
+//                .notificationMessage(planDto.getNotificationMessage())
+//                .user(userId)
+//                .build();
+//
+//        return PlanDto.fromEntity(planRepo.save(plan), true);
+//    }
+
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
         UserEntity user = authFacade.extractUser();
@@ -49,8 +81,22 @@ public class PlanService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // Get latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        PlaceSearchResponse departureLocation;
+        PlaceSearchResponse arrivalLocation;
+
+        // Determine if the departure name is specific or general
+        if (isSpecificAddress(planDto.getDepartureName())) {
+            departureLocation = client.searchAddress(planDto.getDepartureName());
+        } else {
+            departureLocation = client.searchPlace(planDto.getDepartureName());
+        }
+
+        // Determine if the arrival name is specific or general
+        if (isSpecificAddress(planDto.getArrivalName())) {
+            arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        } else {
+            arrivalLocation = client.searchPlace(planDto.getArrivalName());
+        }
 
         // Assuming the first result is the most relevant
         double departureLat = departureLocation.getPlaces().get(0).getLatitude();
@@ -73,6 +119,13 @@ public class PlanService {
 
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
+
+    // Helper method to determine if the address is specific
+    private boolean isSpecificAddress(String address) {
+        // Check for patterns indicating specific addresses (e.g., contains numbers and specific patterns)
+        return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
+    }
+
 
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user

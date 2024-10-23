@@ -1,10 +1,8 @@
 package com.example.moveSmart.api.config;
 
 import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
-import com.example.moveSmart.api.entity.geo.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.geo.*;
 import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
-import com.example.moveSmart.api.entity.geo.GeoAddress;
-import com.example.moveSmart.api.entity.geo.GeoNcpResponse;
 import com.example.moveSmart.api.repo.NcpMapApiService;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +39,12 @@ public class Client {
 
     @Value("${naver.secret}")
     private String clientSecret;
+
+    @Value("${naver.search-client-id}")
+    private String searchClientId;
+    @Value("${naver.search-client-secret}")
+    private String searchClientSecret;
+
 
     private final RestTemplate restTemplate;
 
@@ -142,5 +146,55 @@ public class Client {
     }
 
 
+    public PlaceSearchResponse searchPlace(String query) {
+        // Xây dựng URI cho Naver Places API
+        URI uri = UriComponentsBuilder.fromUriString("https://openapi.naver.com/v1/search/local.json")
+                .queryParam("query", query)
+                .build().encode().toUri();
+
+        log.info("[request api] uri = {}", uri);
+
+        // HttpEntity cho yêu cầu với tiêu đề
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Naver-Client-Id", searchClientId); // Thiết lập Client ID
+        headers.set("X-Naver-Client-Secret", searchClientSecret); // Thiết lập Client Secret
+
+        HttpEntity<Void> httpEntity = new HttpEntity<>(headers);
+
+        try {
+            // Gửi yêu cầu đến Naver Local Search API và nhận phản hồi
+            ResponseEntity<NaverSearchResponse> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, httpEntity, NaverSearchResponse.class
+            );
+
+            // Log phản hồi
+            log.info("[response api] status = {}, body = {}", responseEntity.getStatusCode(), responseEntity.getBody());
+
+            // Phân tích phản hồi để lấy danh sách địa điểm
+            List<PlaceSearchResponse.Place> places = new ArrayList<>();
+            NaverSearchResponse body = responseEntity.getBody();
+            if (body != null && body.getItems() != null && !body.getItems().isEmpty()) {
+                for (NaverSearchItem item : body.getItems()) {
+                    String name = item.getTitle(); // Lấy tên địa điểm
+                    double latitude = item.getLatitude(); // Lấy vĩ độ
+                    double longitude = item.getLongitude(); // Lấy kinh độ
+
+                    // Tạo một đối tượng Place và thêm vào danh sách
+                    places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
+                }
+            } else {
+                log.warn("No places found for query: {}", query);
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No places found");
+            }
+
+            return new PlaceSearchResponse(places);
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.error("Error during API request: {}", e.getMessage());
+            throw new ResponseStatusException(e.getStatusCode(), "Error while calling Naver Local Search API", e);
+        } catch (Exception e) {
+            log.error("Unexpected error: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred", e);
+        }
+    }
 
 }

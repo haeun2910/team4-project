@@ -37,5 +37,12 @@ public class ApiController {
         PlaceSearchResponse response = client.searchAddress(address);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/search-place")
+    public ResponseEntity<PlaceSearchResponse> searchPlace(@RequestParam String address) throws JsonProcessingException {
+        log.info("Received address: {}", address);
+        PlaceSearchResponse response = client.searchPlace(address);
+        return ResponseEntity.ok(response);
+    }
+
 
 }

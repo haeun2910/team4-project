@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"go to seoul land\",\n    \"departureName\": \"양화로18길 3\",  \n    \"arrivalName\": \"광명로 181\",\n    \"arrivalAt\": \"2024-10-25 09:10:00\",   \n    \"notificationMessage\": \"mang dien thoai\"\n}",
+							"raw": "{\n    \"title\": \"go shopping\",\n    \"departureName\": \"명지대학교\",  \n    \"arrivalName\": \"홍대입구역\",\n    \"arrivalAt\": \"2024-10-25 09:10:00\",   \n    \"notificationMessage\": \"mang dien thoai\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -666,7 +666,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/plans/time-remaining/14?transportType=CarOrTaxi",
+							"raw": "http://localhost:8080/plans/time-remaining/18?transportType=CarOrTaxi",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -675,7 +675,7 @@
 							"path": [
 								"plans",
 								"time-remaining",
-								"14"
+								"18"
 							],
 							"query": [
 								{
@@ -733,7 +733,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8080/api/route/15",
+							"raw": "http://localhost:8080/api/route/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -742,7 +742,7 @@
 							"path": [
 								"api",
 								"route",
-								"15"
+								"18"
 							]
 						}
 					},
@@ -764,7 +764,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/route-car-taxi/15",
+							"raw": "http://localhost:8080/api/route-car-taxi/18",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -773,7 +773,7 @@
 							"path": [
 								"api",
 								"route-car-taxi",
-								"15"
+								"18"
 							]
 						}
 					},
@@ -787,7 +787,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -795,7 +795,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search-location?address=양화로18길 3",
+							"raw": "http://localhost:8080/api/search-location?address=마포구 동교동",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -808,7 +808,43 @@
 							"query": [
 								{
 									"key": "address",
-									"value": "양화로18길 3"
+									"value": "마포구 동교동"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search place",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/search-place?address=홍대입구역 9번출구",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search-place"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "홍대입구역 9번출구"
 								}
 							]
 						}
@@ -1013,7 +1049,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=명지대학교",
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=남가좌동 5-138",
 							"protocol": "https",
 							"host": [
 								"naveropenapi",
@@ -1029,7 +1065,7 @@
 							"query": [
 								{
 									"key": "query",
-									"value": "명지대학교"
+									"value": "남가좌동 5-138"
 								}
 							]
 						}
@@ -1082,6 +1118,51 @@
 									"key": "mode",
 									"value": "WALKING,TAXI,DRIVING",
 									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://naveropenapi.apigw.ntruss.com/datalab/v1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Naver-Client-Id",
+								"value": "uvxeeIjVjXJ0T_7Q8Qr4",
+								"type": "text"
+							},
+							{
+								"key": "X-Naver-Client-Secret",
+								"value": "Y_Fu5r8Y1m",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://openapi.naver.com/v1/search/local.json?query=명지대학교",
+							"protocol": "https",
+							"host": [
+								"openapi",
+								"naver",
+								"com"
+							],
+							"path": [
+								"v1",
+								"search",
+								"local.json"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "명지대학교"
 								}
 							]
 						}
