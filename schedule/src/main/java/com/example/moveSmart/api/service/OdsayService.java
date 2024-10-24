@@ -2,8 +2,8 @@ package com.example.moveSmart.api.service;
 
 import com.example.moveSmart.api.config.Client;
 import com.example.moveSmart.api.config.RouteSearcher;
-import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
-import com.example.moveSmart.api.entity.RouteSearchResult;
+import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.RouteSearchResult;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -11,7 +11,7 @@ import com.example.moveSmart.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 

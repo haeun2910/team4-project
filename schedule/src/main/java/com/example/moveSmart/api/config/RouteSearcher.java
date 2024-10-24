@@ -1,8 +1,8 @@
 package com.example.moveSmart.api.config;
 
-import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
-import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
-import com.example.moveSmart.api.entity.RouteSearchRequest;
+import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.RouteSearchRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

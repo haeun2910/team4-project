@@ -1,8 +1,11 @@
 package com.example.moveSmart.api.config;
 
-import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.geo.*;
-import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.naverSearch.NaverSearchItem;
+import com.example.moveSmart.api.entity.naverSearch.NaverSearchResponse;
 import com.example.moveSmart.api.repo.NcpMapApiService;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import lombok.RequiredArgsConstructor;

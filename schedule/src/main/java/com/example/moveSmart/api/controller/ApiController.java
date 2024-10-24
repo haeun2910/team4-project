@@ -1,12 +1,10 @@
 package com.example.moveSmart.api.controller;
 
 import com.example.moveSmart.api.config.Client;
-import com.example.moveSmart.api.config.RouteSearcher;
-import com.example.moveSmart.api.entity.NCloudRouteSearchResponse;
-import com.example.moveSmart.api.entity.geo.PlaceSearchResponse;
-import com.example.moveSmart.api.entity.RouteSearchResult;
+import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.route.RouteSearchResult;
 import com.example.moveSmart.api.service.OdsayService;
-import com.example.moveSmart.schedule.plan.PlanService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

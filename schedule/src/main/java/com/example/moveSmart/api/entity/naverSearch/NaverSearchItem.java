@@ -1,4 +1,4 @@
-package com.example.moveSmart.api.entity.geo;
+package com.example.moveSmart.api.entity.naverSearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

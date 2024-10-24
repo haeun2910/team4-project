@@ -1,9 +1,7 @@
 package com.example.moveSmart;
 import com.example.moveSmart.api.config.Client;
 import com.example.moveSmart.api.config.RouteSearcher;
-import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.api.entity.RemainingTimeResponse;
-import com.example.moveSmart.api.entity.RouteSearchRequest;
+import com.example.moveSmart.api.entity.route.RouteSearchRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -11,9 +9,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestTemplate;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

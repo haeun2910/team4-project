@@ -1,9 +1,9 @@
 package com.example.moveSmart.schedule.plan;
 
 import com.example.moveSmart.api.config.Client;
-import com.example.moveSmart.api.entity.geo.PlaceSearchResponse;
-import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.api.entity.RouteSearchRequest;
+import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.time.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.route.RouteSearchRequest;
 import com.example.moveSmart.api.config.RouteSearcher;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
@@ -28,7 +28,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Slf4j

@@ -1,7 +1,7 @@
 package com.example.moveSmart.schedule.plan;
 
-import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.api.entity.RemainingTimeResponse;
+import com.example.moveSmart.api.entity.time.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.time.RemainingTimeResponse;
 import com.example.moveSmart.api.service.OdsayService;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
