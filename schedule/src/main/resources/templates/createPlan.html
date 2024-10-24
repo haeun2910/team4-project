@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Kế Hoạch</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            width: 100%;
+            height: 600px;
+            margin-top: 20px;
+        }
+        #form-container {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="form-container">
+    <h2>Tạo Kế Hoạch</h2>
+    <input type="text" id="title" placeholder="Tiêu đề kế hoạch" required>
+    <input type="text" id="departure-name" placeholder="Địa chỉ khởi hành" required>
+    <input type="text" id="arrival-name" placeholder="Địa chỉ đến" required>
+    <input type="datetime-local" id="arrival-at" required>
+    <textarea id="notification-message" placeholder="Thông báo (nếu có)"></textarea>
+    <button id="create-plan-btn">Tạo Kế Hoạch</button>
+</div>
+
+<div id="map"></div>
+
+<script>
+    var map = new naver.maps.Map('map', {
+        zoom: 10,
+        center: new naver.maps.LatLng(37.3614483, 127.1114883)
+    });
+
+    document.getElementById('create-plan-btn').addEventListener('click', function() {
+        var title = document.getElementById('title').value;
+        var departureName = document.getElementById('departure-name').value;
+        var arrivalName = document.getElementById('arrival-name').value;
+        var arrivalAt = document.getElementById('arrival-at').value;
+        var notificationMessage = document.getElementById('notification-message').value;
+
+        // Tạo một đối tượng kế hoạch
+        var planData = {
+            title: title,
+            departureName: departureName,
+            arrivalName: arrivalName,
+            arrivalAt: arrivalAt,
+            notificationMessage: notificationMessage
+        };
+
+        // Gửi yêu cầu đến server
+        fetch('/plans/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(planData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Không thể tạo kế hoạch.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Kế hoạch đã được tạo thành công! ID: ' + data.id);
+                // Tùy chọn để đặt lại form hoặc làm gì đó khác
+            })
+            .catch(error => {
+                alert('Có lỗi xảy ra: ' + error.message);
+            });
+    });
+</script>
+
+</body>
+</html>
