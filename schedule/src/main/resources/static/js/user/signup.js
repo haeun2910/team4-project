@@ -1,11 +1,3 @@
-const jwt = localStorage.getItem("token") ?? null;
-if (jwt) fetch("/users/get-user-info", {
-  headers: {
-    "Authorization": `Bearer ${jwt}`,
-  },
-}).then(response => {
-  if (response.ok) location.href = "/users";
-})
 
 const signupForm = document.getElementById("signup-form");
 const usernameInput = document.getElementById("username-input");

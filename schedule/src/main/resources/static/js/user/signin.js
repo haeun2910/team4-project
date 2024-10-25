@@ -1,11 +1,4 @@
-const jwt = localStorage.getItem("token") ?? null;
-if (jwt) fetch("/users/get-user-info", {
-  headers: {
-    "Authorization": `Bearer ${jwt}`,
-  },
-}).then(response => {
-  if (response.ok) location.href = "/users";
-})
+
 
 const loginForm = document.getElementById("signin-form");
 const usernameInput = document.getElementById("username-input");
@@ -27,7 +20,9 @@ loginForm.addEventListener("submit", e => {
       })
       .then(json => {
         localStorage.setItem("token", json.token);
-        location.href = "/users";
+        location.href = "/users/update";
       })
       .catch(error => alert(error.message));
+          console.error(error);
+
 });
