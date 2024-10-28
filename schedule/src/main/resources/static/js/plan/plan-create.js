@@ -20,14 +20,10 @@ const arrivalMarker = new naver.maps.Marker({
     title: 'Arrival'
 });
 
+// Function to determine if address is specific or general
 function isSpecificAddress(address) {
     const specificPlacePattern = /(\d{1,2}번출구|입구|학교|공원|지하철|역)$/;
-    if (specificPlacePattern.test(address)) {
-        return false;
-    }
-    const generalAddressPattern = /\d+/;
-
-    return generalAddressPattern.test(address);
+    return !specificPlacePattern.test(address) && /\d+/.test(address);
 }
 
 // Function to fetch coordinates based on address type
@@ -78,33 +74,38 @@ document.getElementById('arrival-name').addEventListener('change', function() {
     updateMap('arrival-name', arrivalMarker);
 });
 
-// Create Plan Button Event Listener
 document.getElementById('create-plan-btn').addEventListener('click', function() {
     const title = document.getElementById('title').value;
     const departureName = document.getElementById('departure-name').value;
     const arrivalName = document.getElementById('arrival-name').value;
-    const arrivalAt = document.getElementById('arrival-at').value;
+    const arrivalDate = document.getElementById('arrival-date').value;
+    const arrivalTime = document.getElementById('arrival-time').value;
     const notificationMessage = document.getElementById('notification-message').value;
 
-    // Ensure all fields are filled
-    if (!title || !departureName || !arrivalName || !arrivalAt) {
+    // Đảm bảo tất cả các trường đều được điền
+    if (!title || !departureName || !arrivalName || !arrivalDate || !arrivalTime) {
         alert('Please fill in all required fields.');
         return;
     }
 
-    // Format arrivalAt to ISO 8601
-    const arrivalAtDate = new Date(arrivalAt);
-    const formattedArrivalAt = arrivalAtDate.toISOString().slice(0, 19);
+    // Kết hợp ngày và giờ thành một đối tượng Date
+    const [year, month, day] = arrivalDate.split('-').map(Number);
+    const [hours, minutes] = arrivalTime.split(':').map(Number);
+    const arrivalAtDate = new Date(year, month - 1, day, hours, minutes); // month - 1 vì tháng trong JavaScript bắt đầu từ 0
 
+// Thay đổi: Định dạng time thành chuỗi theo định dạng HH:mm:ss
+    const formattedArrivalAt = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
+
+// Gửi dữ liệu kế hoạch tới backend
     const planData = {
         title,
         departureName,
         arrivalName,
-        arrivalAt: formattedArrivalAt, // Use formatted date
+        arrivalAt: `${arrivalDate}T${formattedArrivalAt}`, // Sử dụng ngày và thời gian đã định dạng
         notificationMessage
     };
 
-    // Send plan data to backend
+    // Gửi dữ liệu kế hoạch tới backend
     fetch('/plans/create', {
         method: 'POST',
         headers: {
@@ -122,8 +123,8 @@ document.getElementById('create-plan-btn').addEventListener('click', function() 
             return response.json();
         })
         .then(data => {
-            // Redirect to the View Plan page using the ID of the newly created plan
-            const planId = data.id; // Make sure your backend sends back the created plan's ID
+            // Chuyển hướng tới trang View Plan bằng ID của kế hoạch mới tạo
+            const planId = data.id; // Đảm bảo backend gửi ID của kế hoạch đã tạo
             window.location.href = `/views/view-plan?id=${planId}`;
         })
         .catch(error => {

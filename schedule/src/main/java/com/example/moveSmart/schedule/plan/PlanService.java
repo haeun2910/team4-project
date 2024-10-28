@@ -260,7 +260,7 @@ public class PlanService {
         double routeAverageMins;
         if ("publicTransport".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcRouteAverageTime(requestDto)); // Tính toán thời gian từ Odsay
-        } else if ("CarOrTaxi".equalsIgnoreCase(transportType)) {
+        } else if ("carOrTaxi".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcNCloudRouteAverageTime(requestDto)); // Tính toán thời gian từ NCloud
         } else {
             throw new IllegalArgumentException("Invalid transport type: " + transportType);

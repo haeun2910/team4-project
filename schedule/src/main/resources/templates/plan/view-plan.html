@@ -38,6 +38,13 @@
             border: 1px solid #ccc;
             border-radius: 5px;
         }
+        #output {
+            margin-top: 10px; /* Khoảng cách giữa phần tử và các phần tử khác */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9; /* Màu nền nhẹ cho phần hiển thị dữ liệu */
+        }
     </style>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
     <script src="/static/js/plan/view-plan.js" defer></script>
@@ -67,36 +74,17 @@
             <span class="label">Notification Message:</span>
             <span class="value" id="notification-message">Loading...</span> <!-- Default loading text -->
         </div>
-        <div id="public-transport-route" class="plan-detail">
-            <h3>Public Transport Route</h3>
-            <span class="label">Details:</span>
-            <span class="value" id="public-transport-details">Loading...</span> <!-- Default loading text -->
-            <div>
-                <span class="label">Distance:</span>
-                <span class="value" id="public-transport-distance">Loading...</span> <!-- Default loading text -->
-            </div>
-            <div>
-                <span class="label">Duration:</span>
-                <span class="value" id="public-transport-duration">Loading...</span> <!-- Default loading text -->
-            </div>
-            <div>
-                <span class="label">Fare:</span>
-                <span class="value" id="public-transport-fare">Loading...</span> <!-- Default loading text -->
-            </div>
+        <div>
+            <label class="label">Select Transport Type:</label>
+            <select id="transport-type">
+                <option value="publicTransport">Public Transport</option>
+                <option value="carOrTaxi">Car / Taxi</option>
+            </select>
+            <button id="get-time-remaining">Get Time Remaining</button>
         </div>
-        <div id="car-taxi-route" class="plan-detail">
-            <h3>Car/Taxi Route</h3>
-            <span class="label">Details:</span>
-            <span class="value" id="car-taxi-details">Loading...</span> <!-- Default loading text -->
-            <div>
-                <span class="label">Distance:</span>
-                <span class="value" id="car-taxi-distance">Loading...</span> <!-- Default loading text -->
-            </div>
-            <div>
-                <span class="label">Estimated Time:</span>
-                <span class="value" id="car-taxi-duration">Loading...</span> <!-- Default loading text -->
-            </div>
-        </div>
+
+        <!-- Phần tử để hiển thị dữ liệu -->
+        <div id="output"></div>
     </div>
 
     <div id="map"></div>

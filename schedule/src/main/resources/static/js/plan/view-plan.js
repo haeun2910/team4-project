@@ -61,50 +61,50 @@ fetch(`/plans/${planId}`, {
     .catch(error => {
         alert(`An error occurred: ${error.message}`);
     });
-// Fetch public transport route by plan ID
-fetch(`/api/route/${planId}`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`
-    }
-})
-    .then(response => response.json())
-    .then(route => {
-        const detailsElement = document.getElementById('public-transport-details');
-        if (detailsElement) {
-            detailsElement.innerText = route.details || "No public transport route found.";
-            // Display additional route information if available
-            document.getElementById('public-transport-distance').innerText = `Distance: ${route.distance} meters`;
-            document.getElementById('public-transport-duration').innerText = `Duration: ${route.duration} minutes`;
-            document.getElementById('public-transport-fare').innerText = `Fare: ${route.fare} won`;
-        } else {
-            console.error('Element for public transport details not found.');
-        }
-    })
-    .catch(error => console.error('Error fetching public transport route:', error));
 
-// Fetch car/taxi route details by Plan ID
-fetch(`/api/route-car-taxi/${planId}`, {
-    method: 'GET',
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${jwt}`
-    }
-})
-    .then(response => response.json())
-    .then(route => {
-        const carTaxiDetailsElement = document.getElementById('car-taxi-details');
-        if (carTaxiDetailsElement) {
-            carTaxiDetailsElement.innerText = route.details || "No car/taxi route found.";
-            // Display additional route information if available
-            document.getElementById('car-taxi-distance').innerText = `Distance: ${route.distance} meters`;
-            document.getElementById('car-taxi-duration').innerText = `Estimated Time: ${route.duration} minutes`;
-        } else {
-            console.error('Element for car/taxi details not found.');
+// Thêm sự kiện cho nút lấy thời gian còn lại
+document.getElementById('get-time-remaining').addEventListener('click', () => {
+    const transportType = document.getElementById('transport-type').value;
+    console.log(`Fetching time remaining for planId: ${planId}, transportType: ${transportType}`);
+
+    // Gọi API để lấy thời gian còn lại
+    fetch(`/plans/time-remaining/${planId}?transportType=${transportType}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
         }
     })
-    .catch(error => console.error('Error fetching car/taxi route:', error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error fetching time remaining: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data);
+            // Kiểm tra dữ liệu trả về từ API
+            if (data && data.remainingTime) {
+                const timeRemainingInfo = data.remainingTime;
+                const outputElement = document.getElementById('output');
+
+                // Hiển thị dữ liệu vào phần tử output
+                outputElement.innerHTML = `
+            <p><strong>Time remaining:</strong> ${timeRemainingInfo.hours} hours and ${timeRemainingInfo.minutes} minutes</p>
+            <p><strong>Average time:</strong> ${data.routeAverageTimeAsMins} minutes</p>
+            <p><strong>Total Ready Time:</strong> ${data.totalReadyTimeAsMins} minutes</p>
+            <p><strong>Recommended Departure Time:</strong> ${new Date(data.recommendedDepartureTime).toLocaleString()}</p>
+        `;
+            } else {
+                alert('No time remaining data found.');
+            }
+        })
+        .catch(error => {
+            const outputElement = document.getElementById('output');
+            outputElement.innerHTML = `An error occurred: ${error.message}`; // Hiển thị lỗi trên màn hình
+        });
+});
+
 
 function isSpecificAddress(address) {
     const specificPlacePattern = /(\d{1,2}번출구|입구|학교|공원|지하철|역)$/;
