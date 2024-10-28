@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "014b1a08-7902-4324-b550-c0d07dbd33d5",
+		"_postman_id": "86548f4e-0aa0-4306-a791-36bbf2a390e8",
 		"name": "team-4-project",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "37757045"
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"tranlam\",\n    \"password\": \"1234\",\n    \"passwordCheck\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"hahaha\",\n    \"password\": \"1234\"\n}",
+							"raw": "{\n    \"username\": \"tranlam\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -75,7 +75,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"hanh\",\n    \"age\": 24,\n    \"email\": \"hahaha@gmail.com\",\n    \"phone\": \"01015754143\"\n}",
+							"raw": "{\n    \"name\": \"lam huyen tran\",\n    \"age\": 24,\n    \"email\": \"tranlam@gmail.com\",\n    \"phone\": \"010157541473\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -154,7 +154,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ1c2VyNSIsImlhdCI6MTcyODM0Njc0MiwiZXhwIjoxNzI4OTUxNTQyfQ.ZixdwZlut1Lq6FdWe9FiBZdI7gBfaF77sa4zkGUAsAlbiQMbOGmsnHw2eU8wVYiP",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY2MjA0LCJleHAiOjE3Mjk3NzEwMDR9.lU1W26zM5zm--3n4oeTK-dh2odNgLoRog7DHEMOtsdmu1FIBW3WAcZ89-C8lbzo9",
 									"type": "string"
 								}
 							]
@@ -383,7 +383,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY2MjA0LCJleHAiOjE3Mjk3NzEwMDR9.lU1W26zM5zm--3n4oeTK-dh2odNgLoRog7DHEMOtsdmu1FIBW3WAcZ89-C8lbzo9",
 									"type": "string"
 								}
 							]
@@ -392,7 +392,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-138\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 14:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
+							"raw": "{\n    \"title\": \"go shopping\",\n    \"departureName\": \"명지대학교\",  \n    \"arrivalName\": \"홍대입구역\",\n    \"arrivalAt\": \"2024-10-25 09:10:00\",   \n    \"notificationMessage\": \"mang dien thoai\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,7 +422,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -431,7 +431,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"planId\": 7,\n    \"title\": \"mang ho chieu\",\n    \"time\": 5\n}",
+							"raw": "{\n    \"planId\": 14,\n    \"title\": \"rut tien\",\n    \"time\": 5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -470,7 +470,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n     \"title\": \"go to school\",\n    \"departureName\": \"남가좌동 5-142\",  \n    \"arrivalName\": \"관철동 6-13\",\n    \"arrivalAt\": \"2024-10-18 09:00:00\",   \n    \"notificationMessage\": \"Prepare your notebook!\"\n}",
+							"raw": "{\n     \"title\": \"go to work\",\n    \"departureName\": \"남가좌동 5-138\",  \n    \"arrivalName\": \"세종대로12길 12\",\n    \"arrivalAt\": \"2024-10-18 08:45:00\",   \n    \"notificationMessage\": \"mang bang ten\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -532,7 +532,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -658,7 +658,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -666,7 +666,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/plans/time-remaining",
+							"raw": "http://localhost:8080/plans/time-remaining/18?transportType=CarOrTaxi",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -674,126 +674,106 @@
 							"port": "8080",
 							"path": [
 								"plans",
-								"time-remaining"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "route",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3Mjg4Njc5MTYsImV4cCI6MTcyOTQ3MjcxNn0.VzRMDVHIyKlwOvY5SOMA4EY7LdXfi7KaYrCcyviM2LGP4jjeFXIFS6agDuQHrxp9",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "SX",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "SY",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "EX",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "EY",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/api/route/6",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"route",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/route/{planId}/transportation",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "SX",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "SY",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "EX",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							},
-							{
-								"key": "EY",
-								"value": "",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"url": {
-							"raw": "http://localhost:8080/api/route/6/transportation?type=0",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"route",
-								"6",
-								"transportation"
+								"time-remaining",
+								"18"
 							],
 							"query": [
 								{
-									"key": "type",
-									"value": "0"
+									"key": "transportType",
+									"value": "CarOrTaxi"
+								},
+								{
+									"key": "transportType",
+									"value": "publicTransport",
+									"disabled": true
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by plan id with pub trans",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "SX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "SY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EX",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "EY",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/route/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"route",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search by plan id with car taxi",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/route-car-taxi/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"route-car-taxi",
+								"18"
 							]
 						}
 					},
@@ -807,7 +787,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -815,7 +795,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search-location?address=남가좌동 5-138",
+							"raw": "http://localhost:8080/api/search-location?address=마포구 동교동",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -828,7 +808,7 @@
 							"query": [
 								{
 									"key": "address",
-									"value": "남가좌동 5-138"
+									"value": "마포구 동교동"
 								}
 							]
 						}
@@ -836,14 +816,14 @@
 					"response": []
 				},
 				{
-					"name": "search location Copy",
+					"name": "search place",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJoYWhhaGEiLCJpYXQiOjE3MjkwMzk2NjUsImV4cCI6MTcyOTY0NDQ2NX0.5L8g3ul2azm4O7i02krNOzAvfZcVTcjDepI03ivEO92aDldG5YNcBs_El8lRvpot",
+									"value": "eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJ0cmFubGFtIiwiaWF0IjoxNzI5MTY1ODg3LCJleHAiOjE3Mjk3NzA2ODd9.CNBx0c6l5Ach8a4klCDt4ALLBKZIWRhZa6VB0Yc7ODskgC3eopVM0BImTgvsqWgL",
 									"type": "string"
 								}
 							]
@@ -851,7 +831,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/search-location?address=서교동",
+							"raw": "http://localhost:8080/api/search-place?address=홍대입구역 9번출구",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -859,12 +839,12 @@
 							"port": "8080",
 							"path": [
 								"api",
-								"search-location"
+								"search-place"
 							],
 							"query": [
 								{
 									"key": "address",
-									"value": "서교동"
+									"value": "홍대입구역 9번출구"
 								}
 							]
 						}
@@ -1069,7 +1049,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=명지대학교",
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=남가좌동 5-138",
 							"protocol": "https",
 							"host": [
 								"naveropenapi",
@@ -1081,6 +1061,103 @@
 								"map-geocode",
 								"v2",
 								"geocode"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "남가좌동 5-138"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=126.924584,37.5570395&goal=127.0240449,37.4365474",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-ncp-apigw-api-key-id",
+								"value": "g24wojyn1l",
+								"type": "text"
+							},
+							{
+								"key": "x-ncp-apigw-api-key",
+								"value": "tmkN8TuZ7Wnc6hbFHjIs0ElQat39LqSNIvkUsG5l",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=126.924584,37.5570395&goal=127.0240449,37.4365474",
+							"protocol": "https",
+							"host": [
+								"naveropenapi",
+								"apigw",
+								"ntruss",
+								"com"
+							],
+							"path": [
+								"map-direction",
+								"v1",
+								"driving"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "126.924584,37.5570395"
+								},
+								{
+									"key": "goal",
+									"value": "127.0240449,37.4365474"
+								},
+								{
+									"key": "mode",
+									"value": "WALKING,TAXI,DRIVING",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://naveropenapi.apigw.ntruss.com/datalab/v1",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Naver-Client-Id",
+								"value": "uvxeeIjVjXJ0T_7Q8Qr4",
+								"type": "text"
+							},
+							{
+								"key": "X-Naver-Client-Secret",
+								"value": "Y_Fu5r8Y1m",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://openapi.naver.com/v1/search/local.json?query=명지대학교",
+							"protocol": "https",
+							"host": [
+								"openapi",
+								"naver",
+								"com"
+							],
+							"path": [
+								"v1",
+								"search",
+								"local.json"
 							],
 							"query": [
 								{

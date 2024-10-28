@@ -1,4 +1,4 @@
-package com.example.moveSmart.api.entity;
+package com.example.moveSmart.api.entity.geo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

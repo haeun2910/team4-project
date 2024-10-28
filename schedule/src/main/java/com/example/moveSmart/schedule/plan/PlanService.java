@@ -2,8 +2,8 @@ package com.example.moveSmart.schedule.plan;
 
 import com.example.moveSmart.api.config.Client;
 import com.example.moveSmart.api.entity.PlaceSearchResponse;
-import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.api.entity.RouteSearchRequest;
+import com.example.moveSmart.api.entity.time.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.route.RouteSearchRequest;
 import com.example.moveSmart.api.config.RouteSearcher;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -41,6 +41,38 @@ public class PlanService {
     private final RouteSearcher routeSearcher;
     private final Client client;
 
+//    @Transactional
+//    public PlanDto createPlan(PlanDto planDto) {
+//        UserEntity user = authFacade.extractUser();
+//        UserEntity userId = userRepo.findById(user.getId())
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+//
+//        // Get latitude and longitude for departure and arrival addresses
+//        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
+//        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+//
+//        // Assuming the first result is the most relevant
+//        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
+//        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
+//        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
+//        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
+//
+//        Plan plan = Plan.builder()
+//                .title(planDto.getTitle())
+//                .departureName(planDto.getDepartureName())
+//                .departureLat(departureLat) // set fetched latitude
+//                .departureLng(departureLng) // set fetched longitude
+//                .arrivalName(planDto.getArrivalName())
+//                .arrivalAt(planDto.getArrivalAt())
+//                .arrivalLat(arrivalLat) // set fetched latitude
+//                .arrivalLng(arrivalLng) // set fetched longitude
+//                .notificationMessage(planDto.getNotificationMessage())
+//                .user(userId)
+//                .build();
+//
+//        return PlanDto.fromEntity(planRepo.save(plan), true);
+//    }
+
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
         UserEntity user = authFacade.extractUser();
@@ -48,8 +80,22 @@ public class PlanService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // Get latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        PlaceSearchResponse departureLocation;
+        PlaceSearchResponse arrivalLocation;
+
+        // Determine if the departure name is specific or general
+        if (isSpecificAddress(planDto.getDepartureName())) {
+            departureLocation = client.searchAddress(planDto.getDepartureName());
+        } else {
+            departureLocation = client.searchPlace(planDto.getDepartureName());
+        }
+
+        // Determine if the arrival name is specific or general
+        if (isSpecificAddress(planDto.getArrivalName())) {
+            arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        } else {
+            arrivalLocation = client.searchPlace(planDto.getArrivalName());
+        }
 
         // Assuming the first result is the most relevant
         double departureLat = departureLocation.getPlaces().get(0).getLatitude();
@@ -72,6 +118,13 @@ public class PlanService {
 
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
+
+    // Helper method to determine if the address is specific
+    private boolean isSpecificAddress(String address) {
+        // Check for patterns indicating specific addresses (e.g., contains numbers and specific patterns)
+        return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
+    }
+
 
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user
@@ -195,7 +248,7 @@ public class PlanService {
     }
 
     @Transactional
-    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan() {
+    public RemainingTimeInfoVo getTimeRemainingUntilRecentPlan(Long planId, String transportType) {
         // Lấy người dùng hiện tại từ authFacade
         UserEntity currentUser = authFacade.extractUser();
         log.info("Current User: {}", currentUser);
@@ -203,11 +256,11 @@ public class PlanService {
         // Lấy thời gian hiện tại
         LocalDateTime now = LocalDateTime.now();
 
-        // Tìm kế hoạch gần nhất của người dùng, kế hoạch phải có thời gian đến lớn hơn thời gian hiện tại
-        Plan recentPlan = planRepo.findTopByUserAndArrivalAtGreaterThanOrderByArrivalAtAsc(currentUser, now)
-                .orElseThrow();
+        // Tìm kế hoạch theo id và thời gian đến phải lớn hơn thời gian hiện tại
+        Plan recentPlan = planRepo.findByIdAndArrivalAtGreaterThan(planId, now)
+                .orElseThrow(() -> new NoSuchElementException("No plan found with id " + planId + " and valid arrival time."));
 
-        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch gần nhất
+        // Xây dựng đối tượng RouteSearchRequest từ thông tin của kế hoạch
         RouteSearchRequest requestDto = RouteSearchRequest.builder()
                 .startLng(recentPlan.getDepartureLng())
                 .startLat(recentPlan.getDepartureLat())
@@ -216,46 +269,49 @@ public class PlanService {
                 .sortCriterion(0) // 0 là giá trị mặc định của tiêu chí sắp xếp
                 .build();
 
-        // Tính toán thời gian trung bình của các tuyến đường
-        int routeAverageMins = (int) Math.ceil(routeSearcher.calcRouteAverageTime(requestDto));
+        // Tính toán thời gian trung bình của các tuyến đường dựa trên loại phương tiện
+        double routeAverageMins;
+        if ("publicTransport".equalsIgnoreCase(transportType)) {
+            routeAverageMins = Math.ceil(routeSearcher.calcRouteAverageTime(requestDto)); // Tính toán thời gian từ Odsay
+        } else if ("CarOrTaxi".equalsIgnoreCase(transportType)) {
+            routeAverageMins = Math.ceil(routeSearcher.calcNCloudRouteAverageTime(requestDto)); // Tính toán thời gian từ NCloud
+        } else {
+            throw new IllegalArgumentException("Invalid transport type: " + transportType);
+        }
 
-        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ liên quan tới kế hoạch
-        int preparationMins = Optional.ofNullable(recentPlan.getPlanTasks())
+        // Kiểm tra danh sách các nhiệm vụ
+        Optional.ofNullable(recentPlan.getPlanTasks())
+                .ifPresent(tasks -> tasks.forEach(task -> log.info("Task: {}, Time: {}", task.getTask().getTitle(), task.getTask().getTime())));
+
+        // Tính toán tổng thời gian chuẩn bị từ các nhiệm vụ (Task) liên quan tới kế hoạch
+        int totalReadyTimeAsMins = Optional.ofNullable(recentPlan.getPlanTasks())
                 .map(tasks -> tasks.stream()
-                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Thời gian của mỗi nhiệm vụ
+                        .filter(Objects::nonNull)
+                        .mapToInt(pt -> Optional.ofNullable(pt.getTask().getTime()).orElse(0)) // Lấy thời gian của mỗi nhiệm vụ (nếu null trả về 0)
                         .sum())
                 .orElse(0); // Trả về 0 nếu danh sách nhiệm vụ rỗng hoặc null
 
+        log.info("Total Ready Time (in minutes): {}", totalReadyTimeAsMins);
+
         // Tính toán thời gian chuẩn bị
         LocalDateTime recentPlanArrivalAt = recentPlan.getArrivalAt();
-        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes(routeAverageMins + preparationMins);
+        LocalDateTime preparationStartAt = recentPlanArrivalAt.minusMinutes((int) routeAverageMins + totalReadyTimeAsMins);
 
-        // Tính toán thời gian còn lại cho đến khi người dùng cần bắt đầu chuẩn bị
-        Duration remainingTime = Duration.between(now, preparationStartAt);
+        // Tính toán thời gian còn lại cho đến khi người dùng cần đến (ArrivalAt)
+        Duration remainingTime = Duration.between(now, recentPlanArrivalAt);
         if (remainingTime.isNegative()) {
             remainingTime = Duration.ZERO; // Nếu thời gian còn lại là số âm, đặt thành 0
         }
+
 
         // Định nghĩa thời gian đệm (trong phút)
         int bufferTimeMins = 15; // Thay đổi giá trị này theo nhu cầu
         LocalDateTime recommendedDepartureTime = preparationStartAt.minusMinutes(bufferTimeMins);
 
-        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và thời gian khuyến nghị
-        return new RemainingTimeInfoVo(remainingTime, routeAverageMins, preparationMins, recentPlanArrivalAt, recommendedDepartureTime);
+        // Trả về đối tượng RemainingTimeInfoVo chứa thông tin về thời gian còn lại và tổng thời gian chuẩn bị
+        return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, totalReadyTimeAsMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
 
 
-
-//    public String findRouteForPlan(Long planId) {
-//        // Extract the currently authenticated user
-//        UserEntity user = authFacade.extractUser();
-//
-//        // Fetch the Plan by ID, and ensure it belongs to the current user
-//        Plan plan = planRepo.findByIdAndUser(planId, user)
-//                .orElseThrow();
-//
-//        // Use OdsayClient to search for the route based on the Plan's coordinates
-//        return odsayClient.searchRoute(plan);
-//    }
 
 }

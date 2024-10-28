@@ -1,4 +1,4 @@
-package com.example.moveSmart.api.entity;
+package com.example.moveSmart.api.entity.time;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

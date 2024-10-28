@@ -1,6 +1,9 @@
 package com.example.moveSmart.api.service;
 
 import com.example.moveSmart.api.config.Client;
+import com.example.moveSmart.api.config.RouteSearcher;
+import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.RouteSearchResult;
 import com.example.moveSmart.schedule.plan.entity.Plan;
 import com.example.moveSmart.schedule.plan.repo.PlanRepo;
 import com.example.moveSmart.user.AuthenticationFacade;
@@ -8,14 +11,9 @@ import com.example.moveSmart.user.entity.UserEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import com.example.moveSmart.api.entity.OdsayRouteSearchResponse;
+import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,54 +22,36 @@ public class OdsayService {
     private final AuthenticationFacade authFacade;
     private final Client client;
     private final PlanRepo planRepo;
+    private final RouteSearcher routeSearcher;
 
-    public Map<String, List<OdsayRouteSearchResponse.Result.Path>> findRoutesForPlan(Long planId) {
-        Map<String, List<OdsayRouteSearchResponse.Result.Path>> routes = new HashMap<>();
 
-        // Tìm các loại đường
-        for (int trafficType = 0; trafficType <= 4; trafficType++) {
-            String routeType = getRouteType(trafficType);
-            List<OdsayRouteSearchResponse.Result.Path> pathList = findRouteForPlan(planId, trafficType);
-            routes.put(routeType, pathList);
+    public RouteSearchResult searchRouteByPlanIdWithPubTran(Long planId) {
+        // Retrieve the current user from AuthFacade
+        UserEntity currentUser = authFacade.extractUser();
+
+        // Find the plan by ID, ensuring it belongs to the current user
+        Plan plan = planRepo.findByIdAndUser(planId, currentUser)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found for the current user"));
+
+        // Use the Client to search for routes based on the Plan
+        OdsayRouteSearchResponse response = client.searchRouteWithPubTran(plan);
+        log.info("ODSay API Response: {}", response);
+
+        // Check if the response is valid
+        if (response == null || response.getResult() == null || response.getResult().getPath() == null) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found for the given plan");
         }
 
-        return routes;
+        // Return the RouteSearchResult with searchType and list of paths
+        return new RouteSearchResult(response.getResult().getSearchType(), response.getResult().getPath());
     }
 
-    public List<OdsayRouteSearchResponse.Result.Path> findRouteForPlan(Long planId, int trafficType) {
-        // Lấy người dùng hiện tại từ authFacade
-        UserEntity user = authFacade.extractUser();
-
-        // Fetch the Plan by ID and ensure it belongs to the current user
-        Plan plan = planRepo.findByIdAndUser(planId, user)
+    public NCloudRouteSearchResponse searchRouteByPlanIdWithPrivateCar(Long planId) {
+        // Find the plan by ID
+        Plan plan = planRepo.findById(planId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found"));
 
-        // Sử dụng OdsayClient để tìm kiếm tuyến đường dựa trên tọa độ của kế hoạch
-        OdsayRouteSearchResponse response = client.searchRoute(plan);
-        log.info("Response from ODSAY API: {}", response);
-        log.info("Searching for paths with traffic type: {}", trafficType);
-        // Kiểm tra nếu response hợp lệ
-        if (response == null || response.getResult() == null || response.getResult().getPath() == null) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found");
-        }
-
-        // Lọc và lấy các quãng đường dựa trên trafficType
-        List<OdsayRouteSearchResponse.Result.Path> filteredPaths = response.getResult().getPath().stream()
-                .filter(path -> path.getPathType() == trafficType)
-                .collect(Collectors.toList());
-        log.info("Filtered Paths for traffic type {}: {}", trafficType, filteredPaths.size());
-
-        return filteredPaths;
-    }
-
-    private String getRouteType(int trafficType) {
-        return switch (trafficType) {
-            case 0 -> "walkingRoutes";
-            case 1 -> "busRoutes";
-            case 2 -> "subwayRoutes";
-            case 3 -> "taxiRoutes";
-            case 4 -> "carRoutes";
-            default -> "unknownRoutes";
-        };
+        // Call the method to search route without public transport
+        return client.searchRouteWithPrivateCar(plan);
     }
 }

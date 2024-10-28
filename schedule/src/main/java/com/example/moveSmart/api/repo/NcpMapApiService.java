@@ -1,6 +1,6 @@
 package com.example.moveSmart.api.repo;
 
-import com.example.moveSmart.api.entity.GeoNcpResponse;
+import com.example.moveSmart.api.entity.geo.GeoNcpResponse;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.service.annotation.GetExchange;
 
