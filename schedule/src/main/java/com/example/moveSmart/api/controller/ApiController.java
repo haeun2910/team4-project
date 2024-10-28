@@ -8,6 +8,7 @@ import com.example.moveSmart.api.service.OdsayService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,16 +31,29 @@ public class ApiController {
         return ResponseEntity.ok(response);
     }
     @GetMapping("/search-location")
-    public ResponseEntity<PlaceSearchResponse> searchLocation(@RequestParam String address) throws JsonProcessingException {
-        log.info("Received address: {}", address);
-        PlaceSearchResponse response = client.searchAddress(address);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> searchLocation(@RequestParam String address) {
+        try {
+            log.info("Received address: {}", address);
+            PlaceSearchResponse response = client.searchAddress(address);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error searching for location: {}", address, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("error.");
+        }
     }
+
     @GetMapping("/search-place")
-    public ResponseEntity<PlaceSearchResponse> searchPlace(@RequestParam String address) throws JsonProcessingException {
-        log.info("Received address: {}", address);
-        PlaceSearchResponse response = client.searchPlace(address);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> searchPlace(@RequestParam String address) {
+        try {
+            log.info("Received address: {}", address);
+            PlaceSearchResponse response = client.searchPlace(address);
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            log.error("Error searching for place: {}", address, e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("error.");
+        }
     }
 
 

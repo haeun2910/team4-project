@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tạo Kế Hoạch</title>
-    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=83bfuniegk"></script>
+    <title>Create Plan</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,23 +23,75 @@
 <body>
 
 <div id="form-container">
-    <h2>Tạo Kế Hoạch</h2>
-    <input type="text" id="title" placeholder="Tiêu đề kế hoạch" required>
-    <input type="text" id="departure-name" placeholder="Địa chỉ khởi hành" required>
-    <input type="text" id="arrival-name" placeholder="Địa chỉ đến" required>
-    <input type="datetime-local" id="arrival-at" required>
-    <textarea id="notification-message" placeholder="Thông báo (nếu có)"></textarea>
-    <button id="create-plan-btn">Tạo Kế Hoạch</button>
+    <h2>Create a Plan</h2>
+    <input type="text" id="title" placeholder="Plan Title" required>
+    <input type="text" id="departure-name" placeholder="Departure Address" required>
+    <input type="text" id="arrival-name" placeholder="Arrival Address" required>
+    <input type="datetime-local" id="arrival-at" placeholder="Arrival Time" required>
+    <textarea id="notification-message" placeholder="Notification Message"></textarea>
+    <button id="create-plan-btn">Create Plan</button>
 </div>
 
 <div id="map"></div>
 
 <script>
+    // Initialize the map
     var map = new naver.maps.Map('map', {
         zoom: 10,
         center: new naver.maps.LatLng(37.3614483, 127.1114883)
     });
+    var marker = new naver.maps.Marker({
+        map: map,
+        position: map.getCenter()
+    });
+    // Function to call backend endpoint and get coordinates
+    function fetchCoordinates(endpoint, address, callback) {
+        fetch(`/api/${endpoint}?address=${encodeURIComponent(address)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Received data:', data); // Log full response for debugging
+                if (data && data.latitude && data.longitude) {
+                    var coords = new naver.maps.LatLng(data.latitude, data.longitude);
+                    callback(coords);
+                } else {
+                    alert('This address could not be found.');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching coordinates:', error);
+                alert('An error occurred while finding the address.');
+            });
+    }
 
+    // Update map when departure address is entered
+    document.getElementById('departure-name').addEventListener('change', function() {
+        var departureAddress = document.getElementById('departure-name').value;
+        fetchCoordinates("search-location", departureAddress, function(coords) {
+            map.setCenter(coords);
+            marker.setPosition(coords);
+        });
+    });
+
+    // Update map when arrival address is entered
+    document.getElementById('arrival-name').addEventListener('change', function() {
+        var arrivalAddress = document.getElementById('arrival-name').value;
+        fetchCoordinates("search-place", arrivalAddress, function(coords) {
+            map.setCenter(coords);
+            marker.setPosition(coords);
+        });
+    });
+
+    // Handle plan creation
     document.getElementById('create-plan-btn').addEventListener('click', function() {
         var title = document.getElementById('title').value;
         var departureName = document.getElementById('departure-name').value;
@@ -47,7 +99,6 @@
         var arrivalAt = document.getElementById('arrival-at').value;
         var notificationMessage = document.getElementById('notification-message').value;
 
-        // Tạo một đối tượng kế hoạch
         var planData = {
             title: title,
             departureName: departureName,
@@ -56,7 +107,6 @@
             notificationMessage: notificationMessage
         };
 
-        // Gửi yêu cầu đến server
         fetch('/plans/create', {
             method: 'POST',
             headers: {
@@ -66,16 +116,15 @@
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Không thể tạo kế hoạch.');
+                    throw new Error('Unable to create the plan.');
                 }
                 return response.json();
             })
             .then(data => {
-                alert('Kế hoạch đã được tạo thành công! ID: ' + data.id);
-                // Tùy chọn để đặt lại form hoặc làm gì đó khác
+                alert('Plan created successfully! ID: ' + data.id);
             })
             .catch(error => {
-                alert('Có lỗi xảy ra: ' + error.message);
+                alert('An error occurred: ' + error.message);
             });
     });
 </script>
