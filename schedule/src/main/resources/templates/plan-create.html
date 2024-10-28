@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Plan</title>
+    <title>Create a Plan</title>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
     <style>
         body {
@@ -17,6 +17,13 @@
         }
         #form-container {
             margin: 20px;
+        }
+        input, textarea, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 1em;
         }
     </style>
 </head>
@@ -44,12 +51,14 @@
         map: map,
         position: map.getCenter()
     });
-    // Function to call backend endpoint and get coordinates
+
+    // Fetch coordinates from backend based on search type and address
     function fetchCoordinates(endpoint, address, callback) {
         fetch(`/api/${endpoint}?address=${encodeURIComponent(address)}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${your_jwt_token}
             }
         })
             .then(response => {
@@ -59,12 +68,11 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Received data:', data); // Log full response for debugging
                 if (data && data.latitude && data.longitude) {
-                    var coords = new naver.maps.LatLng(data.latitude, data.longitude);
+                    const coords = new naver.maps.LatLng(data.latitude, data.longitude);
                     callback(coords);
                 } else {
-                    alert('This address could not be found.');
+                    alert('Address not found.');
                 }
             })
             .catch(error => {
@@ -73,33 +81,38 @@
             });
     }
 
-    // Update map when departure address is entered
-    document.getElementById('departure-name').addEventListener('change', function() {
-        var departureAddress = document.getElementById('departure-name').value;
-        fetchCoordinates("search-location", departureAddress, function(coords) {
+    // Update map with selected coordinates
+    function updateMap(addressId, endpoint) {
+        const address = document.getElementById(addressId).value;
+        fetchCoordinates(endpoint, address, function(coords) {
             map.setCenter(coords);
             marker.setPosition(coords);
         });
-    });
+    }
 
-    // Update map when arrival address is entered
+    // Listeners for address changes, with user choice for endpoint
+    document.getElementById('departure-name').addEventListener('change', function() {
+        updateMap('departure-name', "search-location"); // Can also use "search-place" if preferred
+    });
     document.getElementById('arrival-name').addEventListener('change', function() {
-        var arrivalAddress = document.getElementById('arrival-name').value;
-        fetchCoordinates("search-place", arrivalAddress, function(coords) {
-            map.setCenter(coords);
-            marker.setPosition(coords);
-        });
+        updateMap('arrival-name', "search-place"); // Can also use "search-location" if preferred
     });
 
     // Handle plan creation
     document.getElementById('create-plan-btn').addEventListener('click', function() {
-        var title = document.getElementById('title').value;
-        var departureName = document.getElementById('departure-name').value;
-        var arrivalName = document.getElementById('arrival-name').value;
-        var arrivalAt = document.getElementById('arrival-at').value;
-        var notificationMessage = document.getElementById('notification-message').value;
+        const title = document.getElementById('title').value;
+        const departureName = document.getElementById('departure-name').value;
+        const arrivalName = document.getElementById('arrival-name').value;
+        const arrivalAt = document.getElementById('arrival-at').value;
+        const notificationMessage = document.getElementById('notification-message').value;
 
-        var planData = {
+        // Ensure all fields are filled
+        if (!title || !departureName || !arrivalName || !arrivalAt) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        const planData = {
             title: title,
             departureName: departureName,
             arrivalName: arrivalName,
@@ -107,6 +120,7 @@
             notificationMessage: notificationMessage
         };
 
+        // Send plan data to backend
         fetch('/plans/create', {
             method: 'POST',
             headers: {

@@ -1,5 +1,5 @@
 const jwt = localStorage.getItem("token");
-if (!jwt) location.href = "/users/signin";
+if (!jwt) location.href = "/views/signin";
 
 const nameInput = document.getElementById("name-input");
 const ageInput = document.getElementById("age-input");
@@ -21,7 +21,7 @@ fetch("/users/get-user-info", {
       loggedIn = response.ok;
       if (!loggedIn) {
         localStorage.removeItem("token");
-        location.href = "/users/signin";
+        location.href = "/views/signin";
       }
       return response.json();
     })
@@ -46,7 +46,7 @@ updateForm.addEventListener("submit", e => {
       .then(response => {
         if (response.ok) location.reload();
         else if (response.status === 403)
-          location.href = "/users/signin";
+          location.href = "/views/signin";
         else alert(response.status);
       });
 });
@@ -68,7 +68,7 @@ imageForm.addEventListener("submit", e => {
   }).then(response => {
     if (response.ok) location.reload();
     else if (response.status === 403)
-      location.href = "/users/signin";
+      location.href = "/views/signin";
     else alert(response.status);
   });
 });
