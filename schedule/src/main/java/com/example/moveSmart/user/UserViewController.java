@@ -15,4 +15,8 @@ public class UserViewController {
     public String signIn(){ return "users/signin"; }
     @GetMapping("update")
     public String update(){ return "users/update"; }
+    @GetMapping("plan-create")
+    public String test3() {
+        return "plan-create";
+    }
 }
