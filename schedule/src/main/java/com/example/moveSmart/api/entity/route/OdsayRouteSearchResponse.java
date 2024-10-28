@@ -1,4 +1,4 @@
-package com.example.moveSmart.api.entity;
+package com.example.moveSmart.api.entity.route;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -44,10 +44,6 @@ public class OdsayRouteSearchResponse {
                 private int payment; // Chi phí
                 private int busTransitCount; // Số lần chuyển xe buýt
                 private int subwayTransitCount;
-                private int taxiTime;
-                private double taxiDistance;
-                private int personalCarTime;
-                private double personalCarDistance;
                 private String mapObj;
                 private String firstStartStation;
                 private String lastEndStation;
@@ -85,10 +81,6 @@ public class OdsayRouteSearchResponse {
                 private double endExitX;
                 private double endExitY;
                 private PassStopList passStopList;
-                private int taxiSectionTime;
-                private double taxiDistance;
-                private int personalCarSectionTime;
-                private double personalCarDistance;
 
                 @NoArgsConstructor
                 @AllArgsConstructor

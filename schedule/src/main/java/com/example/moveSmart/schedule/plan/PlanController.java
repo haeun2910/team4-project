@@ -1,7 +1,7 @@
 package com.example.moveSmart.schedule.plan;
 
-import com.example.moveSmart.api.entity.RemainingTimeInfoVo;
-import com.example.moveSmart.api.entity.RemainingTimeResponse;
+import com.example.moveSmart.api.entity.time.RemainingTimeInfoVo;
+import com.example.moveSmart.api.entity.time.RemainingTimeResponse;
 import com.example.moveSmart.api.service.OdsayService;
 import com.example.moveSmart.schedule.plan.dto.PlanDto;
 import com.example.moveSmart.schedule.plan.dto.PlanTaskDto;
@@ -69,12 +69,19 @@ public class PlanController {
         return ResponseEntity.ok(expiredplans);
     }
 
+//    @GetMapping("/time-remaining/{planId}")
+//    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
+//        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
+//        RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
+//        return ResponseEntity.ok(response);
+//    }
 
-
-    @GetMapping("/time-remaining")
-    public ResponseEntity<RemainingTimeResponse> getTimeRemaining() {
-        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan();
+    @GetMapping("/time-remaining/{planId}")
+    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId,
+                                                                  @RequestParam String transportType) {
+        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId, transportType);
         RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
         return ResponseEntity.ok(response);
     }
+
 }
