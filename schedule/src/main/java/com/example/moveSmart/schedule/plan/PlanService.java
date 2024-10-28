@@ -20,7 +20,9 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,38 +42,6 @@ public class PlanService {
     private final PlanTaskRepo planTaskRepo;
     private final RouteSearcher routeSearcher;
     private final Client client;
-
-//    @Transactional
-//    public PlanDto createPlan(PlanDto planDto) {
-//        UserEntity user = authFacade.extractUser();
-//        UserEntity userId = userRepo.findById(user.getId())
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        // Get latitude and longitude for departure and arrival addresses
-//        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-//        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
-//
-//        // Assuming the first result is the most relevant
-//        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
-//        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
-//        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
-//        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
-//
-//        Plan plan = Plan.builder()
-//                .title(planDto.getTitle())
-//                .departureName(planDto.getDepartureName())
-//                .departureLat(departureLat) // set fetched latitude
-//                .departureLng(departureLng) // set fetched longitude
-//                .arrivalName(planDto.getArrivalName())
-//                .arrivalAt(planDto.getArrivalAt())
-//                .arrivalLat(arrivalLat) // set fetched latitude
-//                .arrivalLng(arrivalLng) // set fetched longitude
-//                .notificationMessage(planDto.getNotificationMessage())
-//                .user(userId)
-//                .build();
-//
-//        return PlanDto.fromEntity(planRepo.save(plan), true);
-//    }
 
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
@@ -213,10 +183,27 @@ public class PlanService {
 
     public Page<PlanDto> myPlan(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
+        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "arrivalAt"));
 
         Page<Plan> plans = planRepo.findByUser(user,pageable);
         return plans.map(plan -> PlanDto.fromEntity(plan, true));
     }
+
+    public PlanDto readOnePlan(Long planId) {
+        UserEntity user = authFacade.extractUser();
+
+        Plan plan = planRepo.findById(planId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found with id: " + planId));
+
+        // Check if the plan belongs to the authenticated user
+        if (!plan.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to view this plan.");
+        }
+
+        // Convert the Plan entity to PlanDto and return it
+        return PlanDto.fromEntity(plan, true);
+    }
+
     public void completePlan(Long id) {
         UserEntity currentUser = authFacade.extractUser();
         LocalDateTime currentTime = LocalDateTime.now();

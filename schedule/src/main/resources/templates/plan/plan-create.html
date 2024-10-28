@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Plan</title>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+    <script src="/static/js/plan/plan-create.js" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            margin: 0;
+            height: 100vh; /* Full height */
+        }
+        #form-container {
+            flex: 1; /* Takes up 1 part of the available space */
+            margin: 20px;
+            display: flex;
+            flex-direction: column; /* Arrange items vertically */
+        }
+        #map {
+            flex: 2; /* Takes up 2 parts of the available space */
+            margin: 20px;
+        }
+        input, textarea, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+<div id="form-container">
+    <h2>Create a Plan</h2>
+    <input type="text" id="title" placeholder="Plan Title" required>
+    <input type="text" id="departure-name" placeholder="Departure Address" required>
+    <input type="text" id="arrival-name" placeholder="Arrival Address" required>
+    <input type="datetime-local" id="arrival-at" required>
+    <textarea id="notification-message" placeholder="Notification Message"></textarea>
+    <button id="create-plan-btn">Create Plan</button>
+</div>
+
+<div id="map"></div>
+
+</body>
+</html>

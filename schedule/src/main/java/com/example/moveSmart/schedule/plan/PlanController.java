@@ -26,6 +26,7 @@ public class PlanController {
     public PlanDto create(@RequestBody PlanDto plan) {
         return planService.createPlan(plan);
     }
+
     @PostMapping("create-plan-task")
     public ResponseEntity<PlanTaskDto> createPlanTask(@RequestBody PlanTaskDto task) {
         // Validate the incoming task object
@@ -50,6 +51,11 @@ public class PlanController {
     @GetMapping("my-plans")
     public Page<PlanDto> myPlans(Pageable pageable) {
         return planService.myPlan(pageable);
+    }
+
+    @GetMapping("/{id}")
+    public PlanDto getPlan(@PathVariable("id") Long planId) {
+        return planService.readOnePlan(planId);
     }
     @PutMapping("/complete/{id}")
     public ResponseEntity<String> completePlan(@PathVariable Long id) {
