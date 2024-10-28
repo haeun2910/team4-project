@@ -1,7 +1,9 @@
 const jwt = localStorage.getItem("token");
 const planId = new URLSearchParams(window.location.search).get('id');
 
-if (!jwt) location.href = "/views/signin";
+if (!jwt) {
+    location.href = "/views/signin";
+}
 if (!planId) {
     alert('No plan ID provided.');
     location.href = "/views/plans"; // Redirect if no ID
@@ -62,58 +64,70 @@ fetch(`/plans/${planId}`, {
         alert(`An error occurred: ${error.message}`);
     });
 
-// Thêm sự kiện cho nút lấy thời gian còn lại
+// Add this updated script to your view-plan.js
 document.getElementById('get-time-remaining').addEventListener('click', () => {
-    const transportType = document.getElementById('transport-type').value;
-    console.log(`Fetching time remaining for planId: ${planId}, transportType: ${transportType}`);
+    const outputElement = document.getElementById('output');
+    outputElement.innerHTML = ''; // Clear previous output
 
-    // Gọi API để lấy thời gian còn lại
-    fetch(`/plans/time-remaining/${planId}?transportType=${transportType}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${jwt}`
-        }
-    })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error fetching time remaining: ${response.statusText}`);
+    // Fetch data for both transport types together
+    const transportTypes = ['publicTransport', 'carOrTaxi'];
+    const promises = transportTypes.map(transportType => {
+        console.log(`Fetching time remaining for planId: ${planId}, transportType: ${transportType}`);
+
+        return fetch(`/plans/time-remaining/${planId}?transportType=${transportType}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
             }
-            return response.json();
         })
-        .then(data => {
-            console.log(data);
-            // Kiểm tra dữ liệu trả về từ API
-            if (data && data.remainingTime) {
-                const timeRemainingInfo = data.remainingTime;
-                const outputElement = document.getElementById('output');
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error fetching time remaining: ${response.statusText}`);
+                }
+                return response.json();
+            });
+    });
 
-                // Hiển thị dữ liệu vào phần tử output
-                outputElement.innerHTML = `
-            <p><strong>Time remaining:</strong> ${timeRemainingInfo.hours} hours and ${timeRemainingInfo.minutes} minutes</p>
-            <p><strong>Average time:</strong> ${data.routeAverageTimeAsMins} minutes</p>
-            <p><strong>Total Ready Time:</strong> ${data.totalReadyTimeAsMins} minutes</p>
-            <p><strong>Recommended Departure Time:</strong> ${new Date(data.recommendedDepartureTime).toLocaleString()}</p>
-        `;
-            } else {
-                alert('No time remaining data found.');
-            }
+    // Process all responses
+    Promise.all(promises)
+        .then(responses => {
+            const publicTransportInfo = responses[0];
+            const carOrTaxiInfo = responses[1];
+
+            const output = `
+                <div class="transport-info">
+                    <div>
+                        <p><strong>Time Remaining:</strong> ${carOrTaxiInfo.remainingTime.hours} hours and ${carOrTaxiInfo.remainingTime.minutes} minutes</p>
+                        <p><strong>Total Ready Time:</strong> ${carOrTaxiInfo.totalReadyTimeAsMins} minutes</p>
+                    </div>
+                </div>
+                <div class="average-info">
+                    <h3>Transport Information</h3>
+                    <div>
+                        <h4>Public Transport</h4>
+                        <p><strong>Average Time:</strong> ${publicTransportInfo.routeAverageTimeAsMins} minutes</p>
+                        <p><strong>Recommended Departure Time:</strong> ${new Date(publicTransportInfo.recommendedDepartureTime).toLocaleString()}</p>
+                    </div>
+                    <div>
+                        <h4>Car / Taxi</h4>
+                        <p><strong>Average Time:</strong> ${carOrTaxiInfo.routeAverageTimeAsMins} minutes</p>
+                        <p><strong>Recommended Departure Time:</strong> ${new Date(carOrTaxiInfo.recommendedDepartureTime).toLocaleString()}</p>
+                    </div>
+                </div>
+            `;
+
+            outputElement.innerHTML = output; // Display the output
         })
         .catch(error => {
-            const outputElement = document.getElementById('output');
-            outputElement.innerHTML = `An error occurred: ${error.message}`; // Hiển thị lỗi trên màn hình
+            outputElement.innerHTML = `<p>An error occurred while fetching data: ${error.message}</p>`;
         });
 });
 
-
+// Function to determine if the address is specific
 function isSpecificAddress(address) {
     const specificPlacePattern = /(\d{1,2}번출구|입구|학교|공원|지하철|역)$/;
-    if (specificPlacePattern.test(address)) {
-        return false;
-    }
-    const generalAddressPattern = /\d+/;
-
-    return generalAddressPattern.test(address);
+    return !specificPlacePattern.test(address) && /\d+/.test(address);
 }
 
 // Function to fetch coordinates based on address type
