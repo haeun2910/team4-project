@@ -1,5 +1,5 @@
-const jwt = localStorage.getItem("token");
-if (!jwt) location.href = "/users/signin";
+//const jwt = localStorage.getItem("token");
+//if (!jwt) location.href = "/users/signin";
 
 const nameInput = document.getElementById("name-input");
 const ageInput = document.getElementById("age-input");
