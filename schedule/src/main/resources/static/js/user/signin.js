@@ -20,7 +20,7 @@ loginForm.addEventListener("submit", e => {
       })
       .then(json => {
         localStorage.setItem("token", json.token);
-        location.href = "/users/update";
+        location.href = "/views/update";
       })
       .catch(error => alert(error.message));
           console.error(error);

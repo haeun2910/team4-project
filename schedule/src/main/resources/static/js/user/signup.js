@@ -16,7 +16,7 @@ signupForm.addEventListener("submit", e => {
     body: JSON.stringify({ username, password, passwordCheck }),
   })
       .then(response => {
-        if (response.ok) location.href = "/users/signin";
+        if (response.ok) location.href = "/views/signin";
         else throw Error("failed to signup");
       })
       .catch(error => alert(error.message));

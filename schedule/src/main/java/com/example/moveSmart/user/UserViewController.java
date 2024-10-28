@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("users")
+@RequestMapping("views")
 public class UserViewController {
     @GetMapping
     public String home(){ return "users/index"; }
@@ -15,4 +15,8 @@ public class UserViewController {
     public String signIn(){ return "users/signin"; }
     @GetMapping("update")
     public String update(){ return "users/update"; }
+    @GetMapping("plan-create")
+    public String test3() {
+        return "plan-create";
+    }
 }
