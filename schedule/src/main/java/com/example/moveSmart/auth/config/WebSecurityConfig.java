@@ -52,13 +52,18 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/views/signin")
+                        .defaultSuccessUrl("/views/update")
+                        .failureUrl("/views/signin?fail")
+                        .permitAll())
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/users/signin")
+                        .loginPage("/views/signin")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/users/get-user-info")
-                        .failureUrl("/users/signin?fail")
+                        .defaultSuccessUrl("/views/update")
+                        .failureUrl("/views/signin?fail")
                         .permitAll())
                 .addFilterBefore(
                         new JwtTokenFilter(
