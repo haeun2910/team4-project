@@ -3,6 +3,7 @@ package com.example.moveSmart.schedule.plan.entity;
 
 import com.example.moveSmart.entity.BaseEntity;
 import com.example.moveSmart.user.entity.UserEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,6 +43,7 @@ public class Plan extends BaseEntity {
     private Double arrivalLng;
     @Setter
 //    @Column(nullable = false)
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalAt;
     @Setter
 //    @Column

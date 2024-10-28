@@ -34,7 +34,7 @@
     <input type="text" id="title" placeholder="Plan Title" required>
     <input type="text" id="departure-name" placeholder="Departure Address" required>
     <input type="text" id="arrival-name" placeholder="Arrival Address" required>
-    <input type="datetime-local" id="arrival-at" placeholder="Arrival Time" required>
+    <input type="datetime-local" id="arrival-at" required>
     <textarea id="notification-message" placeholder="Notification Message"></textarea>
     <button id="create-plan-btn">Create Plan</button>
 </div>
@@ -42,23 +42,47 @@
 <div id="map"></div>
 
 <script>
+    const jwt = localStorage.getItem("token");
+    if (!jwt) location.href = "/views/signin";
+
     // Initialize the map
-    var map = new naver.maps.Map('map', {
+    const map = new naver.maps.Map('map', {
         zoom: 10,
         center: new naver.maps.LatLng(37.3614483, 127.1114883)
     });
-    var marker = new naver.maps.Marker({
+
+    // Create markers for departure and arrival
+    const departureMarker = new naver.maps.Marker({
         map: map,
-        position: map.getCenter()
+        position: map.getCenter(),
+        title: 'Departure'
     });
 
-    // Fetch coordinates from backend based on search type and address
-    function fetchCoordinates(endpoint, address, callback) {
+    const arrivalMarker = new naver.maps.Marker({
+        map: map,
+        position: map.getCenter(),
+        title: 'Arrival'
+    });
+
+    function isSpecificAddress(address) {
+        const specificPlacePattern = /(\d{1,2}번출구|입구|학교|공원|지하철|역)$/;
+        if (specificPlacePattern.test(address)) {
+            return false;
+        }
+        const generalAddressPattern = /\d+/;
+
+        return generalAddressPattern.test(address);
+    }
+
+    // Function to fetch coordinates based on address type
+    function fetchCoordinates(address, callback) {
+        const endpoint = isSpecificAddress(address) ? 'search-location' : 'search-place';
+
         fetch(`/api/${endpoint}?address=${encodeURIComponent(address)}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${your_jwt_token}
+                'Authorization': `Bearer ${jwt}`
             }
         })
             .then(response => {
@@ -68,8 +92,8 @@
                 return response.json();
             })
             .then(data => {
-                if (data && data.latitude && data.longitude) {
-                    const coords = new naver.maps.LatLng(data.latitude, data.longitude);
+                if (data && data.places && data.places.length > 0) {
+                    const coords = new naver.maps.LatLng(data.places[0].latitude, data.places[0].longitude);
                     callback(coords);
                 } else {
                     alert('Address not found.');
@@ -81,24 +105,24 @@
             });
     }
 
-    // Update map with selected coordinates
-    function updateMap(addressId, endpoint) {
+    // Function to update the map with fetched coordinates
+    function updateMap(addressId, marker) {
         const address = document.getElementById(addressId).value;
-        fetchCoordinates(endpoint, address, function(coords) {
+        fetchCoordinates(address, function(coords) {
             map.setCenter(coords);
             marker.setPosition(coords);
         });
     }
 
-    // Listeners for address changes, with user choice for endpoint
+    // Event listeners for address changes
     document.getElementById('departure-name').addEventListener('change', function() {
-        updateMap('departure-name', "search-location"); // Can also use "search-place" if preferred
+        updateMap('departure-name', departureMarker);
     });
     document.getElementById('arrival-name').addEventListener('change', function() {
-        updateMap('arrival-name', "search-place"); // Can also use "search-location" if preferred
+        updateMap('arrival-name', arrivalMarker);
     });
 
-    // Handle plan creation
+    // Create Plan Button Event Listener
     document.getElementById('create-plan-btn').addEventListener('click', function() {
         const title = document.getElementById('title').value;
         const departureName = document.getElementById('departure-name').value;
@@ -112,33 +136,40 @@
             return;
         }
 
+        // Format arrivalAt to ISO 8601
+        const arrivalAtDate = new Date(arrivalAt);
+        const formattedArrivalAt = arrivalAtDate.toISOString().slice(0, 19);
+
         const planData = {
-            title: title,
-            departureName: departureName,
-            arrivalName: arrivalName,
-            arrivalAt: arrivalAt,
-            notificationMessage: notificationMessage
+            title,
+            departureName,
+            arrivalName,
+            arrivalAt: formattedArrivalAt, // Use formatted date
+            notificationMessage
         };
 
         // Send plan data to backend
         fetch('/plans/create', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
             },
             body: JSON.stringify(planData)
         })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Unable to create the plan.');
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'Unable to create the plan.');
+                    });
                 }
                 return response.json();
             })
             .then(data => {
-                alert('Plan created successfully! ID: ' + data.id);
+                alert(`Plan created successfully! ID: ${data.id}`);
             })
             .catch(error => {
-                alert('An error occurred: ' + error.message);
+                alert(`An error occurred: ${error.message}`);
             });
     });
 </script>

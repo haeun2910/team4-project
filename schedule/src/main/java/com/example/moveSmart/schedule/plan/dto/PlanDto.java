@@ -22,7 +22,7 @@ public class PlanDto {
     private Double departureLat;
     private Double departureLng;
     private String arrivalName;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime arrivalAt;
     private Double arrivalLat;
     private Double arrivalLng;
