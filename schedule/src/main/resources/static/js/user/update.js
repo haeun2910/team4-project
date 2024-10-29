@@ -1,5 +1,5 @@
-//const jwt = localStorage.getItem("token");
-//if (!jwt) location.href = "/users/signin";
+const jwt = localStorage.getItem("token");
+if (!jwt) location.href = "/users/signin";
 
 const nameInput = document.getElementById("name-input");
 const ageInput = document.getElementById("age-input");
@@ -44,7 +44,9 @@ updateForm.addEventListener("submit", e => {
     body: JSON.stringify(body),
   })
       .then(response => {
-        if (response.ok) location.reload();
+        if (response.ok)
+//         alert("Update profile info successful!");
+         location.reload();
         else if (response.status === 403)
           location.href = "/users/signin";
         else alert(response.status);
@@ -66,7 +68,10 @@ imageForm.addEventListener("submit", e => {
     },
     body: formData,
   }).then(response => {
-    if (response.ok) location.reload();
+    if (response.ok)
+     location.reload();
+//         alert("Update profile image successful, click Home to use MoveSmart!!");
+
     else if (response.status === 403)
       location.href = "/users/signin";
     else alert(response.status);

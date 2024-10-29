@@ -1,4 +1,11 @@
-
+const jwt = localStorage.getItem("token") ?? null;
+if (jwt) fetch("/users/get-user-info", {
+  headers: {
+    "Authorization": `Bearer ${jwt}`,
+  },
+}).then(response => {
+  if (response.ok) location.href = "/views";
+})
 const signupForm = document.getElementById("signup-form");
 const usernameInput = document.getElementById("username-input");
 const passwordInput = document.getElementById("password-input");
@@ -16,7 +23,9 @@ signupForm.addEventListener("submit", e => {
     body: JSON.stringify({ username, password, passwordCheck }),
   })
       .then(response => {
-        if (response.ok) location.href = "/views/signin";
+        if (response.ok)
+//        alert("Signup successful, please login");
+         location.href = "/views/signin";
         else throw Error("failed to signup");
       })
       .catch(error => alert(error.message));
