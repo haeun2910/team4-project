@@ -69,11 +69,8 @@ document.getElementById('get-time-remaining').addEventListener('click', () => {
     const outputElement = document.getElementById('output');
     outputElement.innerHTML = ''; // Clear previous output
 
-    // Fetch data for both transport types together
     const transportTypes = ['publicTransport', 'carOrTaxi'];
     const promises = transportTypes.map(transportType => {
-        console.log(`Fetching time remaining for planId: ${planId}, transportType: ${transportType}`);
-
         return fetch(`/plans/time-remaining/${planId}?transportType=${transportType}`, {
             method: 'GET',
             headers: {
@@ -89,7 +86,6 @@ document.getElementById('get-time-remaining').addEventListener('click', () => {
             });
     });
 
-    // Process all responses
     Promise.all(promises)
         .then(responses => {
             const publicTransportInfo = responses[0];
@@ -108,21 +104,33 @@ document.getElementById('get-time-remaining').addEventListener('click', () => {
                         <h4>Public Transport</h4>
                         <p><strong>Average Time:</strong> ${publicTransportInfo.routeAverageTimeAsMins} minutes</p>
                         <p><strong>Recommended Departure Time:</strong> ${new Date(publicTransportInfo.recommendedDepartureTime).toLocaleString()}</p>
+                        <button id="view-route-public">View Route for Public Transport</button>
                     </div>
                     <div>
                         <h4>Car / Taxi</h4>
                         <p><strong>Average Time:</strong> ${carOrTaxiInfo.routeAverageTimeAsMins} minutes</p>
                         <p><strong>Recommended Departure Time:</strong> ${new Date(carOrTaxiInfo.recommendedDepartureTime).toLocaleString()}</p>
+                        <button id="view-route-car">View Route for Car / Taxi</button>
                     </div>
                 </div>
             `;
 
-            outputElement.innerHTML = output; // Display the output
+            outputElement.innerHTML = output;
+
+            // Add event listeners to each "View Route" button
+            document.getElementById('view-route-public').addEventListener('click', () => {
+                window.location.href = `/views/pub-trans-route?planId=${planId}`;
+            });
+
+            document.getElementById('view-route-car').addEventListener('click', () => {
+                window.location.href = `/views/car-taxi-route?planId=${planId}`;
+            });
         })
         .catch(error => {
             outputElement.innerHTML = `<p>An error occurred while fetching data: ${error.message}</p>`;
         });
 });
+
 
 // Function to determine if the address is specific
 function isSpecificAddress(address) {

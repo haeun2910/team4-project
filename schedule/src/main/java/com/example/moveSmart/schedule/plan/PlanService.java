@@ -19,10 +19,7 @@ import com.example.moveSmart.user.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -183,11 +180,28 @@ public class PlanService {
 
     public Page<PlanDto> myPlan(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
-        pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.ASC, "arrivalAt"));
+        LocalDateTime now = LocalDateTime.now();
 
-        Page<Plan> plans = planRepo.findByUser(user,pageable);
+        // Tạo danh sách các mục với arrivalAt trong tương lai
+        List<Plan> futurePlans = planRepo.findByUserAndArrivalAtAfter(user, now, Sort.by(Sort.Direction.ASC, "arrivalAt"));
+
+        // Tạo danh sách các mục với arrivalAt trong quá khứ
+        List<Plan> pastPlans = planRepo.findByUserAndArrivalAtBefore(user, now, Sort.by(Sort.Direction.DESC, "arrivalAt"));
+
+        // Kết hợp hai danh sách lại với các mục trong tương lai ở đầu
+        List<Plan> allPlans = new ArrayList<>(futurePlans);
+        allPlans.addAll(pastPlans);
+
+        // Chuyển danh sách thành Page
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), allPlans.size());
+        Page<Plan> plans = new PageImpl<>(allPlans.subList(start, end), pageable, allPlans.size());
+
         return plans.map(plan -> PlanDto.fromEntity(plan, true));
     }
+
+
+
 
     public PlanDto readOnePlan(Long planId) {
         UserEntity user = authFacade.extractUser();

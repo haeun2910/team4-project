@@ -27,4 +27,8 @@ public class UserViewController {
     public String readOnePlan(){
         return "/plan/view-plan";
     }
+    @GetMapping("pub-trans-route")
+    public String readOneRoute(){
+        return "/route/view-pub-trans-route";
+    }
 }

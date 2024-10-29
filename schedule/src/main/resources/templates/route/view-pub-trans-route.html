@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Details</title>
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh; /* Ensure the body takes full height */
+        }
+        .route-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .details {
+            flex: 1; /* Take 50% of the width */
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 100%; /* Ensure it doesn't overflow */
+        }
+        #map {
+            flex: 1; /* Take 50% of the width */
+            height: 90%; /* Full height */
+            min-width: 400px; /* Minimum width for the map */
+        }
+        h1 {
+            margin-top: 0;
+        }
+        button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="route-container">
+    <div class="details">
+        <h1>Public Transport Route</h1>
+        <div id="route-details"></div>
+        <button onclick="window.history.back()">Back</button>
+    </div>
+    <div id="map"></div>
+</div>
+
+<script src="/static/js/route/view-pub-trans-route.js"></script>
+</body>
+</html>
