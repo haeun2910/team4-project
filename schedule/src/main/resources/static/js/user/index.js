@@ -12,6 +12,7 @@ const setUserInfo = userInfo => {
   document.getElementById("greeting").innerText = `Welcome, ${userInfo.name ?? userInfo.username}.`;
   const isAdmin = userInfo.roles.includes("ROLE_ADMIN");
   const isActive = userInfo.roles.includes("ROLE_ACTIVE");
+    const isSuspended = userInfo.roles.includes("ROLE_SUSPEND")
   const summary = document.getElementById("summary");
 
   if (isAdmin) {
@@ -20,6 +21,9 @@ const setUserInfo = userInfo => {
   } else if (isActive) {
     summary.innerText = "You are: USER";
     document.getElementById("user-menu").classList.remove("d-none");
+    } else if (isSuspended) {
+          summary.innerText = "You are: INACTIVE (Suspended)";
+          document.getElementById("comeback-button").classList.remove("d-none");
   }  else summary.innerText = "You are: INACTIVE";
 }
 //await fetch("/users/comeback", {
@@ -70,6 +74,26 @@ if (jwt) {
   setBaseView();
 }
 
+
+document.getElementById("comeback-button").addEventListener("click", () => {
+  fetch("/users/comeback", {
+    method: "PUT",
+    headers: {
+      "Authorization": `Bearer ${jwt}`,
+      "Content-Type": "application/json"
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Failed to come back to active status");
+    }
+    alert("Your account is now active.");
+    location.reload(); // Refresh the page to update the status
+  })
+  .catch(error => {
+    alert("Error: " + error.message);
+  });
+});
 
 const logoutButton = document.getElementById("logout-button");
 logoutButton.addEventListener("click", e => {
