@@ -7,44 +7,107 @@
     <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
-            height: 100vh; /* Ensure the body takes full height */
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #eef2f3;
         }
+
         .route-container {
             display: flex;
-            width: 100%;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .details {
+            width: 45%;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+        }
+
+        #map {
+            width: 55%;
             height: 100%;
         }
-        .details {
-            flex: 1; /* Take 50% of the width */
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            background-color: #f9f9f9;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 100%; /* Ensure it doesn't overflow */
-        }
-        #map {
-            flex: 1; /* Take 50% of the width */
-            height: 90%; /* Full height */
-            min-width: 400px; /* Minimum width for the map */
-        }
+
         h1 {
             margin-top: 0;
+            font-size: 24px;
+            color: #333;
         }
-        button {
+
+        .path {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #fafafa;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .path h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .path p {
+            font-size: 14px;
+            color: #666;
+            margin: 3px 0;
+        }
+
+        .path button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .path button:hover {
+            background-color: #45a049;
+        }
+
+        .back-button {
+            display: block;
             margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            background-color: #2196F3;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #1976D2;
         }
     </style>
 </head>
 <body>
+<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
+<a href="/views/my-plan">View my Plans</a>
 <div class="route-container">
     <div class="details">
         <h1>Public Transport Route</h1>
         <div id="route-details"></div>
-        <button onclick="window.history.back()">Back</button>
+        <button class="back-button" onclick="window.history.back()">Back</button>
     </div>
     <div id="map"></div>
 </div>

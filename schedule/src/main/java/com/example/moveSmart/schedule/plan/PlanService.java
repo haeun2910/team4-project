@@ -182,17 +182,39 @@ public class PlanService {
         UserEntity user = authFacade.extractUser();
         LocalDateTime now = LocalDateTime.now();
 
-        // Tạo danh sách các mục với arrivalAt trong tương lai
+        // Get future plans
         List<Plan> futurePlans = planRepo.findByUserAndArrivalAtAfter(user, now, Sort.by(Sort.Direction.ASC, "arrivalAt"));
 
-        // Tạo danh sách các mục với arrivalAt trong quá khứ
+        // Get past plans
         List<Plan> pastPlans = planRepo.findByUserAndArrivalAtBefore(user, now, Sort.by(Sort.Direction.DESC, "arrivalAt"));
 
-        // Kết hợp hai danh sách lại với các mục trong tương lai ở đầu
-        List<Plan> allPlans = new ArrayList<>(futurePlans);
-        allPlans.addAll(pastPlans);
+        // Separate incomplete and complete plans
+        List<Plan> incompletePlans = new ArrayList<>();
+        List<Plan> completedPlans = new ArrayList<>();
 
-        // Chuyển danh sách thành Page
+        // Classify future plans
+        for (Plan plan : futurePlans) {
+            if (!plan.isCompleted()) { // Assuming isCompleted() returns true if the plan is complete
+                incompletePlans.add(plan);
+            } else {
+                completedPlans.add(plan);
+            }
+        }
+
+        // Classify past plans
+        for (Plan plan : pastPlans) {
+            if (!plan.isCompleted()) {
+                incompletePlans.add(plan);
+            } else {
+                completedPlans.add(plan);
+            }
+        }
+
+        // Combine incomplete plans first, followed by completed plans
+        List<Plan> allPlans = new ArrayList<>(incompletePlans);
+        allPlans.addAll(completedPlans);
+
+        // Create a Page from the combined list
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allPlans.size());
         Page<Plan> plans = new PageImpl<>(allPlans.subList(start, end), pageable, allPlans.size());

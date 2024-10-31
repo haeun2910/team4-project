@@ -1,4 +1,11 @@
-
+const jwt = localStorage.getItem("token") ?? null;
+if (jwt) fetch("/users/get-user-info", {
+  headers: {
+    "Authorization": `Bearer ${jwt}`,
+  },
+}).then(response => {
+  if (response.ok) location.href = "/views";
+})
 
 const loginForm = document.getElementById("signin-form");
 const usernameInput = document.getElementById("username-input");
@@ -20,8 +27,13 @@ loginForm.addEventListener("submit", e => {
       })
       .then(json => {
         localStorage.setItem("token", json.token);
-        location.href = "/views/update";
+//         if (json.roles === "ROLE_INACTIVE") {
+//                location.href = "/views/update";
+//              } else (json.roles === "ROLE_USER")
+                location.href = "/views";
+              
       })
+  
       .catch(error => alert(error.message));
           console.error(error);
 

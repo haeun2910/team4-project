@@ -41,6 +41,8 @@ public class WebSecurityConfig {
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
+                                    "/users/update",
+                                    "/users/index",
                                     "/users/suspend-req",
                                     "/users/comeback"
                             )

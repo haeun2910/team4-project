@@ -13,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping("/plans")
@@ -58,10 +61,13 @@ public class PlanController {
         return planService.readOnePlan(planId);
     }
     @PutMapping("/complete/{id}")
-    public ResponseEntity<String> completePlan(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> completePlan(@PathVariable Long id) {
         planService.completePlan(id);
-        return ResponseEntity.ok("plan marked as completed");
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Plan marked as completed");
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/completed")
     public ResponseEntity<Page<PlanDto>> getCompletedplans(Pageable pageable) {

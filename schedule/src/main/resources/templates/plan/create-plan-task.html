@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Plan Task</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/static/js/plan/create-plan-task.js" defer></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f8;
+            color: #333;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fafafa;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            border-color: #3498db;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
+<div class="container">
+    <h1>Create a Task for the Plan</h1>
+
+    <form id="create-task-form">
+        <!-- Task Title -->
+        <div class="form-group">
+            <label for="title">Task Title</label>
+            <input type="text" id="title" name="title" placeholder="Enter task title" required>
+        </div>
+
+        <!-- Task Time -->
+        <div class="form-group">
+            <label for="time">Task Time</label>
+            <input type="text" id="time" name="time" placeholder="Enter task time in minitue" required>
+        </div>
+
+        <!-- Hidden field for Plan ID (Extracted from the URL) -->
+        <input type="hidden" id="planId" name="planId">
+
+        <button type="submit">Create Task</button>
+    </form>
+
+    <div id="message"></div> <!-- For displaying success or error messages -->
+</div>
+</body>
+</html>
