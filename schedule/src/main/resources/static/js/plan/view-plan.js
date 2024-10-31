@@ -6,7 +6,7 @@ if (!jwt) {
 }
 if (!planId) {
     alert('No plan ID provided.');
-    location.href = "/views/plans"; // Redirect if no ID
+    location.href = "/views/my-plan"; // Redirect if no ID
 }
 
 // Fetch plan details by ID

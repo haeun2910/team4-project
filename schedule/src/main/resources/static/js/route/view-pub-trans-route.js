@@ -78,32 +78,47 @@ function displayRouteDetails(paths) {
             <p><strong>Station Count:</strong> ${path.info.totalStationCount || "N/A"}</p>
         `;
 
-        // Hiển thị thông tin Lane
+        // Hiển thị thông tin Lane nếu có
         if (path.subPath && path.subPath.length > 0) {
             const laneList = document.createElement('ul');
+            let hasValidLaneInfo = false; // Track if we have any valid lane information
             laneList.innerHTML = `<strong>Lane Information:</strong>`;
-            let hasValidLaneInfo = false;
 
             path.subPath.forEach(subPath => {
                 if (subPath.lane && subPath.lane.length > 0) {
                     subPath.lane.forEach(lane => {
-                        const laneItem = document.createElement('li');
-                        laneItem.innerHTML = `
-                            Lane Name: ${lane.name || "N/A"}
-                            ${lane.busNo ? " | Bus Number: " + lane.busNo : ""}
-                        `;
-                        laneList.appendChild(laneItem);
-                        hasValidLaneInfo = true;
+                        const laneName = lane.name || "N/A"; // Default to "N/A" if no name
+                        const busNumber = lane.busNo ? " | Bus Number: " + lane.busNo : "N/A"; // Default to "N/A" if no bus number
+
+                        // Only display if either lane name or bus number is valid
+                        if (laneName !== "N/A" || busNumber !== "N/A") {
+                            const laneItem = document.createElement('li');
+                            if (laneName !== "N/A" && busNumber !== "N/A") {
+                                // If both are available, show both
+                                laneItem.innerHTML = `Lane Name: ${laneName} | Bus Number: ${lane.busNo}`;
+                            } else if (laneName !== "N/A") {
+                                // If only lane name is valid, show it
+                                laneItem.innerHTML = `Lane Name: ${laneName}`;
+                            } else {
+                                // If only bus number is valid, show it
+                                laneItem.innerHTML = `Bus Number: ${lane.busNo}`;
+                            }
+                            laneList.appendChild(laneItem);
+                            hasValidLaneInfo = true; // We have valid lane info
+                        }
                     });
                 }
             });
 
+            // Append laneList only if it has valid lane information
             if (hasValidLaneInfo) {
                 pathContainer.appendChild(laneList);
             }
         }
 
-        // Hiển thị thông tin PassStopList
+
+
+        // Hiển thị thông tin PassStopList nếu có
         if (path.subPath && path.subPath.length > 0) {
             const stopList = document.createElement('div');
             stopList.innerHTML = `<strong>Pass Stop List:</strong>`;
@@ -113,7 +128,8 @@ function displayRouteDetails(paths) {
                 if (subPath.passStopList && subPath.passStopList.stations && subPath.passStopList.stations.length > 0) {
                     subPath.passStopList.stations.forEach(station => {
                         const stationItem = document.createElement('li');
-                        stationItem.innerHTML = `Name: ${station.stationName || "N/A"}`;
+                        const stationType = subPath.trafficType === 1 ? "Subway Stop" : (subPath.trafficType === 2 ? "Bus Stop" : "N/A");
+                        stationItem.innerHTML = `Name: ${station.stationName || "N/A"} (${stationType})`;
                         stationList.appendChild(stationItem);
                     });
                 }
@@ -138,6 +154,7 @@ function displayRouteDetails(paths) {
         routeDetails.appendChild(pathContainer);
     });
 }
+
 
 // Hàm hiển thị điểm bắt đầu và kết thúc trên bản đồ
 function displayInitialRouteOnMap(paths) {
@@ -172,7 +189,6 @@ function clearMarkers() {
     markers = []; // Đặt lại mảng markers
 }
 
-// Hàm hiển thị cung đường cụ thể trên bản đồ
 function showPathOnMap(index) {
     // Clear existing polylines and markers
     polylines.forEach(polyline => polyline.setMap(null));
@@ -201,15 +217,24 @@ function showPathOnMap(index) {
             if (path && Array.isArray(path.subPath) && path.subPath.length > 0) {
                 path.subPath.forEach(subPath => {
                     // Process bus route
-                    if (subPath.trafficType === 2) {
-                        // Process bus route with passStopList for coordinates
+                    if (subPath.trafficType === 2) { // Bus
                         if (subPath.passStopList && Array.isArray(subPath.passStopList.stations)) {
                             const busCoords = subPath.passStopList.stations.map(station =>
                                 new naver.maps.LatLng(station.y, station.x)
                             );
 
-                            if (busCoords.length > 0) {
-                                createPolyline(busCoords, '#FF0000'); // Red for bus route
+                            // Check if the API provides actual route coordinates
+                            if (subPath.routeCoords && Array.isArray(subPath.routeCoords)) {
+                                const routeCoords = subPath.routeCoords.map(coord =>
+                                    new naver.maps.LatLng(coord.y, coord.x)
+                                );
+
+                                if (routeCoords.length > 0) {
+                                    createPolyline(routeCoords, '#FF0000'); // Red for bus route
+                                }
+                            } else if (busCoords.length > 0) {
+                                // Use the bus stops as polyline if route coordinates are not available
+                                createPolyline(busCoords, '#FF0000'); // Fallback to connecting bus stops
                             }
 
                             // Add markers for each bus stop
@@ -221,14 +246,22 @@ function showPathOnMap(index) {
                         }
                     }
                     // Process subway route
-                    else if (subPath.trafficType === 1) {
+                    else if (subPath.trafficType === 1) { // Subway
                         if (subPath.passStopList && Array.isArray(subPath.passStopList.stations)) {
                             const subwayCoords = subPath.passStopList.stations.map(station =>
                                 new naver.maps.LatLng(station.y, station.x)
                             );
 
-                            if (subwayCoords.length > 0) {
-                                createPolyline(subwayCoords, '#0000FF'); // Blue for subway route
+                            if (subPath.routeCoords && Array.isArray(subPath.routeCoords)) {
+                                const routeCoords = subPath.routeCoords.map(coord =>
+                                    new naver.maps.LatLng(coord.y, coord.x)
+                                );
+
+                                if (routeCoords.length > 0) {
+                                    createPolyline(routeCoords, '#0000FF'); // Blue for subway route
+                                }
+                            } else if (subwayCoords.length > 0) {
+                                createPolyline(subwayCoords, '#0000FF'); // Fallback to connecting subway stations
                             }
 
                             // Add markers for each subway station
@@ -239,24 +272,19 @@ function showPathOnMap(index) {
                             });
                         }
                     }
-                    // Process walk section, only add start and end markers
-                    else if (subPath.trafficType === 3) {
-                        if (subPath.startY && subPath.startX && subPath.startName && subPath.endY && subPath.endX && subPath.endName) {
-                            createMarker(subPath.startY, subPath.startX, subPath.startName);
-                            createMarker(subPath.endY, subPath.endX, subPath.endName);
-                        }
-                    } else {
-                        console.warn("Unsupported trafficType:", subPath.trafficType);
-                    }
                 });
-            } else {
-                console.warn("No subPath available for the selected route");
+
+                // Adjust map to show all markers
+                const bounds = new naver.maps.LatLngBounds();
+                markers.forEach(marker => bounds.extend(marker.getPosition()));
+                map.fitBounds(bounds);
             }
         })
         .catch(error => {
-            console.error('Error fetching route:', error);
+            console.error('Error fetching route data:', error);
         });
 }
+
 
 // Function to create polylines with specified color
 function createPolyline(coords, color) {
@@ -279,6 +307,3 @@ function createMarker(lat, lng, title) {
     });
     markers.push(marker);
 }
-
-
-

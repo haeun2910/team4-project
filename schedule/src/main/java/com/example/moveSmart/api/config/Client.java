@@ -3,6 +3,7 @@ package com.example.moveSmart.api.config;
 import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
 import com.example.moveSmart.api.entity.PlaceSearchResponse;
 import com.example.moveSmart.api.entity.geo.*;
+import com.example.moveSmart.api.entity.route.OdsayLaneInfoResponse;
 import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
 import com.example.moveSmart.api.entity.naverSearch.NaverSearchItem;
 import com.example.moveSmart.api.entity.naverSearch.NaverSearchResponse;
@@ -199,5 +200,51 @@ public class Client {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred", e);
         }
     }
+
+    public OdsayLaneInfoResponse loadLaneInfo(String mapObject) {
+        // Set default mapObject if null or empty
+        if (mapObject == null || mapObject.isEmpty()) {
+            mapObject = "0:0@"; // Default value
+        } else {
+            mapObject = "0:0@" + mapObject; // Prepend "0:0@" to the mapObject
+        }
+
+        // Construct the URI for the ODsay API
+        URI uri = UriComponentsBuilder.fromUriString("https://api.odsay.com/v1/api/loadLane")
+                .queryParam("apiKey", key) // Include your API key
+                .queryParam("lang", 0) // Language code (0 for Korean)
+                .queryParam("mapObject", mapObject) // mapObject parameter from the request
+                .build().encode().toUri();
+
+        log.info("[request api] uri = {}", uri);
+
+        // Set up the HttpEntity for the request
+        HttpHeaders headers = new HttpHeaders();
+        HttpEntity<Void> httpEntity = new HttpEntity<>(headers); // Empty body since it's a GET request
+
+        // Define the response type
+        ParameterizedTypeReference<OdsayLaneInfoResponse> responseType = new ParameterizedTypeReference<>() {}; // Adjusted to match the response structure
+
+        try {
+            // Send the request to the ODsay API
+            ResponseEntity<OdsayLaneInfoResponse> responseEntity = restTemplate.exchange(
+                    uri, HttpMethod.GET, httpEntity, responseType
+            );
+
+            // Log the response
+            log.info("[response api] status = {}, body = {}", responseEntity.getStatusCode(), responseEntity.getBody());
+
+            return responseEntity.getBody(); // Return the response body
+        } catch (HttpClientErrorException | HttpServerErrorException e) {
+            log.error("Error during API request: {}", e.getMessage());
+            throw new ResponseStatusException(e.getStatusCode(), "Error while calling ODSAY API", e);
+        } catch (Exception e) {
+            log.error("Unexpected error: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error occurred", e);
+        }
+    }
+
+
+
 
 }

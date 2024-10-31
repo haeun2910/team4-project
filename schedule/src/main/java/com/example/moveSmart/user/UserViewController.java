@@ -34,6 +34,10 @@ public class UserViewController {
     public String readOneRoute(){
         return "/route/view-pub-trans-route";
     }
+    @GetMapping("car-taxi-route")
+    public String readCarTaxiRoute(){
+        return "/route/car-taxi-route";
+    }
     @GetMapping("admin/users")
     public String adminGetUsers(){ return "admin/get-users"; }
     @GetMapping("admin/suspend-requests")
