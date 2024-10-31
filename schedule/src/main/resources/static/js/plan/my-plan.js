@@ -42,12 +42,16 @@ function displayPlans(plans) {
                     <span><strong>Notification Message:</strong> ${plan.notificationMessage}</span>
                 </div>
                 <button onclick="viewPlan(${plan.id})">View Details</button>
+                <button onclick="createTask(${plan.id})">Create Task</button>
             `;
         container.appendChild(planDiv);
     });
 }
 function viewPlan(planId) {
     location.href = `/views/view-plan?id=${planId}`; // Redirect to view-plan.html with planId in the URL
+}
+function createTask(planId) {
+    location.href = `/views/create-plan-task?planId=${planId}`; // Redirect to create-task.html with planId in the URL
 }
 
 // Function to set up pagination

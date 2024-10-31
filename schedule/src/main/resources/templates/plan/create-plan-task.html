@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Plan Task</title>
+    <link rel="stylesheet" href="/styles.css"> <!-- Link to your stylesheet if needed -->
+</head>
+<body>
+<div class="container">
+    <h1>Create a Task for the Plan</h1>
+
+    <form id="create-task-form">
+        <!-- Task Title -->
+        <div class="form-group">
+            <label for="title">Task Title</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+
+        <!-- Task Time -->
+        <div class="form-group">
+            <label for="time">Task Time</label>
+            <input type="text" id="time" name="time" required>
+        </div>
+
+        <!-- Hidden field for Plan ID (Extracted from the URL) -->
+        <input type="hidden" id="planId" name="planId">
+
+        <button type="submit">Create Task</button>
+    </form>
+
+    <div id="message"></div> <!-- For displaying success or error messages -->
+</div>
+
+<script>
+    const jwt = localStorage.getItem("token");
+    if (!jwt) location.href = "/views/signin";
+    // Retrieve planId from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const planId = urlParams.get('planId');
+    document.getElementById('planId').value = planId; // Set the planId in the hidden field
+
+    // Function to handle form submission
+    document.getElementById('create-task-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get values from form
+        const title = document.getElementById('title').value;
+        const time = document.getElementById('time').value;
+
+        // Create the request payload
+        const taskData = {
+            title: title,
+            time: time,
+            planId: planId
+        };
+
+        // Fetch the JWT token from localStorage
+        const jwt = localStorage.getItem("token");
+
+        // Send a POST request to create the task
+        fetch('/plans/create-plan-task', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            },
+            body: JSON.stringify(taskData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to create task');
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.location.href = `/views/view-plan?id=${planId}`;
+            })
+            .catch(error => {
+                document.getElementById('message').textContent = `Error: ${error.message}`;
+            });
+    });
+</script>
+</body>
+</html>

@@ -31,6 +31,80 @@ fetch(`/plans/${planId}`, {
         document.getElementById('arrival-at').innerText = new Date(plan.arrivalAt).toLocaleString();
         document.getElementById('notification-message').innerText = plan.notificationMessage;
 
+        const tasksContainer = document.getElementById('tasks-container');
+        tasksContainer.innerHTML = ''; // Clear previous tasks
+        const taskListTitle = document.createElement('h3');
+        taskListTitle.innerText = 'Task List:';
+        tasksContainer.appendChild(taskListTitle);
+
+        plan.planTasks.forEach(task => {
+            const taskTitleElement = document.createElement('div');
+
+            // Create a checkbox for task completion
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.checked = task.completed; // Check if the task is completed
+
+            // Event listener for the checkbox
+            checkbox.addEventListener('change', () => {
+                // If the checkbox is checked, call the API to mark the task as completed
+                if (checkbox.checked) {
+                    fetch(`/tasks/complete/${task.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${jwt}`
+                        }
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`Error completing task: ${response.statusText}`);
+                            }
+                            return response.text(); // Assuming the API returns a message
+                        })
+                        .then(message => {
+                            alert(message); // Show success message
+                            task.completed = true; // Update local task state
+                            // Optionally, you can update the UI or remove the task
+                        })
+                        .catch(error => {
+                            alert(`An error occurred: ${error.message}`);
+                            checkbox.checked = false; // Revert checkbox if there was an error
+                        });
+                } else {
+                    // Optionally, you can handle the case when the checkbox is unchecked
+                    alert('Task cannot be marked as incomplete.'); // Prevent unchecking
+                    checkbox.checked = true; // Revert checkbox to checked state
+                }
+            });
+
+            taskTitleElement.innerHTML = `
+        <div>
+            <strong>Task Title:</strong> ${task.title}
+        </div>
+        <div>
+            <strong>Time:</strong> ${task.time} minutes
+        </div>
+        <div>
+            <strong>Completed:</strong>
+        </div>
+    `;
+
+            // Append the checkbox to the taskTitleElement
+            taskTitleElement.appendChild(checkbox);
+            tasksContainer.appendChild(taskTitleElement);
+        });
+
+
+        const createTaskButton = document.createElement('button');
+        createTaskButton.innerText = 'Create Task';
+        createTaskButton.onclick = () => {
+            window.location.href = `/views/create-plan-task?planId=${planId}`;
+        };
+
+// Append the button to the tasks container
+        tasksContainer.appendChild(createTaskButton);
+
         // Initialize the map
         const map = new naver.maps.Map('map', {
             zoom: 10,
