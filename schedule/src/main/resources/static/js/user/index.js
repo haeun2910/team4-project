@@ -20,34 +20,30 @@ const setUserInfo = userInfo => {
   } else if (isActive) {
     summary.innerText = "You are: USER";
     document.getElementById("user-menu").classList.remove("d-none");
-    }else if (isSuspended) {
-        summary.innerText = "You are: SUSPENDED";
-  } else {
-    summary.innerText = "You are: INACTIVE";
-  }
+  }  else summary.innerText = "You are: INACTIVE";
 }
-await fetch("/users/comeback", {
-      method: "PUT",
-      headers: {
-        "Authorization": `Bearer ${jwt}`,
-      }
-    })
-    .then(response => {
-      if (!response.ok) throw new Error("Failed to restore role");
-      return response.json();
-    })
-    .then(updatedUser => {
-      setUserInfo(updatedUser); // Cập nhật lại vai trò và hiển thị
-      alert("Your account has been reactivated.");
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Error restoring role: " + error.message);
-    });
-  } else {
-    summary.innerText = "You are: INACTIVE";
-  }
-}
+//await fetch("/users/comeback", {
+//      method: "PUT",
+//      headers: {
+//        "Authorization": `Bearer ${jwt}`,
+//      }
+//    })
+//    .then(response => {
+//      if (!response.ok) throw new Error("Failed to restore role");
+//      return response.json();
+//    })
+//    .then(updatedUser => {
+//      setUserInfo(updatedUser); // Cập nhật lại vai trò và hiển thị
+//      alert("Your account has been reactivated.");
+//    })
+//    .catch(error => {
+//      console.error("Error:", error);
+//      alert("Error restoring role: " + error.message);
+//    });
+//  } else {
+//    summary.innerText = "You are: INACTIVE";
+//  }
+//}
 
 const setBaseView = () => {
   if (loggedIn) document.getElementById("authenticated").classList.remove("d-none");
