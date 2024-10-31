@@ -13,8 +13,11 @@ public class UserViewController {
     public String signUp(){ return "users/signup";}
     @GetMapping("signin")
     public String signIn(){ return "users/signin"; }
+    @GetMapping("suspend-req")
+    public String suspendAcc(){ return "users/suspend-req"; }
     @GetMapping("update")
     public String update(){ return "users/update"; }
+
     @GetMapping("plan-create")
     public String planCreate() {
         return "/plan/plan-create";
@@ -31,4 +34,9 @@ public class UserViewController {
     public String readOneRoute(){
         return "/route/view-pub-trans-route";
     }
+    @GetMapping("admin/users")
+    public String adminGetUsers(){ return "admin/get-users"; }
+    @GetMapping("admin/suspend-requests")
+    public String adminGetSuspendRequests(){ return "admin/suspend-requests"; }
+
 }
