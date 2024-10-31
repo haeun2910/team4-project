@@ -287,18 +287,18 @@ function showPathOnMap(index) {
 
 
 // Function to create polylines with specified color
+// Create Polyline with color for different transportation types
 function createPolyline(coords, color) {
     const polyline = new naver.maps.Polyline({
         path: coords,
         strokeColor: color,
-        strokeOpacity: 0.7,
-        strokeWeight: 6,
+        strokeWeight: 4,
         map: map
     });
     polylines.push(polyline);
 }
 
-// Function to create markers
+// Create marker at specific coordinates
 function createMarker(lat, lng, title) {
     const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(lat, lng),
@@ -307,3 +307,4 @@ function createMarker(lat, lng, title) {
     });
     markers.push(marker);
 }
+

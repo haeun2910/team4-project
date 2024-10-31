@@ -7,46 +7,83 @@
     <title>View Plan</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
             margin: 20px;
-        }
-        h2 {
-            margin-top: 0;
-        }
-        .container {
-            display: flex;
-            gap: 20px;
-        }
-        .plan-detail, .task-list, #map {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-        .plan-detail, .task-list {
-            flex: 1;
-            max-width: 300px;
-        }
-        #map {
-            flex: 2;
-            height: 400px;
-        }
-        .label {
+            color: #3498db;
+            text-decoration: none;
             font-weight: bold;
         }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            justify-content: center;
+        }
+
+        .plan-detail, .task-list, #map {
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .plan-detail, .task-list {
+            flex: 1;
+            max-width: 320px;
+            min-width: 280px;
+        }
+
+        #map {
+            flex: 2;
+            height: 450px;
+            max-width: 600px;
+            min-width: 300px;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #34495e;
+        }
+
         .value {
-            margin-left: 5px;
+            color: #2c3e50;
         }
+
         #output {
-            margin-top: 10px;
+            margin-top: 15px;
             padding: 10px;
-            border-top: 1px solid #ccc;
-            background-color: #fff;
+            border-top: 1px solid #ddd;
+            background-color: #f8f9fa;
+            border-radius: 4px;
         }
+
         .task-item {
             margin-top: 10px;
-            padding: 5px 0;
-            border-top: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #ecf0f1;
+            border: 1px solid #ddd;
+        }
+
+        h3 {
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
         }
     </style>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
@@ -55,6 +92,7 @@
 <body>
 
 <a href="/views">Home</a>
+<a href="/views/my-plan">View my Plans</a>
 <h2>View Plan</h2>
 <div class="container">
     <!-- Plan Details Section -->
@@ -80,10 +118,8 @@
             <span class="label">Notification:</span>
             <span class="value" id="notification-message">Loading...</span>
         </div>
-        <button id="get-time-remaining">Get Time Remaining</button>
         <div id="output"></div>
     </div>
-
 
     <!-- Task List Section -->
     <div class="task-list" id="tasks-container">

@@ -5,43 +5,109 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View All Plans</title>
+    <link rel="stylesheet" href="/static/css/styles.css"> <!-- Link to external CSS if needed -->
     <script src="/static/js/plan/my-plan.js" defer></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+
         h2 {
+            font-size: 24px;
+            color: #4CAF50;
             margin-bottom: 20px;
+            text-align: center;
         }
+
+        #plans-container {
+            width: 100%;
+            max-width: 800px;
+        }
+
         .plan {
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
             margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
         }
+
+        .plan:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
         .plan-title {
-            font-size: 1.5em;
-            margin: 0;
+            font-size: 20px;
+            color: #333;
+            margin: 0 0 10px;
         }
-        .plan-details {
-            margin-top: 10px;
-        }
+
         .plan-details span {
             display: block;
+            color: #666;
+            font-size: 14px;
             margin-bottom: 5px;
         }
+
         button {
-            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            margin-right: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            background-color: #2196F3;
+            margin: 0 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #1976D2;
+        }
+        .completion-checkbox {
+            display: flex;
+            align-items: center;
             margin-top: 10px;
         }
+
+        .completion-checkbox input {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+
     </style>
 </head>
 <body>
-<a href="/views">Home</a>
+<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
+<a href="/views/plan-create">Create Plan</a>
 <h2>All Plans</h2>
 <div id="plans-container"></div>
-
+<div class="pagination" id="pagination-container"></div>
 </body>
 </html>
