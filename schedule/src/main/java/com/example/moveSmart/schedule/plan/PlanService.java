@@ -19,8 +19,7 @@ import com.example.moveSmart.user.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,38 +39,6 @@ public class PlanService {
     private final PlanTaskRepo planTaskRepo;
     private final RouteSearcher routeSearcher;
     private final Client client;
-
-//    @Transactional
-//    public PlanDto createPlan(PlanDto planDto) {
-//        UserEntity user = authFacade.extractUser();
-//        UserEntity userId = userRepo.findById(user.getId())
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        // Get latitude and longitude for departure and arrival addresses
-//        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-//        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
-//
-//        // Assuming the first result is the most relevant
-//        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
-//        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
-//        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
-//        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
-//
-//        Plan plan = Plan.builder()
-//                .title(planDto.getTitle())
-//                .departureName(planDto.getDepartureName())
-//                .departureLat(departureLat) // set fetched latitude
-//                .departureLng(departureLng) // set fetched longitude
-//                .arrivalName(planDto.getArrivalName())
-//                .arrivalAt(planDto.getArrivalAt())
-//                .arrivalLat(arrivalLat) // set fetched latitude
-//                .arrivalLng(arrivalLng) // set fetched longitude
-//                .notificationMessage(planDto.getNotificationMessage())
-//                .user(userId)
-//                .build();
-//
-//        return PlanDto.fromEntity(planRepo.save(plan), true);
-//    }
 
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
@@ -213,10 +180,44 @@ public class PlanService {
 
     public Page<PlanDto> myPlan(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
+        LocalDateTime now = LocalDateTime.now();
 
-        Page<Plan> plans = planRepo.findByUser(user,pageable);
+        // Tạo danh sách các mục với arrivalAt trong tương lai
+        List<Plan> futurePlans = planRepo.findByUserAndArrivalAtAfter(user, now, Sort.by(Sort.Direction.ASC, "arrivalAt"));
+
+        // Tạo danh sách các mục với arrivalAt trong quá khứ
+        List<Plan> pastPlans = planRepo.findByUserAndArrivalAtBefore(user, now, Sort.by(Sort.Direction.DESC, "arrivalAt"));
+
+        // Kết hợp hai danh sách lại với các mục trong tương lai ở đầu
+        List<Plan> allPlans = new ArrayList<>(futurePlans);
+        allPlans.addAll(pastPlans);
+
+        // Chuyển danh sách thành Page
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), allPlans.size());
+        Page<Plan> plans = new PageImpl<>(allPlans.subList(start, end), pageable, allPlans.size());
+
         return plans.map(plan -> PlanDto.fromEntity(plan, true));
     }
+
+
+
+
+    public PlanDto readOnePlan(Long planId) {
+        UserEntity user = authFacade.extractUser();
+
+        Plan plan = planRepo.findById(planId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found with id: " + planId));
+
+        // Check if the plan belongs to the authenticated user
+        if (!plan.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to view this plan.");
+        }
+
+        // Convert the Plan entity to PlanDto and return it
+        return PlanDto.fromEntity(plan, true);
+    }
+
     public void completePlan(Long id) {
         UserEntity currentUser = authFacade.extractUser();
         LocalDateTime currentTime = LocalDateTime.now();
@@ -273,7 +274,7 @@ public class PlanService {
         double routeAverageMins;
         if ("publicTransport".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcRouteAverageTime(requestDto)); // Tính toán thời gian từ Odsay
-        } else if ("CarOrTaxi".equalsIgnoreCase(transportType)) {
+        } else if ("carOrTaxi".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcNCloudRouteAverageTime(requestDto)); // Tính toán thời gian từ NCloud
         } else {
             throw new IllegalArgumentException("Invalid transport type: " + transportType);

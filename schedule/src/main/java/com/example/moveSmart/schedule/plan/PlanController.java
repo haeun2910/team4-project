@@ -26,6 +26,7 @@ public class PlanController {
     public PlanDto create(@RequestBody PlanDto plan) {
         return planService.createPlan(plan);
     }
+
     @PostMapping("create-plan-task")
     public ResponseEntity<PlanTaskDto> createPlanTask(@RequestBody PlanTaskDto task) {
         // Validate the incoming task object
@@ -51,6 +52,11 @@ public class PlanController {
     public Page<PlanDto> myPlans(Pageable pageable) {
         return planService.myPlan(pageable);
     }
+
+    @GetMapping("/{id}")
+    public PlanDto getPlan(@PathVariable("id") Long planId) {
+        return planService.readOnePlan(planId);
+    }
     @PutMapping("/complete/{id}")
     public ResponseEntity<String> completePlan(@PathVariable Long id) {
         planService.completePlan(id);
@@ -68,13 +74,6 @@ public class PlanController {
         Page<PlanDto> expiredplans = planService.getIncompletePlans(pageable);
         return ResponseEntity.ok(expiredplans);
     }
-
-//    @GetMapping("/time-remaining/{planId}")
-//    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
-//        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
-//        RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
-//        return ResponseEntity.ok(response);
-//    }
 
     @GetMapping("/time-remaining/{planId}")
     public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId,

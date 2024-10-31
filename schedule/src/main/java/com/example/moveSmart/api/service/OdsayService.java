@@ -25,7 +25,28 @@ public class OdsayService {
     private final RouteSearcher routeSearcher;
 
 
-    public RouteSearchResult searchRouteByPlanIdWithPubTran(Long planId) {
+//    public RouteSearchResult searchRouteByPlanIdWithPubTran(Long planId) {
+//        // Retrieve the current user from AuthFacade
+//        UserEntity currentUser = authFacade.extractUser();
+//
+//        // Find the plan by ID, ensuring it belongs to the current user
+//        Plan plan = planRepo.findByIdAndUser(planId, currentUser)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found for the current user"));
+//
+//        // Use the Client to search for routes based on the Plan
+//        OdsayRouteSearchResponse response = client.searchRouteWithPubTran(plan);
+//        log.info("ODSay API Response: {}", response);
+//
+//        // Check if the response is valid
+//        if (response == null || response.getResult() == null || response.getResult().getPath() == null) {
+//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found for the given plan");
+//        }
+//
+//        // Return the RouteSearchResult with searchType and list of paths
+//        return new RouteSearchResult(response.getResult().getSearchType(), response.getResult().getPath());
+//    }
+
+    public OdsayRouteSearchResponse searchRouteByPlanIdWithPubTran(Long planId) {
         // Retrieve the current user from AuthFacade
         UserEntity currentUser = authFacade.extractUser();
 
@@ -34,16 +55,8 @@ public class OdsayService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found for the current user"));
 
         // Use the Client to search for routes based on the Plan
-        OdsayRouteSearchResponse response = client.searchRouteWithPubTran(plan);
-        log.info("ODSay API Response: {}", response);
-
-        // Check if the response is valid
-        if (response == null || response.getResult() == null || response.getResult().getPath() == null) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "No routes found for the given plan");
-        }
-
-        // Return the RouteSearchResult with searchType and list of paths
-        return new RouteSearchResult(response.getResult().getSearchType(), response.getResult().getPath());
+        return client.searchRouteWithPubTran(plan);
+        
     }
 
     public NCloudRouteSearchResponse searchRouteByPlanIdWithPrivateCar(Long planId) {

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Plan</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        .container {
+            display: flex;
+            gap: 20px;
+        }
+        .plan-detail {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 300px;
+        }
+        .label {
+            font-weight: bold;
+        }
+        .value {
+            margin-left: 10px;
+        }
+        #map {
+            flex: 2;
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #output {
+            margin-top: 10px; /* Khoảng cách giữa phần tử và các phần tử khác */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9; /* Màu nền nhẹ cho phần hiển thị dữ liệu */
+        }
+    </style>
+    <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+    <script src="/static/js/plan/view-plan.js" defer></script>
+</head>
+<body>
+
+<h2>View Plan</h2>
+<div class="container">
+    <div id="plan-details" class="plan-detail">
+        <div>
+            <span class="label">Title:</span>
+            <span class="value" id="plan-title">Loading...</span> <!-- Default loading text -->
+        </div>
+        <div>
+            <span class="label">Departure Address:</span>
+            <span class="value" id="departure-name">Loading...</span> <!-- Default loading text -->
+        </div>
+        <div>
+            <span class="label">Arrival Address:</span>
+            <span class="value" id="arrival-name">Loading...</span> <!-- Default loading text -->
+        </div>
+        <div>
+            <span class="label">Arrival Time:</span>
+            <span class="value" id="arrival-at">Loading...</span> <!-- Default loading text -->
+        </div>
+        <div>
+            <span class="label">Notification Message:</span>
+            <span class="value" id="notification-message">Loading...</span> <!-- Default loading text -->
+        </div>
+        <div>
+            <button id="get-time-remaining">Get Time Remaining</button>
+        </div>
+
+        <!-- Element to display the output -->
+        <div id="output"></div>
+
+    </div>
+
+    <div id="map"></div>
+</div>
+
+</body>
+</html>

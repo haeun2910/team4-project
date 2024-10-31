@@ -3,6 +3,7 @@ package com.example.moveSmart.api.controller;
 import com.example.moveSmart.api.config.Client;
 import com.example.moveSmart.api.entity.route.NCloudRouteSearchResponse;
 import com.example.moveSmart.api.entity.PlaceSearchResponse;
+import com.example.moveSmart.api.entity.route.OdsayRouteSearchResponse;
 import com.example.moveSmart.api.entity.route.RouteSearchResult;
 import com.example.moveSmart.api.service.OdsayService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,11 +21,18 @@ public class ApiController {
     private final Client client;
     private final OdsayService odsayService;
 
+//    @GetMapping("/route/{planId}")
+//    public ResponseEntity<RouteSearchResult> getRoutesForPlan(@PathVariable Long planId) {
+//        RouteSearchResult routeSearchResult = odsayService.searchRouteByPlanIdWithPubTran(planId);
+//        return ResponseEntity.ok(routeSearchResult);
+//    }
+
     @GetMapping("/route/{planId}")
-    public ResponseEntity<RouteSearchResult> getRoutesForPlan(@PathVariable Long planId) {
-        RouteSearchResult routeSearchResult = odsayService.searchRouteByPlanIdWithPubTran(planId);
-        return ResponseEntity.ok(routeSearchResult);
+    public ResponseEntity<OdsayRouteSearchResponse> getRoutesForPlan(@PathVariable Long planId) {
+        OdsayRouteSearchResponse response = odsayService.searchRouteByPlanIdWithPubTran(planId);
+        return ResponseEntity.ok(response);
     }
+
     @GetMapping("/route-car-taxi/{planId}")
     public ResponseEntity<NCloudRouteSearchResponse> getRouteByPlanId(@PathVariable Long planId) {
         NCloudRouteSearchResponse response = odsayService.searchRouteByPlanIdWithPrivateCar(planId);
