@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Taxi Route</title>
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #004d99;
+            margin: 20px 0;
+        }
+
+        /* Container and layout */
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        #map {
+            width: 600px;
+            height: 400px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        #routeInfo {
+            flex: 1;
+            margin-left: 20px;
+            max-width: 600px;
+        }
+
+        /* Route details styling */
+        .routeDetail {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .routeDetail:hover {
+            transform: scale(1.02);
+            background-color: #e6f2ff;
+        }
+        h3 {
+            margin-top: 0;
+            color: #00509e;
+        }
+        .sectionDetail, .guideDetail {
+            margin-top: 10px;
+        }
+
+        /* Button styling */
+        button {
+            background-color: #00509e;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #007bff;
+        }
+
+        /* Guide instructions styling */
+        .guideDetail h4 {
+            margin: 10px 0;
+            color: #333;
+        }
+        .guideDetail p {
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #ddd;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
+<a href="/views/my-plan">View my Plans</a>
+
+<h1>Car Taxi Route</h1>
+
+<div id="container">
+    <div id="map"></div>
+    <div id="routeInfo"></div>
+</div>
+
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+<script src="/static/js/route/car-taxi-route.js"></script>
+</body>
+</html>

@@ -22,6 +22,10 @@ public class UserViewController {
     public String planCreate() {
         return "/plan/plan-create";
     }
+    @GetMapping("create-plan-task")
+    public String createPlanTask() {
+        return "/plan/create-plan-task";
+    }
     @GetMapping("my-plan")
     public String myPlan() {
         return "/plan/my-plan";
@@ -33,6 +37,10 @@ public class UserViewController {
     @GetMapping("pub-trans-route")
     public String readOneRoute(){
         return "/route/view-pub-trans-route";
+    }
+    @GetMapping("car-taxi-route")
+    public String readCarTaxiRoute(){
+        return "/route/car-taxi-route";
     }
     @GetMapping("admin/users")
     public String adminGetUsers(){ return "admin/get-users"; }
