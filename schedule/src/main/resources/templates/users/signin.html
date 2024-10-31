@@ -1,38 +1,71 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In | MoveSmart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
-    <title>Sign In</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-custom img {
+            margin-left: 8px;
+        }
+    </style>
 </head>
 
 <body>
-<main class="p-3">
-    <div class="mx-auto w-50">
-        <h1>Login</h1>
-        <a href="/views">Back</a>
-        <form id="signin-form">
-            <div class="mb-3">
-                <label for="username-input" class="form-label">User Name</label>
-                <input type="text" id="username-input" class="form-control">
+<main class="d-flex align-items-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card p-4">
+                    <h1 class="text-center mb-4">Login</h1>
+                    <div class="text-center mb-3">
+                        <a href="/views" class="text-decoration-none">Back</a>
+                    </div>
+                    <form id="signin-form">
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            <label for="username-input" class="form-label">User Name</label>
+                            <input type="text" id="username-input" class="form-control" required>
+                        </div>
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="password-input" class="form-label">Password</label>
+                            <input type="password" id="password-input" class="form-control" required>
+                        </div>
+                        <!-- Login Button -->
+                        <button id="login-button" type="submit" class="btn btn-primary w-100">Login</button>
+                        <!-- OAuth Login -->
+                        <div class="text-center mt-4">
+                            <p>Or login with</p>
+                            <a href="/oauth2/authorization/naver" class="btn btn-custom btn-outline-success">
+                                <span>Naver</span>
+                                <img src="/static/img/naver-icon.png" alt="Login with Naver" style="width: 20px; height: 20px;">
+                            </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="mb-3">
-                <label for="password-input" class="form-label">Password</label>
-                <input type="password" id="password-input" class="form-control">
-            </div>
-            <button id="login-button" type="submit" class="btn btn-primary">Login</button>
-            <br>
-            Login in with   <a href="/oauth2/authorization/naver">
-                <img src="/static/img/naver-icon.png" alt="Login with Naver" style="width: 30px; height: 30px;">
-            </a>
-
-        </form>
+        </div>
     </div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 <script src="/static/js/user/signin.js"></script>
-
 </body>
-
 </html>
