@@ -21,7 +21,7 @@ public class TaskController {
     }
     @PutMapping("update/{taskId}")
     public TaskDto update(@RequestBody TaskDto taskDto, @PathVariable("taskId") Long taskId) {
-        return taskService.updateTask(taskDto);
+        return taskService.updateTask(taskId, taskDto);
     }
     @DeleteMapping("delete/{taskId}")
     public void delete(@PathVariable("taskId") Long taskId) {
