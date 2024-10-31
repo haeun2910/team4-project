@@ -42,5 +42,9 @@ public class UserViewController {
     public String adminGetUsers(){ return "admin/get-users"; }
     @GetMapping("admin/suspend-requests")
     public String adminGetSuspendRequests(){ return "admin/suspend-requests"; }
+    @GetMapping("task-create")
+    public String taskCreate(){ return "task/create"; }
+    @GetMapping("my-tasks")
+    public String myTasks(){ return "task/my-tasks"; }
 
 }

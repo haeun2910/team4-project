@@ -27,8 +27,13 @@ loginForm.addEventListener("submit", e => {
       })
       .then(json => {
         localStorage.setItem("token", json.token);
-        location.href = "/views/update";
+//         if (json.roles === "ROLE_INACTIVE") {
+//                location.href = "/views/update";
+//              } else (json.roles === "ROLE_USER")
+                location.href = "/views";
+              
       })
+  
       .catch(error => alert(error.message));
           console.error(error);
 
