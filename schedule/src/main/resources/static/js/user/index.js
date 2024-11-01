@@ -9,7 +9,7 @@ const setUserInfo = userInfo => {
   imgContainer.innerHTML = "";
   imgContainer.appendChild(imageElem);
 
-  document.getElementById("greeting").innerText = `Welcome, ${userInfo.name ?? userInfo.username}.`;
+  document.getElementById("greeting").innerText = `Welcome, ${userInfo.name ?? userInfo.username}!!`;
   const isAdmin = userInfo.roles.includes("ROLE_ADMIN");
   const isActive = userInfo.roles.includes("ROLE_ACTIVE");
     const isSuspended = userInfo.roles.includes("ROLE_SUSPEND")
