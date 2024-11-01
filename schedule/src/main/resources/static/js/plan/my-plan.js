@@ -28,6 +28,74 @@ function fetchPlans(page = 0, size = 10) {
             alert(`An error occurred: ${error.message}`);
         });
 }
+function fetchCompletedPlans(page = 0, size = 10) {
+    fetch(`/plans/completed?page=${page}&size=${size}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch completed plans');
+            return response.json();
+        })
+        .then(data => {
+            displayPlans(data.content);
+            setupPagination(data, fetchCompletedPlans);
+        })
+        .catch(error => alert(`An error occurred: ${error.message}`));
+}
+
+// Function to fetch incomplete plans
+function fetchIncompletePlans(page = 0, size = 10) {
+    fetch(`/plans/incomplete?page=${page}&size=${size}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Failed to fetch incomplete plans');
+            return response.json();
+        })
+        .then(data => {
+            displayPlans(data.content);
+            setupPagination(data, fetchIncompletePlans);
+        })
+        .catch(error => alert(`An error occurred: ${error.message}`));
+}
+
+function searchPlans(page = 0, size = 10) {
+    const title = document.getElementById('search-input').value;
+    if (!title) {
+        alert('Please enter a title to search.');
+        return;
+    }
+
+    fetch(`/plans/search?title=${encodeURIComponent(title)}&page=${page}&size=${size}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch plans');
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayPlans(data.content);
+            setupPagination(data, searchPlans);
+        })
+        .catch(error => {
+            alert(`An error occurred: ${error.message}`);
+        });
+}
+
 
 // Function to display plans in the container
 function displayPlans(plans) {
@@ -49,8 +117,11 @@ function displayPlans(plans) {
                 <input type="checkbox" id="completed-${plan.id}" ${plan.completed ? 'checked' : ''} onchange="toggleCompletion(${plan.id}, this.checked)">
 <!--                <label for="completed-${plan.id}">${plan.completed ? 'Completed' : 'Not Completed'}</label>-->
             </div>
+            <button onclick="updatePlan(${plan.id})">Update</button>
             <button onclick="viewPlan(${plan.id})">View Details</button>
             <button onclick="createTask(${plan.id})">Create Task</button>
+            <button onclick="deletePlan(${plan.id})">Delete</button>
+            
         `;
         container.appendChild(planDiv);
     });
@@ -61,9 +132,35 @@ function viewPlan(planId) {
     location.href = `/views/view-plan?id=${planId}`;
 }
 
+function updatePlan(planId) {
+    location.href = `/views/plan-update?id=${planId}`;
+}
+
 // Function to create a task for a specific plan
 function createTask(planId) {
     location.href = `/views/create-plan-task?planId=${planId}`;
+}
+
+function deletePlan(planId) {
+    if (confirm('Are you sure you want to delete this plan?')) {
+        fetch(`/plans/delete/${planId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to delete plan');
+                }
+                // Refresh the list of plans after successful deletion
+                fetchPlans();
+            })
+            .catch(error => {
+                alert(`An error occurred: ${error.message}`);
+            });
+    }
 }
 
 // Function to toggle completion status of a plan

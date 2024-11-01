@@ -86,11 +86,13 @@ public class PlanService {
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
 
+
     // Helper method to determine if the address is specific
     private boolean isSpecificAddress(String address) {
         // Check for patterns indicating specific addresses (e.g., contains numbers and specific patterns)
         return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
     }
+
 
 
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
@@ -143,9 +145,28 @@ public class PlanService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this plan.");
         }
 
-        // Fetch the latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        // Declare variables for departure and arrival locations
+        PlaceSearchResponse departureLocation;
+        PlaceSearchResponse arrivalLocation;
+
+        // Determine if the departure name is specific or general
+        if (isSpecificAddress(planDto.getDepartureName())) {
+            departureLocation = client.searchAddress(planDto.getDepartureName());
+        } else {
+            departureLocation = client.searchPlace(planDto.getDepartureName());
+        }
+
+        // Determine if the arrival name is specific or general
+        if (isSpecificAddress(planDto.getArrivalName())) {
+            arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        } else {
+            arrivalLocation = client.searchPlace(planDto.getArrivalName());
+        }
+
+        // Check if the API returned any results
+        if (departureLocation.getPlaces().isEmpty() || arrivalLocation.getPlaces().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to find location for the provided addresses.");
+        }
 
         // Assuming the first result is the most relevant
         double departureLat = departureLocation.getPlaces().get(0).getLatitude();
@@ -162,6 +183,7 @@ public class PlanService {
         existingPlan.setArrivalLat(arrivalLat); // Update with fetched latitude
         existingPlan.setArrivalLng(arrivalLng); // Update with fetched longitude
         existingPlan.setNotificationMessage(planDto.getNotificationMessage());
+        existingPlan.setArrivalAt(planDto.getArrivalAt()); // If needed, adjust this line
 
         // Save the updated plan and return the DTO
         return PlanDto.fromEntity(planRepo.save(existingPlan), true);
@@ -182,47 +204,24 @@ public class PlanService {
         UserEntity user = authFacade.extractUser();
         LocalDateTime now = LocalDateTime.now();
 
-        // Get future plans
+        // Get future plans, sorted by arrival time ascending
         List<Plan> futurePlans = planRepo.findByUserAndArrivalAtAfter(user, now, Sort.by(Sort.Direction.ASC, "arrivalAt"));
 
-        // Get past plans
+        // Get past plans, sorted by arrival time descending (latest first)
         List<Plan> pastPlans = planRepo.findByUserAndArrivalAtBefore(user, now, Sort.by(Sort.Direction.DESC, "arrivalAt"));
 
-        // Separate incomplete and complete plans
-        List<Plan> incompletePlans = new ArrayList<>();
-        List<Plan> completedPlans = new ArrayList<>();
-
-        // Classify future plans
-        for (Plan plan : futurePlans) {
-            if (!plan.isCompleted()) { // Assuming isCompleted() returns true if the plan is complete
-                incompletePlans.add(plan);
-            } else {
-                completedPlans.add(plan);
-            }
-        }
-
-        // Classify past plans
-        for (Plan plan : pastPlans) {
-            if (!plan.isCompleted()) {
-                incompletePlans.add(plan);
-            } else {
-                completedPlans.add(plan);
-            }
-        }
-
-        // Combine incomplete plans first, followed by completed plans
-        List<Plan> allPlans = new ArrayList<>(incompletePlans);
-        allPlans.addAll(completedPlans);
+        // Combine future plans and past plans into a single list
+        List<Plan> allPlans = new ArrayList<>(futurePlans);
+        allPlans.addAll(pastPlans);
 
         // Create a Page from the combined list
         int start = (int) pageable.getOffset();
         int end = Math.min((start + pageable.getPageSize()), allPlans.size());
         Page<Plan> plans = new PageImpl<>(allPlans.subList(start, end), pageable, allPlans.size());
 
+        // Map the Page<Plan> to Page<PlanDto>
         return plans.map(plan -> PlanDto.fromEntity(plan, true));
     }
-
-
 
 
     public PlanDto readOnePlan(Long planId) {
@@ -335,6 +334,20 @@ public class PlanService {
         return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, totalReadyTimeAsMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
 
+    public Page<PlanDto> findPlansByTitle(String title, Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Long userId = user.getId(); // Assuming UserEntity has a method to get user ID
+
+        // Fetch plans based on title and user ID
+        List<Plan> plans = planRepo.findByTitleContainingIgnoreCaseAndUserId(title, userId);
+
+        // Create a pageable response by converting the list to a page
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), plans.size());
+        Page<Plan> page = new PageImpl<>(plans.subList(start, end), pageable, plans.size());
+
+        return page.map(plan -> PlanDto.fromEntity(plan, true));
+    }
 
 
 }
