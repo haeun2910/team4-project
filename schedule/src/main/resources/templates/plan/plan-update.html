@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create a Plan</title>
+    <title>Update Plan</title>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
-    <script src="/static/js/plan/plan-create.js" defer></script>
+    <script src="/static/js/plan/plan-update.js" defer></script>
     <style>
         * {
             box-sizing: border-box;
@@ -77,22 +77,16 @@
 <a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
 
 <div id="form-container">
-    <h2>Create a Plan</h2>
+    <h2>Update a Plan</h2>
     <input type="text" id="title" placeholder="Plan Title" required>
     <input type="text" id="departure-name" placeholder="Departure Address" required>
     <input type="text" id="arrival-name" placeholder="Arrival Address" required>
     <input type="date" id="arrival-date" required>
     <input type="time" id="arrival-time" required>
-    <textarea id="notification-message" placeholder="Notification Message"></textarea>
-    <button id="create-plan-btn">Create Plan</button>
-</div>
-<div id="address-options" style="display:none; background-color: #fff; padding: 10px; max-width: 400px; margin: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);">
-    <h3>Select an Address</h3>
-    <ul id="address-list" style="list-style: none; padding: 0;"></ul>
+    <textarea id="notification-message" placeholder="Notification Message (optional)"></textarea>
+    <button id="update-plan-btn">Update Plan</button>
 </div>
 
-
-<div id="map"></div>
-
+<div id="map" style="height: 400px;"></div>
 </body>
 </html>

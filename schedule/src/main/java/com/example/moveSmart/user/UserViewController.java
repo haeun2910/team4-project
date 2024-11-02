@@ -22,6 +22,10 @@ public class UserViewController {
     public String planCreate() {
         return "/plan/plan-create";
     }
+    @GetMapping("plan-update")
+    public String planUpdate() {
+        return "/plan/plan-update";
+    }
     @GetMapping("create-plan-task")
     public String createPlanTask() {
         return "/plan/create-plan-task";
