@@ -4,17 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MoveSmart</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+                body {
+                    margin: 36;
+                    height: 100vh; /* Full height of the viewport */
+                    background-color: #f8f9fa; /* Default background color */
+                    transition: background 0.5s; /* Smooth transition for background */
+                }
+
+                .background-anonymous {
+            background: linear-gradient(rgba(3, 155, 0, 0.7), rgba(3, 155, 0, 0.7)),
+            url('/static/img/bg.png'); /* Your background image */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            height: 100vh; /* Full viewport height */
+            position: fixed; /* Ensure it covers the full viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: -1; /* Keep it behind other elements */
+        }
+/* Layout container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Left Image styling */
+.left-image {
+    position: absolute;
+    left: 200px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 250px;
+    height: 500px;
+}
+
+/* Right Container Flex Layout */
+.right-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Welcome text styling */
+.welcome-text {
+    font-size: 3rem;
+    text-align: right;
+    margin-top: -150px; /* Adjust to move text higher or lower */
+    margin-left: 40px; /* Adjust to move text further to the right */
+    width: 100%; /* Allows it to align more to the right edge */
+}
+
+/* Anonymous div styling */
+#anonymous {
+    width: 550px;
+    height: 300px; /* Increased height */
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    justify-content: space-between; /* This pushes the button container to the bottom */
+
+    padding: 20px;
+    text-align: center;
+    margin-top: 30px; /* Adds some spacing from welcome text */
+    margin-bottom: 10px;
+    margin-left: 400px;
+}
+
+
+    </style>
 </head>
-<body>
+<body class="background-anonymous"> <!-- Default to show the anonymous background -->
 <main class="container my-5">
 
-
     <!-- Anonymous User Section -->
-    <div id="anonymous" class="d-none text-center">
-        <h2 class="mb-3">Welcome to MoveSmart</h2>
-        <a href="/views/signin" class="btn btn-primary mx-2">Login</a>
-        <a href="/views/signup" class="btn btn-secondary mx-2">Sign Up</a>
+
+    <img src="/static/img/person.png" alt="Left Image" class="left-image"/>
+
+    <!-- Centered Welcome Text and Anonymous Div -->
+    <div class="right-container">
+        <h2 class="welcome-text">Welcome to MoveSmart!!</h2>
+        <div id="anonymous" class="d-none text-center">
+            <div style="display: flex; justify-content: space-around; gap: 10px;">
+                <a href="/views/signin" class="btn btn-primary">Login</a>
+                <a href="/views/signup" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
     </div>
 
     <!-- Authenticated User Section -->
@@ -53,7 +137,9 @@
     </div>
 </main>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 <script src="/static/js/user/index.js"></script>
 </body>
 </html>
