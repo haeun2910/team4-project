@@ -89,4 +89,11 @@ public class PlanController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<PlanDto>> findPlansByTitle(
+            @RequestParam String title,
+            Pageable pageable) {
+        Page<PlanDto> plans = planService.findPlansByTitle(title, pageable);
+        return ResponseEntity.ok(plans);
+    }
 }

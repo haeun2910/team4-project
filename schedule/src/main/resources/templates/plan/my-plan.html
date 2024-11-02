@@ -100,14 +100,44 @@
             height: 20px;
             margin-right: 10px;
         }
+        #plans-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .filter-button {
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+        .filter-button:hover {
+            background-color: #0056b3;
+        }
 
     </style>
 </head>
 <body>
 <a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
 <a href="/views/plan-create">Create Plan</a>
-<h2>All Plans</h2>
+
+<!--<h2>All Plans</h2>-->
+<div>
+    <input type="text" id="search-input" placeholder="Search plans by title" />
+    <button class="filter-button" onclick="searchPlans()">Search</button>
+</div>
+
+<div>
+    <!-- Filter buttons for completed and incomplete plans -->
+    <button class="filter-button" onclick="fetchPlans()">All Plans</button>
+    <button class="filter-button" onclick="fetchCompletedPlans()">Completed Plans</button>
+    <button class="filter-button" onclick="fetchIncompletePlans()">Incomplete Plans</button>
+</div>
+
 <div id="plans-container"></div>
-<div class="pagination" id="pagination-container"></div>
+<div id="pagination-container"></div>
 </body>
 </html>

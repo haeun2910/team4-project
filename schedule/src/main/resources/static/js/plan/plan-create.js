@@ -11,13 +11,17 @@ const map = new naver.maps.Map('map', {
 const departureMarker = new naver.maps.Marker({
     map: map,
     position: map.getCenter(),
-    title: 'Departure'
+    title: 'Departure',
+    visible: false
+
 });
 
 const arrivalMarker = new naver.maps.Marker({
     map: map,
     position: map.getCenter(),
-    title: 'Arrival'
+    title: 'Arrival',
+    visible: false
+
 });
 
 // Function to determine if address is specific or general
@@ -63,6 +67,7 @@ function updateMap(addressId, marker) {
     fetchCoordinates(address, function(coords) {
         map.setCenter(coords);
         marker.setPosition(coords);
+        marker.setVisible(true);
     });
 }
 
