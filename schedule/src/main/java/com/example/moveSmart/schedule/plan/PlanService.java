@@ -47,21 +47,31 @@ public class PlanService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // Get latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation;
-        PlaceSearchResponse arrivalLocation;
+        PlaceSearchResponse departureLocation = null;
+        PlaceSearchResponse arrivalLocation = null;
 
         // Determine if the departure name is specific or general
         if (isSpecificAddress(planDto.getDepartureName())) {
             departureLocation = client.searchAddress(planDto.getDepartureName());
-        } else {
+        }
+        // Fallback to searchPlace if no result from searchAddress
+        if (departureLocation == null || departureLocation.getPlaces().isEmpty()) {
             departureLocation = client.searchPlace(planDto.getDepartureName());
         }
 
         // Determine if the arrival name is specific or general
         if (isSpecificAddress(planDto.getArrivalName())) {
             arrivalLocation = client.searchAddress(planDto.getArrivalName());
-        } else {
+        }
+        // Fallback to searchPlace if no result from searchAddress
+        if (arrivalLocation == null || arrivalLocation.getPlaces().isEmpty()) {
             arrivalLocation = client.searchPlace(planDto.getArrivalName());
+        }
+
+        // Ensure that we have valid results
+        if (departureLocation == null || departureLocation.getPlaces().isEmpty() ||
+                arrivalLocation == null || arrivalLocation.getPlaces().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find valid locations for the provided addresses.");
         }
 
         // Assuming the first result is the most relevant
@@ -85,6 +95,7 @@ public class PlanService {
 
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
+
 
 
     // Helper method to determine if the address is specific
