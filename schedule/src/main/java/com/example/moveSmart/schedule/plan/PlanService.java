@@ -40,6 +40,7 @@ public class PlanService {
     private final RouteSearcher routeSearcher;
     private final Client client;
 
+
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
         UserEntity user = authFacade.extractUser();
@@ -47,31 +48,21 @@ public class PlanService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         // Get latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation = null;
-        PlaceSearchResponse arrivalLocation = null;
+        PlaceSearchResponse departureLocation;
+        PlaceSearchResponse arrivalLocation;
 
         // Determine if the departure name is specific or general
         if (isSpecificAddress(planDto.getDepartureName())) {
             departureLocation = client.searchAddress(planDto.getDepartureName());
-        }
-        // Fallback to searchPlace if no result from searchAddress
-        if (departureLocation == null || departureLocation.getPlaces().isEmpty()) {
+        } else {
             departureLocation = client.searchPlace(planDto.getDepartureName());
         }
 
         // Determine if the arrival name is specific or general
         if (isSpecificAddress(planDto.getArrivalName())) {
             arrivalLocation = client.searchAddress(planDto.getArrivalName());
-        }
-        // Fallback to searchPlace if no result from searchAddress
-        if (arrivalLocation == null || arrivalLocation.getPlaces().isEmpty()) {
+        } else {
             arrivalLocation = client.searchPlace(planDto.getArrivalName());
-        }
-
-        // Ensure that we have valid results
-        if (departureLocation == null || departureLocation.getPlaces().isEmpty() ||
-                arrivalLocation == null || arrivalLocation.getPlaces().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find valid locations for the provided addresses.");
         }
 
         // Assuming the first result is the most relevant
@@ -96,15 +87,11 @@ public class PlanService {
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
 
-
-
     // Helper method to determine if the address is specific
     private boolean isSpecificAddress(String address) {
         // Check for patterns indicating specific addresses (e.g., contains numbers and specific patterns)
         return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
     }
-
-
 
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user

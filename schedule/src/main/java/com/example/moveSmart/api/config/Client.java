@@ -179,7 +179,7 @@ public class Client {
             NaverSearchResponse body = responseEntity.getBody();
             if (body != null && body.getItems() != null && !body.getItems().isEmpty()) {
                 for (NaverSearchItem item : body.getItems()) {
-                    String name = item.getTitle(); // Lấy tên địa điểm
+                    String name = item.getRoadAddress(); // Lấy tên địa điểm
                     double latitude = item.getLatitude(); // Lấy vĩ độ
                     double longitude = item.getLongitude(); // Lấy kinh độ
 

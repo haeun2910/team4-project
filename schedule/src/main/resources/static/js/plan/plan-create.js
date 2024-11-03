@@ -72,6 +72,49 @@ function clearMarkers(markersArray) {
 }
 
 function fetchCoordinates(address, markersArray, isDeparture, callback) {
+    console.log(`Fetching coordinates for address: ${address} using primary endpoint: search-location`);
+
+    // Function to handle the fallback to search-place
+    function fallbackToSearchPlace() {
+        console.warn(`Fallback: No results from search-location. Trying search-place for address: ${address}...`);
+        return fetch(`/api/search-place?address=${encodeURIComponent(address)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error fetching from search-place: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.places && data.places.length > 0) {
+                    const locations = data.places.map(place => ({
+                        latitude: place.latitude,
+                        longitude: place.longitude,
+                        name: place.name,
+                        roadAddress: place.roadAddress
+                    }));
+                    placeMarkers(locations, markersArray, isDeparture);
+
+                    if (typeof callback === 'function') {
+                        callback(locations);
+                    }
+                } else {
+                    console.warn(`No places found in search-place for address: ${address}`);
+                    alert(`No results found for address: ${address}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error in fallback search-place:', error);
+                alert(`An error occurred while finding the address: ${error.message}`);
+            });
+    }
+
+    // First attempt with search-location
     fetch(`/api/search-location?address=${encodeURIComponent(address)}`, {
         method: 'GET',
         headers: {
@@ -81,7 +124,8 @@ function fetchCoordinates(address, markersArray, isDeparture, callback) {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error fetching from search-location: ${response.status} ${response.statusText}`);
+                console.warn(`Error fetching from search-location: ${response.status} ${response.statusText}`);
+                return fallbackToSearchPlace();
             }
             return response.json();
         })
@@ -99,52 +143,33 @@ function fetchCoordinates(address, markersArray, isDeparture, callback) {
                     callback(locations);
                 }
             } else {
-                console.warn(`No places found in search-location for address: ${address}`);
-                return fetch(`/api/search-place?address=${encodeURIComponent(address)}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${jwt}`
-                    }
-                });
-            }
-        })
-        .then(response => {
-            if (response) {
-                if (!response.ok) {
-                    throw new Error(`Error fetching from search-place: ${response.status} ${response.statusText}`);
-                }
-                return response.json();
-            }
-        })
-        .then(data => {
-            if (data && data.places && data.places.length > 0) {
-                const locations = data.places.map(place => ({
-                    latitude: place.latitude,
-                    longitude: place.longitude,
-                    name: place.name,
-                    roadAddress: place.roadAddress
-                }));
-                placeMarkers(locations, markersArray, isDeparture);
-
-                if (typeof callback === 'function') {
-                    callback(locations);
-                }
-            } else {
-                console.warn(`No places found in search-place for address: ${address}`);
-                console.log('Address not found in both search-location and search-place');
+                // If no data found in search-location, fall back to search-place
+                fallbackToSearchPlace();
             }
         })
         .catch(error => {
-            console.error('Error fetching coordinates:', error);
-            alert('An error occurred while finding the address: ' + error.message);
+            console.error('Error in primary search-location fetch:', error);
+            fallbackToSearchPlace();
         });
 }
+
+
+
 
 function updateMap(addressId, markersArray, isDeparture) {
     const address = document.getElementById(addressId).value;
     clearMarkers(markersArray);
-    fetchCoordinates(address, markersArray, isDeparture, function(locations) {});
+    fetchCoordinates(address, markersArray, isDeparture, function(locations) {
+        if (locations && locations.length > 0) {
+            const selectedLocation = locations[0];
+            const selectedAddress = selectedLocation.roadAddress || selectedLocation.name;
+            if (isDeparture) {
+                selectedDepartureAddress = selectedAddress;
+            } else {
+                selectedArrivalAddress = selectedAddress;
+            }
+        }
+    });
 }
 
 document.getElementById('departure-name').addEventListener('change', function() {
