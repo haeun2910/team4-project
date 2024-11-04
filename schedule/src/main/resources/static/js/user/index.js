@@ -23,8 +23,12 @@ const setUserInfo = userInfo => {
     document.getElementById("user-menu").classList.remove("d-none");
     } else if (isSuspended) {
           summary.innerText = "You are: INACTIVE (Suspended)";
+          summary.innerText = "Click comeback to use"
           document.getElementById("comeback-button").classList.remove("d-none");
-  }  else summary.innerText = "You are: INACTIVE";
+  }  else {
+    summary.innerText = "You are: INACTIVE";
+    summary.innerText = "Update profile to use";
+  }
 }
 //await fetch("/users/comeback", {
 //      method: "PUT",

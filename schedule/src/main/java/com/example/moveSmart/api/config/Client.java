@@ -25,6 +25,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 @Component
@@ -179,7 +181,16 @@ public class Client {
             NaverSearchResponse body = responseEntity.getBody();
             if (body != null && body.getItems() != null && !body.getItems().isEmpty()) {
                 for (NaverSearchItem item : body.getItems()) {
-                    String name = item.getRoadAddress(); // Lấy tên địa điểm
+                    String title = item.getTitle();
+
+                    // Regular expression to extract text within <b> tags
+                    Pattern pattern = Pattern.compile("<b>(.*?)</b>");
+                    Matcher matcher = pattern.matcher(title);
+
+                    String name = title; // Default to original title if no <b> tags found
+                    if (matcher.find()) {
+                        name = matcher.group(1); // Extract text inside <b> and </b>
+                    } // Lấy tên địa điểm
                     double latitude = item.getLatitude(); // Lấy vĩ độ
                     double longitude = item.getLongitude(); // Lấy kinh độ
 

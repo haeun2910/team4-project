@@ -44,9 +44,10 @@ updateForm.addEventListener("submit", e => {
     body: JSON.stringify(body),
   })
       .then(response => {
-        if (response.ok)
-//         alert("Update profile info successful!");
-         location.reload();
+        if (response.ok) {
+            alert("Update profile info successful!");
+            location.reload();
+        }
         else if (response.status === 403)
           location.href = "/views/signin";
         else alert(response.status);
@@ -68,12 +69,15 @@ imageForm.addEventListener("submit", e => {
     },
     body: formData,
   }).then(response => {
-    if (response.ok)
-     location.reload();
-//         alert("Update profile image successful, click Home to use MoveSmart!!");
+    if (response.ok) {
+        location.reload();
+        alert("Update profile successful, click Home to use MoveSmart!!");
+    }
 
     else if (response.status === 403)
       location.href = "/views/signin";
-    else alert(response.status);
+    else {
+        alert("Image size is too large, please choose another image");
+    }
   });
 });
