@@ -36,7 +36,7 @@ document.getElementById("suspend-form").addEventListener("submit", e => {
       alert("Request Submitted");
       location.href = "/views";
     } else {
-      alert("Failed to submit request. Please try again.");
+      alert("You have submitted a suspension request. Please wait for approval.");
     }
   })
   .catch(error => {

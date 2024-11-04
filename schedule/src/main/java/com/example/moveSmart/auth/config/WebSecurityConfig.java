@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/views/signin")
-                        .defaultSuccessUrl("/views/update")
+                        .defaultSuccessUrl("/views")
                         .failureUrl("/views/signin?fail")
                         .permitAll())
                 .oauth2Login(oauth2Login -> oauth2Login
@@ -64,7 +64,7 @@ public class WebSecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/views/update")
+                        .defaultSuccessUrl("/views")
                         .failureUrl("/views/signin?fail")
                         .permitAll())
                 .addFilterBefore(
