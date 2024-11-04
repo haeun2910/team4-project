@@ -23,8 +23,12 @@ const setUserInfo = userInfo => {
     document.getElementById("user-menu").classList.remove("d-none");
     } else if (isSuspended) {
           summary.innerText = "You are: INACTIVE (Suspended)";
+          summary.innerText = "Click comeback to use"
           document.getElementById("comeback-button").classList.remove("d-none");
-  }  else summary.innerText = "You are: INACTIVE";
+  }  else {
+    summary.innerText = "You are: INACTIVE";
+    summary.innerText = "Update profile to use";
+  }
 }
 //await fetch("/users/comeback", {
 //      method: "PUT",
@@ -124,8 +128,8 @@ document.getElementById("submit-suspend").addEventListener("click", () => {
     body: JSON.stringify({ suspendReason })
   })
   .then(response => {
-    if (!response.ok) throw new Error("Failed to submit suspension request");
-    alert("Suspension request submitted successfully.");
+    if (!response.ok) throw new Error("Failed to submit suspension request.");
+    alert("Suspension request submitted successfully. Wait for confirm.");
     location.reload(); // Làm mới trang để cập nhật trạng thái
   })
   .catch(error => {

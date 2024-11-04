@@ -40,6 +40,7 @@ public class PlanService {
     private final RouteSearcher routeSearcher;
     private final Client client;
 
+
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
         UserEntity user = authFacade.extractUser();
@@ -86,14 +87,11 @@ public class PlanService {
         return PlanDto.fromEntity(planRepo.save(plan), true);
     }
 
-
     // Helper method to determine if the address is specific
     private boolean isSpecificAddress(String address) {
         // Check for patterns indicating specific addresses (e.g., contains numbers and specific patterns)
         return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
     }
-
-
 
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user

@@ -102,6 +102,18 @@ function displayPlans(plans) {
     const container = document.getElementById('plans-container');
     container.innerHTML = ''; // Clear previous plans
 
+    if (plans.length === 0) {
+        // Create and display a message when there are no plans
+        const noPlansMessage = document.createElement('div');
+        noPlansMessage.className = 'no-plans-message';
+        noPlansMessage.innerText = 'You have no plans';
+        noPlansMessage.style.textAlign = 'center';
+        noPlansMessage.style.color = '#999';
+        noPlansMessage.style.marginTop = '20px';
+        container.appendChild(noPlansMessage);
+        return; // Exit the function
+    }
+
     plans.forEach(plan => {
         const planDiv = document.createElement('div');
         planDiv.className = 'plan';

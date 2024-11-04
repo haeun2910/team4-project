@@ -66,7 +66,7 @@ function showPathOnMap(routeIndex) {
     const polyline = new naver.maps.Polyline({
         map: map,
         path: path,
-        strokeColor: '#FF0000',
+        strokeColor: '#0000FF',
         strokeWeight: 5,
     });
     polylines.push(polyline);
@@ -76,8 +76,8 @@ function showPathOnMap(routeIndex) {
         const goalLocation = selectedRoute.summary.goal?.location;
 
         if (startLocation && goalLocation) {
-            addMarker(startLocation, 'Start Point', 'green', map);
-            addMarker(goalLocation, 'Goal Point', 'red', map);
+            addMarker(startLocation, 'Start Point', 'start', map);
+            addMarker(goalLocation, 'Goal Point', 'goal', map);
             fitMapToPath(path, startLocation, goalLocation);
             displayGuideInfo(selectedRoute.guide);
         } else {
@@ -108,17 +108,30 @@ function displayGuideInfo(guide) {
     routeInfoDiv.appendChild(guideDetailDiv);
 }
 
-function addMarker(location, title, color, map) {
+function addMarker(location, title, type, map) {
+    let iconUrl;
+    if (type === 'start') {
+        iconUrl = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/red_b.png'; // Start marker
+    } else if (type === 'goal') {
+        iconUrl = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png'; // Goal marker
+    } else {
+        iconUrl = ''; // Default or other marker if needed
+    }
+
     const marker = new naver.maps.Marker({
         position: new naver.maps.LatLng(location[1], location[0]),
         map: map,
         title: title,
         icon: {
-            content: `<div style="background-color: ${color}; width: 20px; height: 20px; border-radius: 50%;"></div>`
+            url: iconUrl,
+            size: new naver.maps.Size(24, 35), // Adjust size if necessary
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(12, 35)
         }
     });
     markers.push(marker);
 }
+
 
 function removePolylines() {
     polylines.forEach(polyline => polyline.setMap(null));

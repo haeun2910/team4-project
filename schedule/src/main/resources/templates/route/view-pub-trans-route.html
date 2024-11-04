@@ -11,10 +11,17 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #eef2f3;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 28px;
+            color: #333;
         }
 
         .route-container {
@@ -23,9 +30,14 @@
             max-width: 1200px;
             height: 90vh;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .route-container:hover {
+            transform: scale(1.02);
         }
 
         .details {
@@ -33,6 +45,7 @@
             padding: 20px;
             overflow-y: auto;
             border-right: 1px solid #ddd;
+            background-color: #f9f9f9;
         }
 
         #map {
@@ -40,22 +53,16 @@
             height: 100%;
         }
 
-        h1 {
-            margin-top: 0;
-            font-size: 24px;
-            color: #333;
-        }
-
         .path {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             padding: 15px;
             background-color: #fafafa;
-            border-radius: 6px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .path h2 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 10px;
             color: #333;
         }
@@ -63,17 +70,17 @@
         .path p {
             font-size: 14px;
             color: #666;
-            margin: 3px 0;
+            margin: 5px 0;
         }
 
         .path button {
             margin-top: 10px;
-            padding: 8px 12px;
+            padding: 10px 15px;
             font-size: 14px;
             border: none;
             background-color: #4CAF50;
             color: #fff;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
@@ -82,32 +89,48 @@
             background-color: #45a049;
         }
 
-        .back-button {
-            display: block;
-            margin-top: 20px;
-            padding: 10px 15px;
+        .navigation {
+            margin-bottom: 20px;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-button {
+            padding: 12px 18px;
             font-size: 16px;
             border: none;
             background-color: #2196F3;
             color: #fff;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 0 10px; /* Margin between buttons */
         }
 
-        .back-button:hover {
+        .nav-button:hover {
             background-color: #1976D2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent */
         }
     </style>
 </head>
 <body>
-<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
-<a href="/views/my-plan">View my Plans</a>
+
+<div class="navigation">
+    <button class="nav-button" onclick="window.history.back()">Back</button>
+    <a href="/views" class="nav-button">Home</a>
+    <a href="/views/my-plan" class="nav-button">View My Plans</a>
+</div>
+
+<h1>Public Transport Route</h1>
 <div class="route-container">
     <div class="details">
-        <h1>Public Transport Route</h1>
         <div id="route-details"></div>
-        <button class="back-button" onclick="window.history.back()">Back</button>
     </div>
     <div id="map"></div>
 </div>
