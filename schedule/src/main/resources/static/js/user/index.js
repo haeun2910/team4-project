@@ -128,8 +128,8 @@ document.getElementById("submit-suspend").addEventListener("click", () => {
     body: JSON.stringify({ suspendReason })
   })
   .then(response => {
-    if (!response.ok) throw new Error("Failed to submit suspension request");
-    alert("Suspension request submitted successfully.");
+    if (!response.ok) throw new Error("Failed to submit suspension request.");
+    alert("Suspension request submitted successfully. Wait for confirm.");
     location.reload(); // Làm mới trang để cập nhật trạng thái
   })
   .catch(error => {

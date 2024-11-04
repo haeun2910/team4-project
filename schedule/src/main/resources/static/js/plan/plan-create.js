@@ -110,7 +110,7 @@ function fetchCoordinates(address, markersArray, isDeparture, callback) {
             })
             .catch(error => {
                 console.error('Error in fallback search-place:', error);
-                // alert(`An error occurred while finding the address: ${error.message}`);
+                alert(`can not  address, try again`);
             });
     }
 

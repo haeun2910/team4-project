@@ -132,7 +132,8 @@ public class UserService implements UserDetailsService {
         UserSuspend userSuspend = userSuspendRepo.findByTarget(comeback)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Suspension record not found."));
         userSuspend.setSuspended(false);
-        userSuspendRepo.save(userSuspend);
+//        userSuspendRepo.save(userSuspend);
+        userSuspendRepo.delete(userSuspend);
         return UserDto.fromEntity(userRepo.save(comeback));
 
     }
