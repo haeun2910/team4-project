@@ -30,32 +30,26 @@ const setUserInfo = userInfo => {
     summary.innerText = "Update profile to use";
   }
 }
-//await fetch("/users/comeback", {
-//      method: "PUT",
-//      headers: {
-//        "Authorization": `Bearer ${jwt}`,
-//      }
-//    })
-//    .then(response => {
-//      if (!response.ok) throw new Error("Failed to restore role");
-//      return response.json();
-//    })
-//    .then(updatedUser => {
-//      setUserInfo(updatedUser); // Cập nhật lại vai trò và hiển thị
-//      alert("Your account has been reactivated.");
-//    })
-//    .catch(error => {
-//      console.error("Error:", error);
-//      alert("Error restoring role: " + error.message);
-//    });
-//  } else {
-//    summary.innerText = "You are: INACTIVE";
-//  }
-//}
 
 const setBaseView = () => {
-  if (loggedIn) document.getElementById("authenticated").classList.remove("d-none");
-  else document.getElementById("anonymous").classList.remove("d-none");
+    const anonymousSection = document.getElementById("anonymous");
+    const authenticatedSection = document.getElementById("authenticated");
+    const welcomeText = document.querySelector(".welcome-text");
+        const leftImage = document.querySelector(".left-image");
+
+    if (loggedIn) {
+        authenticatedSection.classList.remove("d-none");
+        anonymousSection.classList.add("d-none");
+        document.body.classList.remove("background-anonymous");
+         welcomeText.classList.add("d-none");
+                 leftImage.classList.add("d-none");// Remove background for authenticated users
+    } else {
+        anonymousSection.classList.remove("d-none");
+        authenticatedSection.classList.add("d-none");
+        document.body.classList.add("background-anonymous");
+        welcomeText.classList.remove("d-none");
+                leftImage.classList.remove("d-none");// Show background for anonymous users
+    }
 }
 
 
