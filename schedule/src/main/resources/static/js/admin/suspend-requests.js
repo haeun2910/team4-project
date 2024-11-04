@@ -75,7 +75,7 @@ const setData = (requestPage) => {
       if (!request.suspended) {
         const approveButton = document.createElement("button");
         approveButton.className = "btn btn-primary me-2";
-        approveButton.innerText = "Approve";
+        approveButton.innerText = "Confirm";
         approveButton.addEventListener("click", () => {
           fetch(`/admin/approveSuspend/${request.id}`, {
             method: "PUT",

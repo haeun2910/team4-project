@@ -127,17 +127,13 @@ public class UserService implements UserDetailsService {
         }
         else {
             comeback.setRoles("ROLE_ACTIVE");
-            comeback.setSuspendReason(null);
-            comeback.setSuspendStartDate(null);
 
         }
         UserSuspend userSuspend = userSuspendRepo.findByTarget(comeback)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Suspension record not found."));
         userSuspend.setSuspended(false);
-//        userSuspend.setSuspendReason(null);
-//        userSuspend.setSuspendStartDate(null);
-        userSuspendRepo.delete(userSuspend);
 //        userSuspendRepo.save(userSuspend);
+        userSuspendRepo.delete(userSuspend);
         return UserDto.fromEntity(userRepo.save(comeback));
 
     }

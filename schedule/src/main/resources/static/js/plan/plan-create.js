@@ -8,33 +8,114 @@ const map = new naver.maps.Map('map', {
 });
 
 // Create markers for departure and arrival
-const departureMarker = new naver.maps.Marker({
-    map: map,
-    position: map.getCenter(),
-    title: 'Departure',
-    visible: false
+const departureMarkers = [];
+const arrivalMarkers = [];
+let selectedDepartureAddress = ""; // Store selected departure address
+let selectedArrivalAddress = ""; // Store selected arrival address
 
-});
+function placeMarkers(locations, markersArray, isDeparture) {
+    clearMarkers(markersArray);
+    const currentMarkers = [];
 
-const arrivalMarker = new naver.maps.Marker({
-    map: map,
-    position: map.getCenter(),
-    title: 'Arrival',
-    visible: false
+    locations.forEach(location => {
+        const coords = new naver.maps.LatLng(location.latitude, location.longitude);
+        const marker = new naver.maps.Marker({
+            map: map,
+            position: coords,
+            title: location.name || 'Location',
+            visible: true
+        });
 
-});
+        marker.addListener('click', () => {
+            const selectedMarker = markersArray[0];
 
-// Function to determine if address is specific or general
-function isSpecificAddress(address) {
-    const specificPlacePattern = /(\d{1,2}번출구|입구|학교|공원|지하철|역)$/;
-    return !specificPlacePattern.test(address) && /\d+/.test(address);
+            if (selectedMarker && selectedMarker !== marker) {
+                selectedMarker.setMap(null);
+                markersArray.length = 0;
+            }
+
+            markersArray.push(marker);
+
+            const selectedAddress = location.roadAddress || location.name;
+
+            // Update the global address variable based on isDeparture
+            if (isDeparture) {
+                selectedDepartureAddress = selectedAddress;
+            } else {
+                selectedArrivalAddress = selectedAddress;
+            }
+
+            const inputFieldId = isDeparture ? 'departure-name' : 'arrival-name';
+            const inputField = document.getElementById(inputFieldId);
+            if (inputField) {
+                inputField.value = selectedAddress;
+            }
+        });
+
+        currentMarkers.push(marker);
+    });
+
+    markersArray.push(...currentMarkers);
+
+    if (markersArray.length > 1) {
+        const bounds = new naver.maps.LatLngBounds();
+        markersArray.forEach(marker => bounds.extend(marker.getPosition()));
+        map.fitBounds(bounds);
+    } else if (markersArray.length === 1) {
+        map.setCenter(markersArray[0].getPosition());
+    }
 }
 
-// Function to fetch coordinates based on address type
-function fetchCoordinates(address, callback) {
-    const endpoint = isSpecificAddress(address) ? 'search-location' : 'search-place';
+function clearMarkers(markersArray) {
+    markersArray.forEach(marker => marker.setMap(null));
+    markersArray.length = 0;
+}
 
-    fetch(`/api/${endpoint}?address=${encodeURIComponent(address)}`, {
+function fetchCoordinates(address, markersArray, isDeparture, callback) {
+    console.log(`Fetching coordinates for address: ${address} using primary endpoint: search-location`);
+
+    // Function to handle the fallback to search-place
+    function fallbackToSearchPlace() {
+        console.warn(`Fallback: No results from search-location. Trying search-place for address: ${address}...`);
+        return fetch(`/api/search-place?address=${encodeURIComponent(address)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${jwt}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error fetching from search-place: ${response.status} ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.places && data.places.length > 0) {
+                    const locations = data.places.map(place => ({
+                        latitude: place.latitude,
+                        longitude: place.longitude,
+                        name: place.name,
+                        roadAddress: place.roadAddress
+                    }));
+                    placeMarkers(locations, markersArray, isDeparture);
+
+                    if (typeof callback === 'function') {
+                        callback(locations);
+                    }
+                } else {
+                    console.warn(`No places found in search-place for address: ${address}`);
+                    alert(`No results found for address: ${address}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error in fallback search-place:', error);
+                alert(`can not  address, try again`);
+            });
+    }
+
+    // First attempt with search-location
+    fetch(`/api/search-location?address=${encodeURIComponent(address)}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -43,74 +124,84 @@ function fetchCoordinates(address, callback) {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Server returned ${response.status}: ${response.statusText}`);
+                console.warn(`Error fetching from search-location: ${response.status} ${response.statusText}`);
+                return fallbackToSearchPlace();
             }
             return response.json();
         })
         .then(data => {
             if (data && data.places && data.places.length > 0) {
-                const coords = new naver.maps.LatLng(data.places[0].latitude, data.places[0].longitude);
-                callback(coords);
+                const locations = data.places.map(place => ({
+                    latitude: place.latitude,
+                    longitude: place.longitude,
+                    name: place.name,
+                    roadAddress: place.roadAddress
+                }));
+                placeMarkers(locations, markersArray, isDeparture);
+
+                if (typeof callback === 'function') {
+                    callback(locations);
+                }
             } else {
-                alert('Address not found.');
+                // If no data found in search-location, fall back to search-place
+                fallbackToSearchPlace();
             }
         })
         .catch(error => {
-            console.error('Error fetching coordinates:', error);
-            alert('An error occurred while finding the address.');
+            console.error('Error in primary search-location fetch:', error);
+            fallbackToSearchPlace();
         });
 }
 
-// Function to update the map with fetched coordinates
-function updateMap(addressId, marker) {
+
+
+
+function updateMap(addressId, markersArray, isDeparture) {
     const address = document.getElementById(addressId).value;
-    fetchCoordinates(address, function(coords) {
-        map.setCenter(coords);
-        marker.setPosition(coords);
-        marker.setVisible(true);
+    clearMarkers(markersArray);
+    fetchCoordinates(address, markersArray, isDeparture, function(locations) {
+        if (locations && locations.length > 0) {
+            const selectedLocation = locations[0];
+            const selectedAddress = selectedLocation.roadAddress || selectedLocation.name;
+            if (isDeparture) {
+                selectedDepartureAddress = selectedAddress;
+            } else {
+                selectedArrivalAddress = selectedAddress;
+            }
+        }
     });
 }
 
-// Event listeners for address changes
 document.getElementById('departure-name').addEventListener('change', function() {
-    updateMap('departure-name', departureMarker);
+    updateMap('departure-name', departureMarkers, true);
 });
 document.getElementById('arrival-name').addEventListener('change', function() {
-    updateMap('arrival-name', arrivalMarker);
+    updateMap('arrival-name', arrivalMarkers, false);
 });
 
 document.getElementById('create-plan-btn').addEventListener('click', function() {
     const title = document.getElementById('title').value;
-    const departureName = document.getElementById('departure-name').value;
-    const arrivalName = document.getElementById('arrival-name').value;
     const arrivalDate = document.getElementById('arrival-date').value;
     const arrivalTime = document.getElementById('arrival-time').value;
     const notificationMessage = document.getElementById('notification-message').value;
 
-    // Đảm bảo tất cả các trường đều được điền
-    if (!title || !departureName || !arrivalName || !arrivalDate || !arrivalTime) {
+    if (!title || !selectedDepartureAddress || !selectedArrivalAddress || !arrivalDate || !arrivalTime) {
         alert('Please fill in all required fields.');
         return;
     }
 
-    // Kết hợp ngày và giờ thành một đối tượng Date
     const [year, month, day] = arrivalDate.split('-').map(Number);
     const [hours, minutes] = arrivalTime.split(':').map(Number);
-    const arrivalAtDate = new Date(year, month - 1, day, hours, minutes); // month - 1 vì tháng trong JavaScript bắt đầu từ 0
+    const arrivalAt = `${arrivalDate}T${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
 
-// Thay đổi: Định dạng time thành chuỗi theo định dạng HH:mm:ss
-    const formattedArrivalAt = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:00`;
-
-// Gửi dữ liệu kế hoạch tới backend
     const planData = {
         title,
-        departureName,
-        arrivalName,
-        arrivalAt: `${arrivalDate}T${formattedArrivalAt}`, // Sử dụng ngày và thời gian đã định dạng
+        departureName: selectedDepartureAddress,
+        arrivalName: selectedArrivalAddress,
+        arrivalAt,
         notificationMessage
     };
 
-    // Gửi dữ liệu kế hoạch tới backend
     fetch('/plans/create', {
         method: 'POST',
         headers: {
@@ -128,8 +219,7 @@ document.getElementById('create-plan-btn').addEventListener('click', function() 
             return response.json();
         })
         .then(data => {
-            // Chuyển hướng tới trang View Plan bằng ID của kế hoạch mới tạo
-            const planId = data.id; // Đảm bảo backend gửi ID của kế hoạch đã tạo
+            const planId = data.id;
             window.location.href = `/views/view-plan?id=${planId}`;
         })
         .catch(error => {

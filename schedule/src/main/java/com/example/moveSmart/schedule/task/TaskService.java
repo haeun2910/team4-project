@@ -60,7 +60,7 @@ public class TaskService {
 
     public Page<TaskDto> getTasks(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
-        Page<Task> tasks = taskRepo.findByUser(user,pageable);
+        Page<Task> tasks = taskRepo.findByUserOrderByCompletedAsc(user, pageable);
         return tasks.map(TaskDto::fromEntity);
     }
 
