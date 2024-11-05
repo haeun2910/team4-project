@@ -65,17 +65,5 @@ public class UserController {
         return userService.comebackUser();
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<String> validateToken(@RequestParam String token) {
-        try {
-            // Use JwtTokenUtils to parse and validate the token
-            Claims claims = jwtTokenUtils.parseClaims(token);
-            String email = claims.getSubject();
 
-            return ResponseEntity.ok("Token is valid for user: " + email);
-        } catch (JwtException e) {
-            log.warn("Invalid token", e);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid token");
-        }
-    }
 }

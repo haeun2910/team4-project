@@ -37,7 +37,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
         UserDetails userDetails = userService.loadUserByUsername(username);
         String jwt = tokenUtils.generateToken(userDetails);
-        String targetUrl = String.format("http://localhost:8080/users/validate?token=%s", jwt);
+        String targetUrl = String.format("http://localhost:8080/views/validate?token=%s", jwt);
         log.info(targetUrl);
         getRedirectStrategy().sendRedirect(request,response,targetUrl); 
     }

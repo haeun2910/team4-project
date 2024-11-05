@@ -54,6 +54,6 @@ public class UserViewController {
     public String taskCreate(){ return "task/create"; }
     @GetMapping("my-tasks")
     public String myTasks(){ return "task/my-tasks"; }
-@GetMapping("validate")
-    public String validate(){ return "users/naver-login"; }
+    @GetMapping("validate")
+    public String validate(){ return "users/oauth-login"; }
 }
