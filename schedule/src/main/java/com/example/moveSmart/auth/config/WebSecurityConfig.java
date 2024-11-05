@@ -34,8 +34,9 @@ public class WebSecurityConfig {
                     auth.requestMatchers("/users/signup","/users/signin")
                             .anonymous();
 
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/signin/validate", "/oauth-signin")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/users/validate", "/oauth-signin")
                             .permitAll();
+
                     auth.requestMatchers("/users/signup", "/users/signin").anonymous();
                     auth.requestMatchers(
                                     "/users/signup-final",
@@ -64,7 +65,7 @@ public class WebSecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-                        .defaultSuccessUrl("/views")
+//                        .defaultSuccessUrl("/views")
                         .failureUrl("/views/signin?fail")
                         .permitAll())
                 .addFilterBefore(

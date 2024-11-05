@@ -33,11 +33,12 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String username = String.format("{%s}%s", provider, email);
         String providerId = oAuth2User.getAttribute("id").toString();
         if (!userService.userExists(username)) {
-            userService.makeUser(username, providerId, providerId);
+            userService.makeUser(username, providerId, providerId, email);
         }
         UserDetails userDetails = userService.loadUserByUsername(username);
         String jwt = tokenUtils.generateToken(userDetails);
-        String targetUrl = String.format("http://localhost:8080/login/validate?token=%s", jwt);
+        String targetUrl = String.format("http://localhost:8080/users/validate?token=%s", jwt);
+        log.info(targetUrl);
         getRedirectStrategy().sendRedirect(request,response,targetUrl); 
     }
 
