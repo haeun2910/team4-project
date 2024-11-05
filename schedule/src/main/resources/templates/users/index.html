@@ -89,6 +89,22 @@
             padding: 20px;
             overflow-y: auto; /* Allow scrolling if necessary */
         }
+        #img-container {
+            width: 150px; /* Set a fixed width */
+            height: 150px; /* Set a fixed height to make it square */
+            overflow: hidden; /* Hide overflow */
+            border-radius: 10px; /* Optional: rounded corners */
+            /*border: 2px solid w; !* Optional: border around the image *!*/
+            display: flex; /* Use flexbox to center the image */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        #img-container img {
+            width: 100%; /* Make the image fill the container width */
+            height: 100%; /* Make the image fill the container height */
+            object-fit: cover; /* Scale the image to cover the container */
+        }
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 </head>
@@ -112,7 +128,7 @@
     </div>
 
     <!-- Authenticated User Section -->
-    <div id="authenticated" class="d-none">
+    <div id="authenticated" class="d-none" >
         <div class="text-center">
             <h1 class="mb-4">My Page</h1>
         </div>
