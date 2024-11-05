@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 let loggedIn = false;
+
 
 const setUserInfo = userInfo => {
     const imageElem = document.createElement("img");
