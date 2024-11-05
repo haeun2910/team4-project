@@ -13,6 +13,8 @@ import com.example.moveSmart.user.repo.UserRepo;
 import com.example.moveSmart.user.entity.ScheduleUserDetails;
 import com.example.moveSmart.user.entity.UserEntity;
 import com.example.moveSmart.user.repo.UserSuspendRepo;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +59,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
     }
     public JwtResponseDto signin(JwtRequestDto dto) {
-        log.info("here");
+//        log.info("here");
         UserEntity userEntity = userRepo.findByUsername(dto.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
         if (!passwordEncoder.matches(
@@ -138,15 +140,19 @@ public class UserService implements UserDetailsService {
 
     }
 
-    public void makeUser(String username, String password, String passCheck) {
+    public void makeUser(String username, String password, String passCheck, String email) {
         if (userExists(username) || !password.equals(passCheck))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         UserEntity newUser = new UserEntity();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setEmail(email);
+
+
         userRepo.save(newUser);
     }
     public boolean userExists(String username) {
         return userRepo.existsByUsername(username);
     }
+
 }

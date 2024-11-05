@@ -1,4 +1,4 @@
-let loggedIn = false;
+ let loggedIn = false;
 
 const setUserInfo = userInfo => {
   const imageElem = document.createElement("img");
