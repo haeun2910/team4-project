@@ -19,8 +19,7 @@ import com.example.moveSmart.user.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -41,37 +40,6 @@ public class PlanService {
     private final RouteSearcher routeSearcher;
     private final Client client;
 
-//    @Transactional
-//    public PlanDto createPlan(PlanDto planDto) {
-//        UserEntity user = authFacade.extractUser();
-//        UserEntity userId = userRepo.findById(user.getId())
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        // Get latitude and longitude for departure and arrival addresses
-//        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-//        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
-//
-//        // Assuming the first result is the most relevant
-//        double departureLat = departureLocation.getPlaces().get(0).getLatitude();
-//        double departureLng = departureLocation.getPlaces().get(0).getLongitude();
-//        double arrivalLat = arrivalLocation.getPlaces().get(0).getLatitude();
-//        double arrivalLng = arrivalLocation.getPlaces().get(0).getLongitude();
-//
-//        Plan plan = Plan.builder()
-//                .title(planDto.getTitle())
-//                .departureName(planDto.getDepartureName())
-//                .departureLat(departureLat) // set fetched latitude
-//                .departureLng(departureLng) // set fetched longitude
-//                .arrivalName(planDto.getArrivalName())
-//                .arrivalAt(planDto.getArrivalAt())
-//                .arrivalLat(arrivalLat) // set fetched latitude
-//                .arrivalLng(arrivalLng) // set fetched longitude
-//                .notificationMessage(planDto.getNotificationMessage())
-//                .user(userId)
-//                .build();
-//
-//        return PlanDto.fromEntity(planRepo.save(plan), true);
-//    }
 
     @Transactional
     public PlanDto createPlan(PlanDto planDto) {
@@ -125,7 +93,6 @@ public class PlanService {
         return address.matches(".*\\d.*") || address.matches(".*길.*\\d[-]\\d.*");
     }
 
-
     public PlanTaskDto createPlanTask(PlanTaskDto planTaskDto) {
         UserEntity user = authFacade.extractUser(); // Extract the authenticated user
         Long planId = planTaskDto.getPlanId();
@@ -176,9 +143,28 @@ public class PlanService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to update this plan.");
         }
 
-        // Fetch the latitude and longitude for departure and arrival addresses
-        PlaceSearchResponse departureLocation = client.searchAddress(planDto.getDepartureName());
-        PlaceSearchResponse arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        // Declare variables for departure and arrival locations
+        PlaceSearchResponse departureLocation;
+        PlaceSearchResponse arrivalLocation;
+
+        // Determine if the departure name is specific or general
+        if (isSpecificAddress(planDto.getDepartureName())) {
+            departureLocation = client.searchAddress(planDto.getDepartureName());
+        } else {
+            departureLocation = client.searchPlace(planDto.getDepartureName());
+        }
+
+        // Determine if the arrival name is specific or general
+        if (isSpecificAddress(planDto.getArrivalName())) {
+            arrivalLocation = client.searchAddress(planDto.getArrivalName());
+        } else {
+            arrivalLocation = client.searchPlace(planDto.getArrivalName());
+        }
+
+        // Check if the API returned any results
+        if (departureLocation.getPlaces().isEmpty() || arrivalLocation.getPlaces().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unable to find location for the provided addresses.");
+        }
 
         // Assuming the first result is the most relevant
         double departureLat = departureLocation.getPlaces().get(0).getLatitude();
@@ -195,6 +181,7 @@ public class PlanService {
         existingPlan.setArrivalLat(arrivalLat); // Update with fetched latitude
         existingPlan.setArrivalLng(arrivalLng); // Update with fetched longitude
         existingPlan.setNotificationMessage(planDto.getNotificationMessage());
+        existingPlan.setArrivalAt(planDto.getArrivalAt()); // If needed, adjust this line
 
         // Save the updated plan and return the DTO
         return PlanDto.fromEntity(planRepo.save(existingPlan), true);
@@ -213,10 +200,43 @@ public class PlanService {
 
     public Page<PlanDto> myPlan(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
+        LocalDateTime now = LocalDateTime.now();
 
-        Page<Plan> plans = planRepo.findByUser(user,pageable);
+        // Get future plans, sorted by arrival time ascending
+        List<Plan> futurePlans = planRepo.findByUserAndArrivalAtAfter(user, now, Sort.by(Sort.Direction.ASC, "arrivalAt"));
+
+        // Get past plans, sorted by arrival time descending (latest first)
+        List<Plan> pastPlans = planRepo.findByUserAndArrivalAtBefore(user, now, Sort.by(Sort.Direction.DESC, "arrivalAt"));
+
+        // Combine future plans and past plans into a single list
+        List<Plan> allPlans = new ArrayList<>(futurePlans);
+        allPlans.addAll(pastPlans);
+
+        // Create a Page from the combined list
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), allPlans.size());
+        Page<Plan> plans = new PageImpl<>(allPlans.subList(start, end), pageable, allPlans.size());
+
+        // Map the Page<Plan> to Page<PlanDto>
         return plans.map(plan -> PlanDto.fromEntity(plan, true));
     }
+
+
+    public PlanDto readOnePlan(Long planId) {
+        UserEntity user = authFacade.extractUser();
+
+        Plan plan = planRepo.findById(planId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Plan not found with id: " + planId));
+
+        // Check if the plan belongs to the authenticated user
+        if (!plan.getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to view this plan.");
+        }
+
+        // Convert the Plan entity to PlanDto and return it
+        return PlanDto.fromEntity(plan, true);
+    }
+
     public void completePlan(Long id) {
         UserEntity currentUser = authFacade.extractUser();
         LocalDateTime currentTime = LocalDateTime.now();
@@ -273,7 +293,7 @@ public class PlanService {
         double routeAverageMins;
         if ("publicTransport".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcRouteAverageTime(requestDto)); // Tính toán thời gian từ Odsay
-        } else if ("CarOrTaxi".equalsIgnoreCase(transportType)) {
+        } else if ("carOrTaxi".equalsIgnoreCase(transportType)) {
             routeAverageMins = Math.ceil(routeSearcher.calcNCloudRouteAverageTime(requestDto)); // Tính toán thời gian từ NCloud
         } else {
             throw new IllegalArgumentException("Invalid transport type: " + transportType);
@@ -312,6 +332,20 @@ public class PlanService {
         return new RemainingTimeInfoVo(remainingTime, (int) routeAverageMins, totalReadyTimeAsMins, recentPlanArrivalAt, recommendedDepartureTime);
     }
 
+    public Page<PlanDto> findPlansByTitle(String title, Pageable pageable) {
+        UserEntity user = authFacade.extractUser();
+        Long userId = user.getId(); // Assuming UserEntity has a method to get user ID
+
+        // Fetch plans based on title and user ID
+        List<Plan> plans = planRepo.findByTitleContainingIgnoreCaseAndUserId(title, userId);
+
+        // Create a pageable response by converting the list to a page
+        int start = (int) pageable.getOffset();
+        int end = Math.min((start + pageable.getPageSize()), plans.size());
+        Page<Plan> page = new PageImpl<>(plans.subList(start, end), pageable, plans.size());
+
+        return page.map(plan -> PlanDto.fromEntity(plan, true));
+    }
 
 
 }

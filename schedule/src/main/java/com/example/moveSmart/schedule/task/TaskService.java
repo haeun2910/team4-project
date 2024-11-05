@@ -38,12 +38,15 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskDto updateTask(TaskDto taskDto) {
+    public TaskDto updateTask(Long taskId, TaskDto taskDto) {
         UserEntity user = authFacade.extractUser();
-        Task existTask = taskRepo.findByUser(user).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        Task existTask = taskRepo.findByIdAndUser(taskId, user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
         existTask.setTitle(taskDto.getTitle());
         return TaskDto.fromEntity(taskRepo.save(existTask), true);
     }
+
 
     @Transactional
     public void deleteTask(Long taskId) {
@@ -57,7 +60,7 @@ public class TaskService {
 
     public Page<TaskDto> getTasks(Pageable pageable) {
         UserEntity user = authFacade.extractUser();
-        Page<Task> tasks = taskRepo.findByUser(user,pageable);
+        Page<Task> tasks = taskRepo.findByUserOrderByCompletedAsc(user, pageable);
         return tasks.map(TaskDto::fromEntity);
     }
 

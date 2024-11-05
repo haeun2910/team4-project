@@ -13,4 +13,7 @@ public interface TaskRepo extends JpaRepository<Task, Long> {
     Optional<Task> findByUser(UserEntity user);
     Page<Task> findByUser(UserEntity user, Pageable pageable);
     Optional<Plan> findByPlanId(Long planId);
+    Optional<Task> findByIdAndUser(Long taskId, UserEntity user);
+    Page<Task> findByUserOrderByCompletedAsc(UserEntity user, Pageable pageable);
+
 }

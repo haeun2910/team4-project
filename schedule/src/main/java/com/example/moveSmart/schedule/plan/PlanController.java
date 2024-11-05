@@ -13,6 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @RestController
 @RequestMapping("/plans")
@@ -26,6 +29,7 @@ public class PlanController {
     public PlanDto create(@RequestBody PlanDto plan) {
         return planService.createPlan(plan);
     }
+
     @PostMapping("create-plan-task")
     public ResponseEntity<PlanTaskDto> createPlanTask(@RequestBody PlanTaskDto task) {
         // Validate the incoming task object
@@ -51,11 +55,19 @@ public class PlanController {
     public Page<PlanDto> myPlans(Pageable pageable) {
         return planService.myPlan(pageable);
     }
-    @PutMapping("/complete/{id}")
-    public ResponseEntity<String> completePlan(@PathVariable Long id) {
-        planService.completePlan(id);
-        return ResponseEntity.ok("plan marked as completed");
+
+    @GetMapping("/{id}")
+    public PlanDto getPlan(@PathVariable("id") Long planId) {
+        return planService.readOnePlan(planId);
     }
+    @PutMapping("/complete/{id}")
+    public ResponseEntity<Map<String, String>> completePlan(@PathVariable Long id) {
+        planService.completePlan(id);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Plan marked as completed");
+        return ResponseEntity.ok(response);
+    }
+
 
     @GetMapping("/completed")
     public ResponseEntity<Page<PlanDto>> getCompletedplans(Pageable pageable) {
@@ -69,13 +81,6 @@ public class PlanController {
         return ResponseEntity.ok(expiredplans);
     }
 
-//    @GetMapping("/time-remaining/{planId}")
-//    public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId) {
-//        RemainingTimeInfoVo timeRemaining = planService.getTimeRemainingUntilRecentPlan(planId);
-//        RemainingTimeResponse response = new RemainingTimeResponse(timeRemaining);
-//        return ResponseEntity.ok(response);
-//    }
-
     @GetMapping("/time-remaining/{planId}")
     public ResponseEntity<RemainingTimeResponse> getTimeRemaining(@PathVariable Long planId,
                                                                   @RequestParam String transportType) {
@@ -84,4 +89,11 @@ public class PlanController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<Page<PlanDto>> findPlansByTitle(
+            @RequestParam String title,
+            Pageable pageable) {
+        Page<PlanDto> plans = planService.findPlansByTitle(title, pageable);
+        return ResponseEntity.ok(plans);
+    }
 }

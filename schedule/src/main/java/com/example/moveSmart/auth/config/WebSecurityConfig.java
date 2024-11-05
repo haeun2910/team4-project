@@ -29,18 +29,21 @@ public class WebSecurityConfig {
     ) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/","/test/**", "/signin/validate","/search")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/signin/validate","/search","/test/**")
                             .permitAll();
                     auth.requestMatchers("/users/signup","/users/signin")
                             .anonymous();
 
-                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/test/**", "/signin/validate", "/oauth-signin")
+                    auth.requestMatchers("/error", "/static/**", "/views/**", "/", "/users/validate", "/oauth-signin")
                             .permitAll();
+
                     auth.requestMatchers("/users/signup", "/users/signin").anonymous();
                     auth.requestMatchers(
                                     "/users/signup-final",
                                     "/users/profile-img",
                                     "/users/get-user-info",
+                                    "/users/update",
+                                    "/users/index",
                                     "/users/suspend-req",
                                     "/users/comeback"
                             )
@@ -52,13 +55,18 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/views/signin")
+                        .defaultSuccessUrl("/views")
+                        .failureUrl("/views/signin?fail")
+                        .permitAll())
                 .oauth2Login(oauth2Login -> oauth2Login
-                        .loginPage("/test")
+                        .loginPage("/views/signin")
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(oAuth2UserService))
                         .successHandler(oAuth2SuccessHandler)
-//                        .defaultSuccessUrl("/users/get-user-info")
-                        .failureUrl("/users/signin?fail")
+//                        .defaultSuccessUrl("/views")
+                        .failureUrl("/views/signin?fail")
                         .permitAll())
                 .addFilterBefore(
                         new JwtTokenFilter(

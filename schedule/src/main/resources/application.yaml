@@ -49,7 +49,7 @@ spring:
     database-platform: org.hibernate.community.dialect.SQLiteDialect
 
 jwt:
-  secret: iAxixh53UL,u]Znp!=]>k#7z#T~x!ne%w2#p2qk+4yHne71-gLhP*q%Fm
+  secret: gJUauntQMUVPkCLCk47J4ucMaVMtuFzSR14tgqh9MHRAQGuTTTw5BbpTiQA/okBt
 naver:
   client-id: ${NAVER_CLIENT_ID}
   secret: ${NAVER_SECRET}

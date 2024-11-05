@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Details</title>
+    <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #eef2f3;
+        }
+
+        h1 {
+            margin: 20px 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        .route-container {
+            display: flex;
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .route-container:hover {
+            transform: scale(1.02);
+        }
+
+        .details {
+            width: 45%;
+            padding: 20px;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        #map {
+            width: 55%;
+            height: 100%;
+        }
+
+        .path {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .path h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .path p {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .path button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .path button:hover {
+            background-color: #45a049;
+        }
+
+        .navigation {
+            margin-bottom: 20px;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .nav-button {
+            padding: 12px 18px;
+            font-size: 16px;
+            border: none;
+            background-color: #2196F3;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px; /* Margin between buttons */
+        }
+
+        .nav-button:hover {
+            background-color: #1976D2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit; /* Inherit color from parent */
+        }
+    </style>
+</head>
+<body>
+
+<div class="navigation">
+    <button class="nav-button" onclick="window.history.back()">Back</button>
+    <a href="/views" class="nav-button">Home</a>
+    <a href="/views/my-plan" class="nav-button">View My Plans</a>
+</div>
+
+<h1>Public Transport Route</h1>
+<div class="route-container">
+    <div class="details">
+        <div id="route-details"></div>
+    </div>
+    <div id="map"></div>
+</div>
+
+<script src="/static/js/route/view-pub-trans-route.js"></script>
+</body>
+</html>
