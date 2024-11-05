@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
     }
     public JwtResponseDto signin(JwtRequestDto dto) {
-        log.info("here");
+//        log.info("here");
         UserEntity userEntity = userRepo.findByUsername(dto.getUsername())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
         if (!passwordEncoder.matches(

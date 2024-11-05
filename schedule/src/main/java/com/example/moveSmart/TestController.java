@@ -21,6 +21,10 @@ public class TestController {
     public String test2() {
         return "navermap";
     }
+    @GetMapping("calender")
+    public String test3() {
+        return "calender";
+    }
 
 
 
