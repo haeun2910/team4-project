@@ -14,7 +14,6 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -66,12 +65,5 @@ public class UserController {
         return userService.comebackUser();
     }
 
-    @GetMapping("/validate")
-    public ResponseEntity<?> protectedEndpoint(Authentication authentication) {
-        // Access authenticated user details
-        String username = authentication.getName();
-        // Process request as needed
 
-        return ResponseEntity.ok("Authenticated as " + username);
-    }
 }

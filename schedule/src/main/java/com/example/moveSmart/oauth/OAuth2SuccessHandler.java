@@ -1,9 +1,7 @@
 package com.example.moveSmart.oauth;
 
 import com.example.moveSmart.auth.jwt.JwtTokenUtils;
-import com.example.moveSmart.auth.jwt.dto.JwtResponseDto;
 import com.example.moveSmart.user.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -39,11 +37,9 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         }
         UserDetails userDetails = userService.loadUserByUsername(username);
         String jwt = tokenUtils.generateToken(userDetails);
-
-        String targetUrl = String.format("http://localhost:8080/views?token=%s", jwt);
+        String targetUrl = String.format("http://localhost:8080/views/validate?token=%s", jwt);
         log.info(targetUrl);
-        getRedirectStrategy().sendRedirect(request,response,targetUrl);
-
+        getRedirectStrategy().sendRedirect(request,response,targetUrl); 
     }
 
 }

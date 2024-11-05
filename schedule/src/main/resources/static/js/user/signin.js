@@ -12,11 +12,31 @@ if (jwt) {
     })
     .catch(error => console.error("Error fetching user info:", error));
 }
+// Hàm để xác thực token và chuyển hướng
+function validateTokenAndRedirect(token) {
+    fetch(`http://localhost:8080/api/validate-token?token=${token}`)
+        .then(response => {
+            if (response.ok) {
+                // Nếu token hợp lệ, lưu token vào localStorage nếu cần
+                localStorage.setItem("authToken", token);
+
+                // Chuyển hướng đến trang mong muốn
+                window.location.href = "/views"; // Thay đổi URL theo yêu cầu
+            } else {
+                throw new Error("Token không hợp lệ");
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi khi xác thực token:", error);
+            alert("Token không hợp lệ hoặc đã hết hạn. Vui lòng thử lại.");
+        });
+}
 
 // Lấy token từ URL
 const urlParams = new URLSearchParams(window.location.search);
 const token = urlParams.get("token");
 
+// Gọi hàm validateTokenAndRedirect nếu có token
 if (token) {
     validateTokenAndRedirect(token);
 } else {
