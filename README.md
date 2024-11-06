@@ -35,7 +35,7 @@
 - **Spring Boot**: RESTful API 구축 및 사용자 인증/권한 관리.
 - **JWT (JSON Web Token)**: 사용자 인증 및 세션 유지.
 - **데이터베이스**: SQLite.
-- **지도 및 경로 API**: 네이버 지도 API, NCloud Directions 5 API.
+- **지도 및 경로 API**: 네이버 지도 API, Geocoding API, NCloud Directions 5 API, Odsay Api, Naver Search Api.
 
 ### 2. 프론트엔드
 - **HTML/CSS/JavaScript**: 사용자가 일정을 입력하고 결과를 확인할 수 있는 입력 폼과 결과 화면 제공.
