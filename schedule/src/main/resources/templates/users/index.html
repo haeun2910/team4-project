@@ -56,30 +56,29 @@
             height: 100vh;
         }
 
-        /* Welcome text styling */
         .welcome-text {
-            font-size: 3rem;
-            text-align: right;
-            margin-top: -150px; /* Adjust to move text higher or lower */
-            margin-left: 0px; /* Adjust to move text further to the right */
-            width: 100%; /* Allows it to align more to the right edge */
-        }
+    font-size: 3rem;
+    text-align: right;
+    margin-top: -500px; /* Adjust to move text higher or lower */
+    margin-left: 500px; /* Adjust to move text further to the right */
+    width: 100%; /* Allows it to align more to the right edge */
+    color: white; /* Set text color to white */
+    animation: slideIn 2s ease-out forwards; /* Apply the animation */
+}
 
-        /* Anonymous div styling */
-        #anonymous {
-            width: 550px;
-            height: 300px; /* Increased height */
-            background-color: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            justify-content: space-between; /* This pushes the button container to the bottom */
+/* Keyframes for sliding animation */
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px); /* Start from off-screen left */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Slide to original position */
+    }
+}
 
-            padding: 20px;
-            text-align: center;
-            margin-top: 30px; /* Adds some spacing from welcome text */
-            margin-bottom: 10px;
-            margin-left: 500px;
-        }
+
         /* Right Container for Calendar */
         .right-container-calender {
             display: flex;
@@ -105,6 +104,37 @@
             height: 100%; /* Make the image fill the container height */
             object-fit: cover; /* Scale the image to cover the container */
         }
+       /* Enlarged and aligned-right logo container */
+.background-logo-container {
+background-image: url(/static/img/logo.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 410px;
+    width: 650px;
+    position: absolute;
+    background-position: left 50px center; /* Moves the image 20px to the right */
+    justify-content: flex-end; /* Aligns the button container to the bottom of the logo */
+
+}
+
+/* Button container positioned within the logo */
+.button-container {
+    position: fixed;
+    bottom: 70px;
+    left: 64%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 200px;
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+
+}
+
+
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
 </head>
@@ -118,11 +148,13 @@
 
     <!-- Centered Welcome Text and Anonymous Div -->
     <div class="right-container">
-        <h2 class="welcome-text">Welcome to MoveSmart!!</h2>
+        <h2 class="welcome-text">Welcome to MoveSmart</h2>
         <div id="anonymous" class="d-none text-center">
-            <div style="display: flex; justify-content: space-around; gap: 30px;">
-                <a href="/views/signin" class="btn btn-primary">Login</a>
-                <a href="/views/signup" class="btn btn-secondary">Sign Up</a>
+            <div class="background-logo-container">
+                <div class="button-container">
+                    <a href="/views/signin" class="btn btn-primary">Login</a>
+                    <a href="/views/signup" class="btn btn-secondary">Sign Up</a>
+                </div>
             </div>
         </div>
     </div>
