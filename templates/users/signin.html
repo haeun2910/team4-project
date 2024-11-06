@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign In | MoveSmart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-custom img {
+            margin-left: 8px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        h1 {
+            color: #343a40;
+            font-weight: 600;
+        }
+        .link-home {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+        .link-home:hover {
+            color: #0056b3;
+        }
+        .btn-outline-success {
+            border-color: #28a745;
+            color: #28a745;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+<main class="d-flex align-items-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card p-5">
+                    <h1 class="text-center mb-4">Login</h1>
+                    <div class="text-center mb-3">
+                        <a href="/views" class="link-home">Back</a>
+                    </div>
+                    <form id="signin-form">
+                        <!-- Username Field -->
+                        <div class="mb-3">
+                            <label for="username-input" class="form-label">User Name</label>
+                            <input type="text" id="username-input" class="form-control" placeholder="Enter your username" required>
+                        </div>
+                        <!-- Password Field -->
+                        <div class="mb-3">
+                            <label for="password-input" class="form-label">Password</label>
+                            <input type="password" id="password-input" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        <!-- Login Button -->
+                        <button id="login-button" type="submit" class="btn btn-primary w-100">Login</button>
+                        <!-- OAuth Login -->
+                        <div class="text-center mt-4">
+                            <p>Or login with</p>
+                            <a href="/oauth2/authorization/naver" class="btn btn-custom btn-outline-success">
+                                <span>Naver</span>
+                                <img src="/static/img/naver-icon.png" alt="Login with Naver" style="width: 20px; height: 20px;">
+                            </a>
+                        </div>
+                        <!-- Sign Up Button -->
+                        <div class="text-center mt-3">
+                            Don't have an account? <a href="/views/signup" class="text-decoration-none link-home">Create One</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/static/js/user/signin.js"></script>
+</body>
+</html>

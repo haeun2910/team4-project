@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Update | MoveSmart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #e9ecef;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        h1 {
+            color: #343a40;
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            font-size: 1.25rem;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+        }
+
+        .img-preview {
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            padding: 5px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .link-home {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .link-home:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<main class="d-flex align-items-center min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5 mb-5">
+                <div class="card p-4">
+                    <div class="card-header">Update Profile</div>
+                    <div class="text-center mb-3 mt-3">
+                        <a href="/views" class="link-home">Home</a>
+                    </div>
+                    <form id="update-form">
+                        <div class="mb-3">
+                            <label for="name-input" class="form-label">Name</label>
+                            <input type="text" id="name-input" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="age-input" class="form-label">Age</label>
+                            <input type="number" id="age-input" class="form-control" min="10" step="1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email-input" class="form-label">Email</label>
+                            <input type="email" id="email-input" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone-input" class="form-label">Phone</label>
+                            <input type="text" id="phone-input" class="form-control" required>
+                        </div>
+                        <button id="update-button" type="submit" class="btn btn-primary w-100">Update</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-5">
+                <div class="card p-4">
+                    <div class="card-header">Update Image</div>
+                    <div id="img-container" class="text-center my-3">
+                        <img src="/static/img/user.png" alt="Profile Image" class="img-preview" id="profile-img-preview">
+                    </div>
+                    <form id="profile-img-form">
+                        <div class="mb-3">
+                            <label for="image-input" class="form-label">Select Image</label>
+                            <input type="file" id="image-input" class="form-control" accept="image/*">
+                        </div>
+                        <button id="upload-button" type="submit" class="btn btn-primary w-100">Upload</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/static/js/user/update.js"></script>
+</body>
+</html>
