@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View All Plans</title>
-    <link rel="stylesheet" href="/static/css/styles.css"> <!-- Link to external CSS if needed -->
     <script src="/static/js/plan/my-plan.js" defer></script>
     <style>
         body {
@@ -118,13 +117,42 @@
             background-color: #0056b3;
         }
 
+        /* Navigation button styles */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .nav-button {
+            padding: 12px 18px;
+            font-size: 16px;
+            border: none;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        .nav-button:hover {
+            background-color: #1976D2;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
     </style>
 </head>
 <body>
-<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
-<a href="/views/plan-create">Create Plan</a>
 
-<!--<h2>All Plans</h2>-->
+<!-- Navigation buttons -->
+<div class="navigation">
+    <a href="/views" class="nav-button">Home</a>
+    <a href="/views/plan-create" class="nav-button">Create Plan</a>
+</div>
+
+<!-- Search and Filter Options -->
 <div>
     <input type="text" id="search-input" placeholder="Search plans by title" />
     <button class="filter-button" onclick="searchPlans()">Search</button>
@@ -137,7 +165,11 @@
     <button class="filter-button" onclick="fetchIncompletePlans()">Incomplete Plans</button>
 </div>
 
+<!-- Plans container -->
 <div id="plans-container"></div>
+
+<!-- Pagination container -->
 <div id="pagination-container"></div>
+
 </body>
 </html>
