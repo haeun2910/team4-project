@@ -115,7 +115,7 @@ function addMarker(location, title, type, map) {
     } else if (type === 'goal') {
         iconUrl = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/blue_b.png'; // Goal marker
     } else {
-        iconUrl = ''; // Default or other marker if needed
+        iconUrl = '/static/icon/map.png'; // Default or other marker if needed
     }
 
     const marker = new naver.maps.Marker({
@@ -124,9 +124,9 @@ function addMarker(location, title, type, map) {
         title: title,
         icon: {
             url: iconUrl,
-            size: new naver.maps.Size(24, 35), // Adjust size if necessary
+            size: new naver.maps.Size(50, 45), // Adjust size if necessary
             origin: new naver.maps.Point(0, 0),
-            anchor: new naver.maps.Point(12, 35)
+            anchor: new naver.maps.Point(20, 40)
         }
     });
     markers.push(marker);

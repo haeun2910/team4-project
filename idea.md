@@ -70,12 +70,19 @@
      - ODsay LAB API: 대중교통 경로 및 정보 제공
    
    - **주요 엔드포인트**:
-     - `/register`: 회원가입
-     - `/login`: 로그인
-     - `/my-page`: 사용자 정보 update
-     - `/schedule/create`: 일정 생성 및 저장.
-     - `/schedule/calculate`: 최적 경로 및 출발 시간 계산.
-     - `/schedule/display-map`: 지도 상에 경로 표시.
+     - `/views/signup`: 회원가입
+     - `/views/signin`: 로그인
+     - `/views`: 사용자 정보 
+     - `/views/update`: 사용자 정보 update
+     - `/views/plan-create`: 일정 생성 및 저장.
+     - `/views/my-plan`: 일정 조회.
+     - `/views/task-create`: task 생성 및 저장.
+     - `/views/my-task`: task 조회.
+     - `/views/view-plan?{planId}`: 시간 계산.
+     - `/views/pub-trans-route?{planId}`: 대중교통 경로 추천, 시간 계산.
+     - `/views/car-taxi-route?{planId}`: 개인 차, 택시 경로 추천, 시간 계산.
+     - `/views/suspend-req`: 서비스 사용 중지 요청 보냄.
+    
 
 ### 4. **프론트엔드 개발**
    - **입력 폼**:

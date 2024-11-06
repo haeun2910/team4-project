@@ -90,11 +90,41 @@
             border-top: 1px solid #ddd;
             margin: 10px 0;
         }
+
+        /* Navigation button styles */
+        .navigation {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .nav-button {
+            padding: 12px 18px;
+            font-size: 16px;
+            border: none;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 0 10px;
+        }
+        .nav-button:hover {
+            background-color: #1976D2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
 </head>
 <body>
-<a href="/views" style="text-decoration: none; color: #2196F3;">Home</a>
-<a href="/views/my-plan">View my Plans</a>
+
+<!-- Navigation buttons -->
+<div class="navigation">
+    <a href="/views" class="nav-button">Home</a>
+    <a href="/views/my-plan" class="nav-button">View My Plans</a>
+</div>
 
 <h1>Car Taxi Route</h1>
 
@@ -105,5 +135,6 @@
 
 <script src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=g24wojyn1l"></script>
 <script src="/static/js/route/car-taxi-route.js"></script>
+
 </body>
 </html>
