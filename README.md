@@ -4,9 +4,9 @@
 
 ### 팀 멤버
 
-- **[Nguyen Thi Hong Hanh (이하은2699)](https://github.com/haeun2910)**
-- **[Nguyen Thi Thuy Dung (원튀영6825)](https://github.com/thuydung44)**
-- **[Tran Dang Tien(짠당티엔5899)](https://github.com/TRANDANGTIEN99)**
+- **[Nguyen Thi Hong Hanh (이하은)](https://github.com/haeun2910)**
+- **[Nguyen Thi Thuy Dung (원튀영)](https://github.com/thuydung44)**
+- **[Tran Dang Tien(짠당티엔)](https://github.com/TRANDANGTIEN99)**
 
 ## 프로젝트 설명
 이 시스템은 **Spring Boot**를 사용하여 일정 관리 서비스의 백엔드 API를 구축합니다. 사용자는 일정의 출발지, 도착지, 시간, 이동 방법 등을 입력하고, 서비스는 효율적인 이동 방법과 출발 시간을 추천합니다. 추가로 경로를 지도에 표시하여 직관적으로 경로를 확인할 수 있습니다.
