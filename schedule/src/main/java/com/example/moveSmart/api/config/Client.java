@@ -100,12 +100,17 @@ public class Client {
         // Validate the response
         if (response != null && response.getAddresses() != null && !response.getAddresses().isEmpty()) {
             for (GeoAddress address : response.getAddresses()) {
-                String name = address.getRoadAddress(); // Get the road address
-                double latitude = Double.parseDouble(address.getY()); // Get latitude (ensure it's parsed as a double)
-                double longitude = Double.parseDouble(address.getX()); // Get longitude (ensure it's parsed as a double)
+                // Get the full road address
+                String fullAddress = address.getRoadAddress();
 
-                // Create a new Place object and add it to the list
-                places.add(new PlaceSearchResponse.Place(name, latitude, longitude));
+                // Use regex to capture only the main address part up to the last number
+                String mainAddress = fullAddress.replaceAll("(^.*?\\d+(?:\\s?동|층|호)?)(\\s.*|$)", "$1");
+
+                double latitude = Double.parseDouble(address.getY()); // Parse latitude as a double
+                double longitude = Double.parseDouble(address.getX()); // Parse longitude as a double
+
+                // Create a new Place object with the trimmed address and add it to the list
+                places.add(new PlaceSearchResponse.Place(mainAddress, latitude, longitude));
             }
         } else {
             log.warn("No addresses found for query: {}", query);
@@ -114,6 +119,8 @@ public class Client {
 
         return new PlaceSearchResponse(places);
     }
+
+
 
     public NCloudRouteSearchResponse searchRouteWithPrivateCar(Plan plan) {
         // Build the URI using the coordinates from the Plan object
